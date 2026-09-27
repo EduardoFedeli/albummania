@@ -1,0 +1,15 @@
+# Dependências e build
+node_modules/
+dist/
+coverage/
+
+# Ambiente
+.env
+.env.*
+
+# Referências visuais baixadas da internet (direitos de terceiros, não publicar)
+referencias/
+
+# Sistema
+.DS_Store
+Thumbs.db
