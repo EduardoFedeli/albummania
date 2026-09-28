@@ -21,7 +21,8 @@ Tudo o que precisamos do Vendedor, reunido para ser enviado de uma vez (pelo seu
 > 4. Qual **número de WhatsApp** vai receber os pedidos?
 > 5. Você tem **nome de loja**, logo ou cores que usa?
 > 6. Me passa **um Gmail seu**? É pra te dar acesso à planilha onde você atualiza o estoque quando vende. Junto com o site vou te mandar um **guia rapidinho** de como fazer isso.
-> 7. **Posso mostrar o site no meu portfólio e no LinkedIn?** (sem o seu número) E tudo bem eu deixar um "feito por Eduardo Fedeli" discreto no rodapé?
+> 7. **Endereço do site:** hoje o link tem o meu nome (`eduardofedeli.github.io/...`). Prefere um endereço com o nome da sua loja? Dá pra fazer de graça (tipo `nomedaloja.vercel.app`) ou com domínio próprio (tipo `nomedaloja.com.br`, uns R$ 40 por ano, no seu nome).
+> 8. **Posso mostrar o site no meu portfólio e no LinkedIn?** (sem o seu número) E tudo bem eu deixar um "feito por Eduardo Fedeli" discreto no rodapé?
 
 ## Suposições enquanto não temos resposta
 
@@ -32,4 +33,5 @@ Tudo o que precisamos do Vendedor, reunido para ser enviado de uma vez (pelo seu
 | Figurinhas extras | Não existem |
 | WhatsApp | O número da planilha de teste |
 | Nome/marca | Identidade própria, proposta por nós e validada com a prancha |
+| Endereço do site | `eduardofedeli.github.io/catalogo-figurinhas` (o do beta) |
 | Portfólio e crédito no rodapé | Crédito visível no beta; sai se ele preferir |

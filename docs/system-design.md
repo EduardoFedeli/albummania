@@ -354,7 +354,14 @@ Nada de teste de aparência ("o botão é amarelo"). O design é verificado olha
 
 ## 14. Questões em aberto
 
-Nenhuma no momento. O esvaziamento do Carrinho foi decidido na revisão e está na §5.3.
+- **Endereço definitivo do site** (pergunta 7 ao Vendedor). O `eduardofedeli.github.io` tem o nome do dev, não o da loja, e pode gerar desconfiança nos Compradores. Opções:
+  - **(a)** manter o GitHub Pages;
+  - **(b)** subdomínio gratuito com o nome da loja (ex.: Vercel);
+  - **(c)** domínio próprio, que funciona tanto no GitHub Pages quanto na Vercel.
+
+  Com (b) ou (c), o site passa a morar na raiz do domínio, e o `base` do Vite deixa de ser `/catalogo-figurinhas/`. Com (b), o deploy passa a ser feito pela integração Git da Vercel, e não pelo `publicar.yml`. **Trocar o endereço depois de divulgado quebra os links já compartilhados**, então a decisão precisa vir antes do lançamento, não antes do beta.
+
+O esvaziamento do Carrinho foi decidido na revisão e está na §5.3.
 
 ## 15. O que revisitar se o projeto crescer
 

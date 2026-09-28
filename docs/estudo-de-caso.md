@@ -42,3 +42,15 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **Consistência eventual.** Depois que mudei o estoque de uma figurinha, o CSV ficou uns 4 minutos alternando entre o valor novo e o antigo, conforme o servidor do Google que respondia. Em 40 leituras seguidas, 24 vieram novas e 16 antigas. Como o projeto já aceitava estoque defasado ("sujeito a confirmação"), a arquitetura ficou de pé, e o manual do vendedor vai avisar que uma mudança leva até 5 minutos.
 - **Dados reais são bagunçados.** Um `[` digitado sem querer numa célula distante virou cinco linhas vazias no CSV, e eu esqueci de pôr cabeçalho numa aba. Os dois "erros" melhoraram o design: agora o código ignora linhas vazias e não exige cabeçalho na aba de configuração.
 - **Um spike é uma pergunta com prazo.** O pior cenário de mensagem (200 figurinhas) cabia com folga no WhatsApp. Descobri isso em minutos, testando no celular, em vez de descobrir em produção.
+
+### Fase 3: Esqueleto andante
+
+**Decisão:** antes de qualquer tela bonita, pus no ar a versão mais simples possível que percorre o caminho inteiro: código, testes automáticos, build, GitHub Pages e leitura da planilha. O site só dizia "3 figurinhas carregadas da planilha" e mostrava a versão do commit, mas cada `git push` já publicava sozinho.
+
+**Aprendi:**
+
+- **O que acontece entre o `git push` e o site no ar.** O GitHub Actions liga um computador temporário que instala as dependências, verifica os tipos, roda os testes e faz o build. Só então o Pages recebe os arquivos. Se um teste falha, a publicação nem começa, e o site continua na versão anterior.
+- **Por que existe build.** O navegador não entende TypeScript nem JSX. O Vite traduz o código para HTML, CSS e JavaScript comum.
+- **Buscar dados no React fica dentro de um `useEffect`.** O corpo do componente roda a cada redesenho, então buscar dados ali criaria um laço infinito: busca, atualiza o estado, redesenha, busca de novo...
+- **Variáveis `VITE_` são públicas.** Elas vão parar dentro do JavaScript que qualquer visitante baixa, então nunca podem guardar segredo, nem no `.env.local`.
+- **Confiança também é requisito.** Um link com o meu nome (`eduardofedeli.github.io`) pode parecer estranho para os compradores do vendedor, então o endereço virou uma pergunta para ele.

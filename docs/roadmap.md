@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: Fase 3 (esqueleto andante), código pronto.** Falta ativar o GitHub Pages e fazer o primeiro push com código.
+**📍 Estamos aqui: início da Fase 4 (dados).** O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
 
 **Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 
@@ -29,13 +29,13 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 **Pronto quando:** nenhum risco da §13 do system design estiver sem resposta.
 
-## Fase 3: Esqueleto andante (walking skeleton)
+## Fase 3: Esqueleto andante (walking skeleton) ✅
 
 - [x] Projeto Vite + React + TypeScript e Vitest (o Playwright entra com o primeiro teste E2E, quando houver um fluxo para testar)
 - [x] CI no GitHub Actions (typecheck, testes e build a cada push na `main`): `.github/workflows/publicar.yml`
 - [ ] Deploy automático no GitHub Pages, só se o CI passar (com o `base` do Vite)
 - [x] Uma página que lê o CSV da planilha de teste e mostra quantas linhas vieram
-- [ ] Ativar o GitHub Pages (Settings → Pages → Source: GitHub Actions) e confirmar o site no ar
+- [x] Ativar o GitHub Pages (Settings → Pages → Source: GitHub Actions) e confirmar o site no ar
 
 **Pronto quando:** um merge na `main` publica sozinho um site que lê a planilha. Não tem nada bonito ainda, mas o caminho inteiro, do código até o site no ar, funciona.
 
