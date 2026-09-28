@@ -26,8 +26,12 @@ _Evitar_: coleção, categoria
 Um agrupamento de Figurinhas dentro do Álbum, normalmente uma seleção (BRA, ARG) ou uma seção especial (FWC).
 _Evitar_: categoria, time
 
+**Grupo**:
+Um conjunto de quatro seleções da fase de grupos da Copa (A a L), que define a ordem das Seções no Álbum. As seções especiais não têm Grupo.
+_Evitar_: chave
+
 **Código**:
-O identificador impresso na Figurinha, formado pela sigla da Seção e um número (ex.: "BRA 10", "FWC 3").
+O identificador impresso na Figurinha, formado pela sigla da Seção e um número (ex.: "BRA 10", "FWC 3"). A única exceção é a figurinha de abertura, cujo Código é só "00".
 _Evitar_: ID, número
 
 **Estoque**:
@@ -35,7 +39,7 @@ Quantas unidades de uma Figurinha o Vendedor tem para vender. Só o Vendedor alt
 _Evitar_: quantidade (reservado para o que o Comprador escolhe no Carrinho), status, disponível
 
 **Tipo**:
-A classificação da Figurinha que define o seu Preço (ex.: Comum, Especial). Vem do checklist oficial do Álbum, não do Vendedor.
+A classificação da Figurinha que define o seu Preço. No álbum da Copa 2026 há dois: **Especial** (as metalizadas: "00", FWC e os escudos) e **Comum** (todas as outras, inclusive a foto do time). Vem do checklist oficial do Álbum, não do Vendedor.
 _Evitar_: raridade, categoria
 
 **Preço**:

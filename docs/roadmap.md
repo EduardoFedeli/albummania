@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: início da Fase 4 (dados).** O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
+**📍 Estamos aqui: Fase 4 (dados).** Checklist e Seções prontos; falta criar a planilha definitiva ([passo a passo](./modelo-da-planilha.md#como-criar-a-planilha)). O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
 
 **Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 
@@ -41,11 +41,11 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 ## Fase 4: Dados
 
-- [ ] Checklist oficial da Copa 2026 → 980 linhas, com Código, Nome e Tipo
-- [ ] `src/data/secoes.ts`: sigla, nome, ordem no Álbum e cores da bandeira de cada Seção
+- [x] Checklist oficial da Copa 2026 → 980 linhas, com Código, Nome e Tipo, cruzando 3 fontes ([origem](./modelo-da-planilha.md#de-onde-vem-o-checklist))
+- [x] `src/data/secoes.ts`: sigla, nome, Grupo, ordem no Álbum e cores da bandeira de cada Seção (as cores serão ajustadas na Fase 5)
 - [ ] Planilha real: abas Catálogo e Config, validação de células, colunas protegidas (testar se impedem apagar linhas) e publicação
-- [ ] `docs/modelo-da-planilha.md`: o contrato da planilha, documentado
-- [ ] Estoque de demonstração para o beta
+- [x] [`docs/modelo-da-planilha.md`](./modelo-da-planilha.md): o contrato da planilha, documentado
+- [x] Estoque de demonstração para o beta: `dados/catalogo-demo.csv`
 - [ ] Preencher o Estoque real com a lista do Vendedor (depois do beta)
 
 ## Fase 5: Design system

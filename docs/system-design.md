@@ -283,7 +283,7 @@ Quem digita os dados é uma pessoa, no celular. O site **nunca** quebra por caus
 | Estoque `"3"` ou `" 3 "` | aceito (3) |
 | Estoque `"dois"`, `"3,5"`, `"-1"` | linha ignorada + problema registrado |
 | Estoque vazio ou `0` | fora do Catálogo (não é erro) |
-| Código fora do padrão `SIGLA NÚMERO` | linha ignorada + problema registrado |
+| Código fora do padrão `SIGLA NÚMERO` (a única exceção aceita é `00`) | linha ignorada + problema registrado |
 | Código duplicado | vale a primeira ocorrência + problema registrado |
 | Tipo sem `Preço <Tipo>` na Config | Figurinhas desse Tipo ocultas + problema registrado |
 | Preço `"1,5"`, `"1,50"`, `"1.50"` ou `"R$ 1,50"` | aceito (1,5). O CSV publicado exporta o valor **como ele aparece formatado** na planilha em português, com vírgula e entre aspas (spike S3) |
