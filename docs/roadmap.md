@@ -2,7 +2,9 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: fim da Fase 1.** Próximo passo: enviar as perguntas ao Vendedor e começar a Fase 2 (spikes).
+**📍 Estamos aqui: Fase 3 (esqueleto andante), código pronto.** Falta ativar o GitHub Pages e fazer o primeiro push com código.
+
+**Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 
 ## Fase 0: Descoberta e decisões ✅
 
@@ -17,22 +19,23 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 - [x] System design: [system-design.md](./system-design.md)
 - [x] Roadmap (este arquivo) e início do [estudo de caso](./estudo-de-caso.md)
 
-## Fase 2: Spikes, validar os riscos antes de codar
+## Fase 2: Spikes, validar os riscos antes de codar ✅
 
-- [ ] **Enviar as perguntas ao Vendedor** (roda em paralelo com tudo daqui em diante, porque a resposta demora)
-- [ ] **S1:** planilha de teste → o CSV publicado aceita `fetch` de outro domínio (CORS)? Quanto tempo uma edição leva para aparecer?
-- [ ] **S3:** na mesma planilha → formato dos números ("1,50" ou "1.50") e se a proteção de colunas impede apagar linhas
-- [ ] **S2:** tamanho máximo prático de uma mensagem no `wa.me` (Android, iOS e desktop)
-- [ ] Registrar os resultados. O ADR-0003 passa a `accepted`, ou entra o plano B
+- [x] **S1:** CORS liberado; a edição aparece para todos em até ~5 min ([ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md))
+- [x] **S3:** números chegam como `"1,5"` (formatados, com vírgula)
+- [x] **S2:** um Pedido de 200 figurinhas (~1.100 caracteres) abre inteiro no celular e no computador
+- [x] Registrar os resultados: ADR-0003 `accepted`
+- (movido para a Fase 4) testar se a proteção de colunas impede o Vendedor de apagar linhas, na planilha real
 
 **Pronto quando:** nenhum risco da §13 do system design estiver sem resposta.
 
 ## Fase 3: Esqueleto andante (walking skeleton)
 
-- [ ] Projeto Vite + React + TypeScript, Vitest e Playwright
-- [ ] CI no GitHub Actions (typecheck, testes e build a cada push na `main`)
+- [x] Projeto Vite + React + TypeScript e Vitest (o Playwright entra com o primeiro teste E2E, quando houver um fluxo para testar)
+- [x] CI no GitHub Actions (typecheck, testes e build a cada push na `main`): `.github/workflows/publicar.yml`
 - [ ] Deploy automático no GitHub Pages, só se o CI passar (com o `base` do Vite)
-- [ ] Uma página que lê o CSV da planilha de teste e mostra quantas linhas vieram
+- [x] Uma página que lê o CSV da planilha de teste e mostra quantas linhas vieram
+- [ ] Ativar o GitHub Pages (Settings → Pages → Source: GitHub Actions) e confirmar o site no ar
 
 **Pronto quando:** um merge na `main` publica sozinho um site que lê a planilha. Não tem nada bonito ainda, mas o caminho inteiro, do código até o site no ar, funciona.
 
@@ -40,9 +43,10 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 - [ ] Checklist oficial da Copa 2026 → 980 linhas, com Código, Nome e Tipo
 - [ ] `src/data/secoes.ts`: sigla, nome, ordem no Álbum e cores da bandeira de cada Seção
-- [ ] Planilha real: abas Catálogo e Config, validação de células, colunas protegidas e publicação
+- [ ] Planilha real: abas Catálogo e Config, validação de células, colunas protegidas (testar se impedem apagar linhas) e publicação
 - [ ] `docs/modelo-da-planilha.md`: o contrato da planilha, documentado
-- [ ] Preencher o Estoque com a lista do Vendedor (quando ele responder)
+- [ ] Estoque de demonstração para o beta
+- [ ] Preencher o Estoque real com a lista do Vendedor (depois do beta)
 
 ## Fase 5: Design system
 
@@ -51,15 +55,26 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 - [ ] Componentes do design system, com todos os estados
 - [ ] Página `/styleguide`
 - [ ] Revisão de acessibilidade AA
-- [ ] Enviar o `/styleguide` ao Vendedor para aprovação (pergunta 8)
+- [ ] **Prancha do design system**: imagem PNG com paleta, tipografia e componentes, gerada automaticamente a partir do `/styleguide`
 
 ## Fase 6: Funcionalidades (commits pequenos por funcionalidade, domínio com TDD)
 
+### 6a. O mínimo para o beta
+
 - [ ] Ler e validar as abas + carregamento com cache (stale-while-revalidate)
 - [ ] Catálogo agrupado por Seção, índice de Seções e links `#SEÇÃO`
-- [ ] Busca tolerante (código, nome sem acento, Seção)
 - [ ] Carrinho: adicionar, quantidade, persistência e reconciliação
 - [ ] Pedido: total por Tipo, mensagem, `wa.me`, "copiar mensagem" e "limpar carrinho"
+
+### 🎯 Marco: beta para o Vendedor
+
+- [ ] Beta publicado com o checklist completo e Estoque de demonstração
+- [ ] Enviar ao Vendedor: link do beta + prancha do design system + [perguntas](./perguntas-ao-vendedor.md) (oferta de cadastrar as figurinhas, manual de Estoque, preço por Tipo)
+- [ ] Incorporar as respostas (preços, nome, cores, ajustes de visual)
+
+### 6b. O restante
+
+- [ ] Busca tolerante (código, nome sem acento, Seção)
 - [ ] Lista de Faltantes
 - [ ] Filtro de Tipo e tema escuro
 - [ ] Prévia de link (Open Graph), analytics e crédito no rodapé

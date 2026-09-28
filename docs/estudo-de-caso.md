@@ -31,3 +31,14 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **Os nomes das colunas da planilha são um contrato**, como uma API. Se o vendedor renomear "Estoque", o código não encontra a coluna, e o site precisa ter um plano para isso.
 - **Núcleo funcional, casca imperativa.** A função que monta a mensagem do pedido recebe dados e devolve texto, sem internet. Por isso ela é testável em milissegundos e continua certa mesmo se o Google cair.
 - Uma melhoria saiu da minha própria análise de falhas: o site não tem como saber se o WhatsApp abriu no computador do comprador, então ganhou um botão **"Não abriu? Copie a mensagem"**.
+
+### Fase 2: Spikes, testar os riscos antes de escrever código
+
+**Decisão:** a leitura da planilha direto pelo navegador foi aprovada ([ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md)), agora com medições reais em vez de suposições. No processo, também abandonei os pull requests: num projeto solo, eles viravam burocracia. A proteção contra código quebrado fica no CI, que só publica o site se todos os testes passarem.
+
+**Aprendi:**
+
+- **CORS na prática.** O navegador só deixa o nosso site ler o CSV porque o Google responde "pode ler". O teste mostrou um detalhe que nenhuma documentação conta: a URL redireciona para outro servidor, e os dois precisam liberar.
+- **Consistência eventual.** Depois que mudei o estoque de uma figurinha, o CSV ficou uns 4 minutos alternando entre o valor novo e o antigo, conforme o servidor do Google que respondia. Em 40 leituras seguidas, 24 vieram novas e 16 antigas. Como o projeto já aceitava estoque defasado ("sujeito a confirmação"), a arquitetura ficou de pé, e o manual do vendedor vai avisar que uma mudança leva até 5 minutos.
+- **Dados reais são bagunçados.** Um `[` digitado sem querer numa célula distante virou cinco linhas vazias no CSV, e eu esqueci de pôr cabeçalho numa aba. Os dois "erros" melhoraram o design: agora o código ignora linhas vazias e não exige cabeçalho na aba de configuração.
+- **Um spike é uma pergunta com prazo.** O pior cenário de mensagem (200 figurinhas) cabia com folga no WhatsApp. Descobri isso em minutos, testando no celular, em vez de descobrir em produção.

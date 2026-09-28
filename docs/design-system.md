@@ -43,7 +43,8 @@ Referências: fotos das páginas de Espanha e Argentina (fotos reais). A imagem 
   - *primitivos*: valores brutos (`--green-700: …`);
   - *semânticos*: o uso (`--color-action: var(--green-700)`).
   Os componentes só usam tokens semânticos. Trocar a paleta a pedido do Vendedor significa mexer só nos primitivos, e cada tema é um conjunto de valores semânticos.
-- **Styleguide:** a página `/styleguide` é publicada junto com o site e mostra paleta, tipografia e todos os componentes em todos os estados. É o link que o Vendedor usa para aprovar o visual.
+- **Styleguide:** a página `/styleguide` é publicada junto com o site e mostra paleta, tipografia e todos os componentes em todos os estados.
+- **Prancha:** uma imagem de apresentação (paleta, tipografia e componentes numa composição só) enviada ao Vendedor junto com o beta. Ela é **gerada automaticamente** a partir de uma seção do `/styleguide`, com uma captura de tela em alta resolução. Assim é uma única fonte da verdade: se um token muda, a prancha muda junto, sem retrabalho num editor de imagens. O formato de "prancha" é inspiração, mas o estilo segue o nosso conceito, e não o visual genérico de kits de UI.
 - **Cor por Seção:** cada Seção tem de 2 a 3 cores tiradas da bandeira, guardadas num arquivo de dados no código (é um fato fixo, e o Vendedor não mexe nisso). A cor aparece **só no cabeçalho da Seção e na tinta de fundo dos espaços**, como decoração. O texto fica sempre sobre o papel neutro. Os componentes recebem a cor como parâmetro e precisam funcionar com qualquer uma das 48.
 - **Crédito no rodapé:** "feito por Eduardo Fedeli", discreto, com link. Depende da autorização do Vendedor.
 - **Canal:** só WhatsApp. A prévia do link (Open Graph) faz parte do design system.

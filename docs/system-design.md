@@ -38,7 +38,7 @@ O projeto tem três restrições que moldam tudo o que vem abaixo:
 |---|---|
 | Custo | R$ 0/mês (GitHub Pages, Google Sheets, GoatCounter). |
 | Operação | O Vendedor muda Estoque, preços e número do WhatsApp sem precisar de dev. |
-| Atualização | Uma edição na planilha aparece no site em alguns minutos (a confirmar no spike S1). |
+| Atualização | Uma edição na planilha aparece para todo mundo em até ~5 minutos (medido no spike S1). |
 | Disponibilidade | Se o Google falhar, o site continua útil com o último Catálogo válido ([ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md)). |
 | Performance | No celular com 4G: JavaScript ≤ 100 KB (gzip) e conteúdo principal visível (LCP) em menos de 2,5 s. |
 | Acessibilidade | WCAG 2.1 AA ([design system](./design-system.md#critérios-de-pronto-acessibilidade)). |
@@ -105,7 +105,7 @@ flowchart LR
 - O Vendedor edita **só a coluna Estoque** (e Imagem, se quiser). As outras vêm do checklist e ficam **protegidas** contra edição.
 - **A Seção não é uma coluna:** ela é derivada do Código ("BRA 10" → BRA). O nome da Seção ("Brasil"), a ordem e as cores ficam num arquivo de dados no código (§6). Guardar o mesmo fato em dois lugares foi o que gerou dados inconsistentes no site de referência.
 
-**Aba `Config`:** pares chave e valor, legíveis para o Vendedor.
+**Aba `Config`:** pares chave e valor, legíveis para o Vendedor. A coluna A é sempre a chave e a B o valor. **Não há cabeçalho obrigatório**, e linhas vazias ou com chave desconhecida são ignoradas: o spike mostrou que uma célula perdida vira linha no CSV.
 
 | Chave | Valor |
 |---|---|
@@ -286,7 +286,8 @@ Quem digita os dados é uma pessoa, no celular. O site **nunca** quebra por caus
 | Código fora do padrão `SIGLA NÚMERO` | linha ignorada + problema registrado |
 | Código duplicado | vale a primeira ocorrência + problema registrado |
 | Tipo sem `Preço <Tipo>` na Config | Figurinhas desse Tipo ocultas + problema registrado |
-| Preço `"1,50"` ou `"1.50"` | aceito (1,5), porque a planilha pode estar em português |
+| Preço `"1,5"`, `"1,50"`, `"1.50"` ou `"R$ 1,50"` | aceito (1,5). O CSV publicado exporta o valor **como ele aparece formatado** na planilha em português, com vírgula e entre aspas (spike S3) |
+| Linha vazia (`,`) ou com lixo numa célula solta | ignorada, sem registrar problema |
 | Imagem que não começa com `https://` | imagem ignorada, Figurinha exibida sem ela |
 | **Coluna obrigatória ausente ou renomeada** | a aba inteira é inválida e o site trata como falha de carregamento (usa o cache, §5.1) |
 
@@ -295,12 +296,13 @@ Quem digita os dados é uma pessoa, no celular. O site **nunca** quebra por caus
 | Falha | Efeito para o Comprador | Como o sistema reage |
 |---|---|---|
 | Google fora do ar ou lento | vê um Catálogo possivelmente defasado | último Catálogo válido + aviso com a idade dos dados |
-| CSV publicado bloqueado por CORS | o site não carrega os dados | **risco do spike S1.** Plano B: gerar o JSON no build, a alternativa já avaliada no ADR-0003 |
+| Logo depois de uma Baixa, o CSV alterna entre a versão nova e a antiga (consistência eventual, spike S1) | por até ~5 minutos, pode ver uma Figurinha que acabou de ser vendida | risco aceito ([ADR-0002](./adr/0002-pedido-nao-reserva-estoque.md)): tudo é "sujeito a confirmação" |
+| O Google deixa de liberar CORS no CSV publicado | o site não carrega os dados | hoje funciona (spike S1). Se mudar, o plano B é gerar o JSON no build, alternativa já avaliada no ADR-0003 |
 | Coluna apagada ou renomeada na planilha | igual a "Google fora do ar" | aba inválida → cache (§7) |
 | localStorage indisponível | o Carrinho some ao fechar a aba | tudo funciona em memória, sem aviso |
 | Estoque mudou com um Carrinho salvo | itens reduzidos ou removidos | reconciliação + aviso (§5.1) |
 | Duas pessoas pedem a última unidade | uma delas ouve "acabou" no WhatsApp | risco aceito ([ADR-0002](./adr/0002-pedido-nao-reserva-estoque.md)) |
-| Mensagem longa demais para o `wa.me` | o WhatsApp corta ou não abre | formato compacto; limite real a medir no spike S2 |
+| Mensagem longa demais para o `wa.me` | o WhatsApp corta ou não abre | improvável: com o formato compacto, um Pedido de 200 figurinhas tem ~1.100 caracteres e abriu inteiro no celular e no computador (spike S2) |
 | Comprador está no computador, sem o app do WhatsApp | o `wa.me` abre uma página intermediária; sem o app, ele cai no WhatsApp Web e precisa escanear um QR code com o celular. Pode desistir no meio | o site não consegue saber se o WhatsApp abriu. Depois de "Finalizar pedido", o painel oferece **"Não abriu? Copie a mensagem"** com o número do Vendedor, e o Pedido segue por qualquer caminho |
 | O Vendedor apaga sem querer a linha de uma Figurinha | a Figurinha some do site, como se o Estoque fosse 0. Quem já a tinha no Carrinho recebe o aviso "não está mais disponível" na próxima visita | **prevenção:** as colunas protegidas impedem um editor de apagar a linha (confirmar na planilha de teste do spike S1). Se acontecer mesmo assim, o histórico de versões da planilha recupera a linha. O site não tem como perceber, porque não distingue "apagada" de "vendida" |
 
@@ -345,9 +347,9 @@ Nada de teste de aparência ("o botão é amarelo"). O design é verificado olha
 
 | # | Pergunta | Por que importa | Como responder |
 |---|---|---|---|
-| S1 | O CSV publicado aceita `fetch` de outro domínio (CORS)? Quanto tempo leva para uma edição aparecer? | Sustenta o [ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md). Se falhar, a arquitetura de leitura muda. | Planilha de teste + `curl` com cabeçalho `Origin` + edição cronometrada |
-| S2 | Qual o tamanho máximo prático de uma mensagem no `wa.me` (Android, iOS, desktop)? | Carrinhos grandes podem ser cortados. | Gerar mensagens de 50, 100 e 200 itens e testar |
-| S3 | Como o Google exporta números no CSV de uma planilha em português ("1,50" ou "1.50")? | Define o parser de Preço. | Olhar o CSV da planilha de teste do S1 |
+| S1 | O CSV publicado aceita `fetch` de outro domínio (CORS)? Quanto tempo leva para uma edição aparecer? | Sustenta o [ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md). Se falhar, a arquitetura de leitura muda. | ✅ **Respondido em 2026-09-27:** CORS liberado; a edição se propaga em até ~5 min, com oscilação entre versões. Detalhes no ADR-0003 |
+| S2 | Qual o tamanho máximo prático de uma mensagem no `wa.me` (Android, iOS, desktop)? | Carrinhos grandes podem ser cortados. | ✅ **Respondido:** 200 figurinhas geram ~1.100 caracteres (URL de ~2.100) e a mensagem abriu inteira no celular e no computador |
+| S3 | Como o Google exporta números no CSV de uma planilha em português ("1,50" ou "1.50")? | Define o parser de Preço. | ✅ **Respondido:** vem como aparece formatado, com vírgula e entre aspas (`"1,5"`) |
 | R1 | O Google limita o CSV publicado com tráfego alto? | Um link viralizando poderia falhar. | Sem dados. O cache local mitiga, e o plano B é o JSON no build |
 
 ## 14. Questões em aberto
