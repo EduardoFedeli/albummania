@@ -7,6 +7,7 @@ Catálogo online para um colecionador vender as suas figurinhas repetidas do ál
 ## Documentação
 
 - [CONTEXT.md](CONTEXT.md): o glossário do domínio.
+- [docs/system-design.md](docs/system-design.md): a arquitetura, os fluxos, os modos de falha e os riscos.
 - [docs/adr/](docs/adr/): as decisões de arquitetura e o porquê de cada uma.
 - [docs/design-system.md](docs/design-system.md): o conceito visual, os tokens e os componentes.
 - [docs/perguntas-ao-vendedor.md](docs/perguntas-ao-vendedor.md): o que falta saber do cliente.
