@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
 import { buscarCsv } from './infra/planilha'
 
-// Esqueleto andante (Fase 3): prova que o caminho código → CI → GitHub Pages →
-// planilha funciona. A leitura de verdade, com validação, vem na Fase 6.
-
 type Estado =
   | { tipo: 'carregando' }
   | { tipo: 'pronto'; linhas: number }
@@ -15,7 +12,6 @@ export default function App() {
   useEffect(() => {
     buscarCsv(import.meta.env.VITE_CSV_CATALOGO_URL)
       .then((csv) => {
-        // Provisório: conta as linhas com conteúdo, descontando o cabeçalho.
         const comConteudo = csv
           .split(/\r?\n/)
           .filter((linha) => linha.replaceAll(',', '').trim() !== '')

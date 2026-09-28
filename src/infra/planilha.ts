@@ -1,8 +1,4 @@
-// Fronteira com a planilha Google: baixa o CSV publicado de uma aba (ADR-0003).
-
-// O navegador guarda o CSV do Google por 5 minutos (spike S1). Um parâmetro que
-// muda a cada chamada força uma resposta nova. `agora` vem de fora para que a
-// função seja pura e testável.
+// O Google deixa o CSV em cache no navegador por 5 min (spike S1); o parâmetro força uma resposta nova.
 export function urlSemCache(url: string, agora: number): string {
   const endereco = new URL(url)
   endereco.searchParams.set('_', String(agora))
