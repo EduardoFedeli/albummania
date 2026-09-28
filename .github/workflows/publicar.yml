@@ -1,0 +1,60 @@
+# A cada push na main: verifica, constrói e publica no GitHub Pages.
+# Se qualquer verificação falhar, o site continua na versão anterior.
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verificar-e-construir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Instalar o Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar as dependências
+        run: npm ci
+
+      - name: Verificar os tipos
+        run: npm run typecheck
+
+      - name: Rodar os testes
+        run: npm test
+
+      - name: Construir o site
+        run: npm run build
+        env:
+          VITE_VERSAO: ${{ github.sha }}
+
+      - name: Empacotar para o Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  publicar:
+    needs: verificar-e-construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: publicacao
+        uses: actions/deploy-pages@v5

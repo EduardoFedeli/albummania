@@ -3,9 +3,11 @@ node_modules/
 dist/
 coverage/
 
-# Ambiente
-.env
-.env.*
+# Ambiente: o .env (URLs públicas) é versionado; sobrescritas locais não
+*.local
+
+# Logs
+*.log
 
 # Referências visuais baixadas da internet (direitos de terceiros, não publicar)
 referencias/

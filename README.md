@@ -2,7 +2,17 @@
 
 Catálogo online para um colecionador vender as suas figurinhas repetidas do álbum da Copa do Mundo 2026. O comprador monta o pedido no site e finaliza pelo WhatsApp. Não há pagamento online, backend nem banco de dados: o estoque vive numa planilha Google que o próprio vendedor atualiza.
 
-> **Status:** fase de documentação e design. Ainda não há código.
+> **Status:** esqueleto andante. O site lê a planilha e é publicado automaticamente; o visual e as funcionalidades vêm a seguir ([roadmap](docs/roadmap.md)).
+
+## Como rodar
+
+```bash
+npm install       # instala as dependências
+npm run dev       # site local em http://localhost:5173/catalogo-figurinhas/
+npm test          # roda os testes
+```
+
+A cada push na `main`, o GitHub Actions verifica tipos, roda os testes, faz o build e publica no GitHub Pages ([publicar.yml](.github/workflows/publicar.yml)).
 
 ## Documentação
 
