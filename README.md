@@ -6,6 +6,7 @@ Catálogo online para um colecionador vender as suas figurinhas repetidas do ál
 
 ## Documentação
 
+- [docs/roadmap.md](docs/roadmap.md): as fases do projeto e em que ponto estamos.
 - [CONTEXT.md](CONTEXT.md): o glossário do domínio.
 - [docs/system-design.md](docs/system-design.md): a arquitetura, os fluxos, os modos de falha e os riscos.
 - [docs/adr/](docs/adr/): as decisões de arquitetura e o porquê de cada uma.
