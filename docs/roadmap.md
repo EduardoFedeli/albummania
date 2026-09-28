@@ -1,6 +1,6 @@
 # Roadmap
 
-Do início à entrega. Cada fase termina num resultado verificável, e as fases de código viram issues e PRs no GitHub.
+Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
 **📍 Estamos aqui: fim da Fase 1.** Próximo passo: enviar as perguntas ao Vendedor e começar a Fase 2 (spikes).
 
@@ -14,7 +14,7 @@ Do início à entrega. Cada fase termina num resultado verificável, e as fases 
 
 ## Fase 1: Documentação de engenharia ✅
 
-- [x] System design: [system-design.md](./system-design.md) (PR #1)
+- [x] System design: [system-design.md](./system-design.md)
 - [x] Roadmap (este arquivo) e início do [estudo de caso](./estudo-de-caso.md)
 
 ## Fase 2: Spikes, validar os riscos antes de codar
@@ -30,8 +30,8 @@ Do início à entrega. Cada fase termina num resultado verificável, e as fases 
 ## Fase 3: Esqueleto andante (walking skeleton)
 
 - [ ] Projeto Vite + React + TypeScript, Vitest e Playwright
-- [ ] CI no GitHub Actions (typecheck, testes e build em cada PR)
-- [ ] Deploy automático no GitHub Pages (com o `base` do Vite)
+- [ ] CI no GitHub Actions (typecheck, testes e build a cada push na `main`)
+- [ ] Deploy automático no GitHub Pages, só se o CI passar (com o `base` do Vite)
 - [ ] Uma página que lê o CSV da planilha de teste e mostra quantas linhas vieram
 
 **Pronto quando:** um merge na `main` publica sozinho um site que lê a planilha. Não tem nada bonito ainda, mas o caminho inteiro, do código até o site no ar, funciona.
@@ -53,7 +53,7 @@ Do início à entrega. Cada fase termina num resultado verificável, e as fases 
 - [ ] Revisão de acessibilidade AA
 - [ ] Enviar o `/styleguide` ao Vendedor para aprovação (pergunta 8)
 
-## Fase 6: Funcionalidades (uma issue e um PR cada, domínio com TDD)
+## Fase 6: Funcionalidades (commits pequenos por funcionalidade, domínio com TDD)
 
 - [ ] Ler e validar as abas + carregamento com cache (stale-while-revalidate)
 - [ ] Catálogo agrupado por Seção, índice de Seções e links `#SEÇÃO`

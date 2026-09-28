@@ -315,12 +315,13 @@ Quem digita os dados é uma pessoa, no celular. O site **nunca** quebra por caus
 
 ```mermaid
 flowchart LR
-  PR["Pull Request"] --> CI["CI: typecheck, Vitest,<br/>build e E2E com CSV de exemplo"]
-  CI -- "verde + merge" --> M["main"]
-  M --> D["build de produção<br/>deploy no GitHub Pages"]
+  P["push na main"] --> CI["CI: typecheck, Vitest,<br/>build e E2E com CSV de exemplo"]
+  CI -- "tudo verde" --> D["deploy no GitHub Pages"]
+  CI -- "algo falhou" --> X["deploy bloqueado<br/>(o site continua na versão anterior)"]
 ```
 
-- **Dois ambientes:** local (`npm run dev`) e produção (Pages). Não há homologação, porque o próprio PR com o CI verde cumpre esse papel.
+- **Sem PRs:** o projeto é solo, então os commits vão direto na `main`. A proteção fica no CI: o deploy só acontece se todas as verificações passarem, e um commit quebrado nunca chega ao site.
+- **Dois ambientes:** local (`npm run dev`) e produção (Pages). Não há homologação.
 - **URLs dos CSVs em variáveis de ambiente** (`VITE_CSV_CATALOGO_URL`, `VITE_CSV_CONFIG_URL`). O E2E aponta para arquivos de exemplo do repositório, e o CI nunca depende do Google.
 - **Pegadinha do GitHub Pages:** o site fica em `/catalogo-figurinhas/`, não na raiz. O Vite precisa de `base: '/catalogo-figurinhas/'`, senão todo CSS e JS dá 404 em produção, mesmo funcionando no local.
 
