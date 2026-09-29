@@ -7,8 +7,8 @@ export interface Secao {
 }
 
 export const SECOES: Secao[] = [
-  { sigla: '00', nome: 'Abertura', cores: ['#1F2A44', '#C9A227'] },
-  { sigla: 'FWC', nome: 'Copa do Mundo', cores: ['#1F2A44', '#C9A227'] },
+  { sigla: '00', nome: 'Abertura', cores: ['#4A6FA5', '#C9A227'] },
+  { sigla: 'FWC', nome: 'Copa do Mundo', cores: ['#4A6FA5', '#C9A227'] },
 
   { sigla: 'MEX', nome: 'México', grupo: 'A', cores: ['#006847', '#FFFFFF', '#CE1126'] },
   { sigla: 'RSA', nome: 'África do Sul', grupo: 'A', cores: ['#007A4D', '#FFB612', '#DE3831'] },
