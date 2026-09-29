@@ -28,6 +28,27 @@ Referências: fotos das páginas de Espanha e Argentina (fotos reais). A imagem 
 
 **Interação-assinatura:** ao adicionar, a Figurinha "cola" no espaço. Com `prefers-reduced-motion`, vira só uma troca de estado, sem animação.
 
+## Direção escolhida (2026-09-28)
+
+Das três variações do protótipo, a escolha foi uma **mistura**, montada como Variante D (`npm run dev` → `?variante=D`). As telas de cada variação estão em [`docs/design/prototipo/`](./design/prototipo/).
+
+| Da variação | Vem |
+|---|---|
+| **C · Caderno** | a **estrutura**: a página abre com "Quais faltam no seu álbum?" e o campo para colar a Lista de Faltantes; o resultado diz "Você procurou 8. Temos 5." e oferece "Adicionar as 5" |
+| **B · Álbum 2026** | o **visual**: página branca, tinta azul-marinho, uma página por Seção com blocos geométricos nas cores da bandeira, e cada Figurinha como espaço tom sobre tom com o numeral gigante |
+| **A · Retrô 70** | as **esgotadas continuam visíveis, mas apagadas** (borda tracejada, numeral quase invisível e a palavra "acabou"), para o Comprador ver o álbum inteiro e não só o que está à venda |
+
+**Descartado:** a paleta e a tipografia dos anos 70 (Shrikhand), a letra de mão do caderno (Caveat) e o papel quadriculado.
+
+**Base provisória, até os tokens:** Unbounded (títulos e numerais) + Instrument Sans (texto), tinta `#14213D`, ação `#00A650`, espaços em 3 colunas no celular. Tocar num espaço adiciona a Figurinha, e ela ganha contorno e um selo com a quantidade.
+
+**A resolver na criação dos tokens:**
+
+1. **Na Unbounded, o `0` e o `O` são quase iguais** (o `00` do índice parece "OO"). Como o Código é o que o colecionador procura, os numerais precisam ser inequívocos: outra fonte para os números, ou uma com zero diferenciado.
+2. **Rolagem longa:** 50 Seções × 20 espaços. Avaliar esgotadas mais compactas ou Seções recolhíveis.
+3. **Contraste AA:** o texto sobre o verde de ação, o cinza do "acabou" e o selo de quantidade. O numeral tom sobre tom é decorativo, porque o Código escrito carrega a informação.
+4. **Tirar do Carrinho:** hoje, tocar num espaço que já está no máximo zera a quantidade. Isso precisa de um controle claro (o painel do Carrinho resolve na Fase 6).
+
 ## Critérios de pronto (acessibilidade)
 
 - WCAG 2.1 **AA** obrigatório (texto com contraste de 4.5:1).
