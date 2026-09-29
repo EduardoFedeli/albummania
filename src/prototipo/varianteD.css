@@ -7,6 +7,8 @@
 }
 
 .vd {
+  /* Margem lateral que centraliza o conteúdo em telas largas e vira 1rem no celular. */
+  --margem: max(var(--espaco-4), calc((100% - var(--largura-conteudo)) / 2));
   background: var(--cor-fundo);
   color: var(--cor-texto);
   font-family: var(--fonte-texto);
@@ -38,8 +40,12 @@
 
 .vd-topo {
   position: relative;
-  padding: var(--espaco-5) var(--espaco-4) var(--espaco-5);
+  padding: var(--espaco-5) var(--margem);
   overflow: hidden;
+}
+
+.vd-formas {
+  --direita: calc(var(--margem) - var(--espaco-4));
 }
 
 .vd-formas i {
@@ -50,7 +56,7 @@
 .vd-formas i:nth-child(1) {
   width: 110px;
   height: 110px;
-  right: -34px;
+  right: calc(var(--direita) - 34px);
   top: -44px;
   border-radius: 50%;
   background: #009c3b;
@@ -59,7 +65,7 @@
 .vd-formas i:nth-child(2) {
   width: 58px;
   height: 58px;
-  right: 58px;
+  right: calc(var(--direita) + 58px);
   top: -18px;
   border-radius: 0 0 0 58px;
   background: #ffdf00;
@@ -68,34 +74,16 @@
 .vd-formas i:nth-child(3) {
   width: 36px;
   height: 36px;
-  right: 16px;
+  right: calc(var(--direita) + 16px);
   top: 58px;
   border-radius: 10px;
   background: #74acdf;
   transform: rotate(14deg);
 }
 
-.vd-barra {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--espaco-3);
-  padding-right: 7rem;
-}
-
 .vd-loja {
+  position: relative;
   margin: 0;
-  font-weight: var(--peso-medio);
-}
-
-.vd-tema {
-  min-height: var(--alvo-minimo);
-  padding: 0 var(--espaco-3);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-pilula);
-  background: var(--cor-fundo);
-  color: var(--cor-texto);
-  font-size: var(--texto-pequeno);
   font-weight: var(--peso-medio);
 }
 
@@ -112,6 +100,7 @@
 .vd textarea {
   position: relative;
   width: 100%;
+  max-width: var(--largura-leitura);
   box-sizing: border-box;
   font: inherit;
   font-size: var(--tamanho-2);
@@ -124,6 +113,7 @@
 }
 
 .vd-procurar {
+  display: block;
   margin-top: var(--espaco-3);
   min-height: var(--alvo-minimo);
   padding: 0 var(--espaco-5);
@@ -135,7 +125,7 @@
 }
 
 .vd-resultado {
-  margin: 0 var(--espaco-4) var(--espaco-2);
+  margin: 0 var(--margem) var(--espaco-2);
   padding: var(--espaco-4) var(--espaco-3);
   border-radius: var(--raio-grande);
   background: var(--cor-superficie);
@@ -181,7 +171,7 @@
   gap: var(--espaco-2);
   overflow-x: auto;
   margin-top: var(--espaco-4);
-  padding: var(--espaco-2) var(--espaco-4);
+  padding: var(--espaco-2) var(--margem);
   background: var(--cor-fundo);
   border-bottom: 1px solid var(--cor-borda);
   scrollbar-width: none;
@@ -202,7 +192,7 @@
 }
 
 .vd-pagina {
-  padding: 0 var(--espaco-4) var(--espaco-5);
+  padding: 0 var(--margem) var(--espaco-5);
   scroll-margin-top: 4rem;
   content-visibility: auto;
   contain-intrinsic-size: auto 700px;
@@ -407,7 +397,7 @@
 
 .vd-pedido {
   position: fixed;
-  inset: auto var(--espaco-2) var(--espaco-2) var(--espaco-2);
+  inset: auto max(var(--espaco-2), calc((100% - var(--largura-leitura)) / 2)) var(--espaco-2);
   z-index: 3;
   display: flex;
   align-items: center;
@@ -447,4 +437,30 @@
 .vd-pedido button:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+@media (min-width: 40rem) {
+  .vd-espacos {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  }
+}
+
+@media (min-width: 48rem) {
+  .vd-topo h1 {
+    font-size: var(--tamanho-6);
+    max-width: 14ch;
+  }
+
+  .vd-cabecalho {
+    margin-inline: 0;
+    border-radius: var(--raio-grande);
+  }
+
+  .vd-tira {
+    grid-template-columns: repeat(20, 1fr);
+  }
+
+  .vd-tira li {
+    height: 36px;
+  }
 }

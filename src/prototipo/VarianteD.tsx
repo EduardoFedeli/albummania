@@ -10,9 +10,6 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   const carrinho = useCarrinhoP(precos)
   const [texto, setTexto] = useState('BRA 2, 3, 11, 17\nARG 22\nFWC 4\nESP 10, 15')
   const [procurado, setProcurado] = useState(texto)
-  const [tema, setTema] = useState<'miolo' | 'capa'>(
-    new URLSearchParams(location.search).get('tema') === 'capa' ? 'capa' : 'miolo',
-  )
 
   const porCodigo = useMemo(
     () => new Map(secoes.flatMap((s) => s.figurinhas).map((f) => [f.codigo, f])),
@@ -51,19 +48,10 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   }
 
   return (
-    <div className="vd" data-tema={tema}>
+    <div className="vd">
       <header className="vd-topo">
         <div className="vd-formas" aria-hidden><i /><i /><i /></div>
-        <div className="vd-barra">
-          <p className="vd-loja">{nomeLoja}</p>
-          <button
-            className="vd-tema"
-            aria-pressed={tema === 'capa'}
-            onClick={() => setTema(tema === 'capa' ? 'miolo' : 'capa')}
-          >
-            {tema === 'capa' ? 'Tema claro' : 'Tema escuro'}
-          </button>
-        </div>
+        <p className="vd-loja">{nomeLoja}</p>
         <h1>Quais faltam no seu álbum?</h1>
         <label className="vd-oculto" htmlFor="vd-lista">Sua lista de faltantes</label>
         <textarea
