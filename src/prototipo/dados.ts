@@ -34,17 +34,20 @@ function lerCatalogo(csv: string): FigurinhaP[] {
 function lerConfig(csv: string) {
   const precos: Record<string, number> = {}
   let nomeLoja = 'Figurinhas'
+  let whatsapp = ''
   for (const [chave, valor] of csv.split(/\r?\n/).map(colunas)) {
     if (chave?.startsWith('Preço ')) precos[chave.slice(6)] = Number(valor.replace(',', '.'))
     if (chave === 'Nome da loja' && valor) nomeLoja = valor
+    if (chave === 'WhatsApp' && valor) whatsapp = valor.replace(/\D/g, '')
   }
-  return { precos, nomeLoja }
+  return { precos, nomeLoja, whatsapp }
 }
 
 export interface DadosP {
   secoes: SecaoComFigurinhas[]
   precos: Record<string, number>
   nomeLoja: string
+  whatsapp: string
 }
 
 export function useDadosPrototipo(): DadosP | null {
@@ -76,8 +79,10 @@ export function useCarrinhoP(precos: Record<string, number> | undefined) {
     })
   const lista = [...itens.values()]
   return {
+    lista,
     qtdDe: (codigo: string) => itens.get(codigo)?.qtd ?? 0,
     alterar,
+    limpar: () => setItens(new Map()),
     total: lista.reduce((soma, { f, qtd }) => soma + qtd * (precos?.[f.tipo] ?? 0), 0),
     unidades: lista.reduce((soma, { qtd }) => soma + qtd, 0),
   }
@@ -95,4 +100,25 @@ export function interpretar(texto: string): string[] {
     else if (sigla) codigos.push(`${sigla} ${Number(token)}`)
   }
   return [...new Set(codigos)]
+}
+
+export function montarMensagem(lista: { f: FigurinhaP; qtd: number }[], secoes: Secao[], total: number): string {
+  const ordem = new Map(secoes.map((s, i) => [s.sigla, i]))
+  const ordenada = [...lista].sort(
+    (a, b) => ordem.get(a.f.secao)! - ordem.get(b.f.secao)! || a.f.numero - b.f.numero,
+  )
+  const porSecao = new Map<string, string[]>()
+  for (const { f, qtd } of ordenada) {
+    const rotulo = `${f.codigo === '00' ? '00' : f.numero}${qtd > 1 ? ` (${qtd}x)` : ''}`
+    porSecao.set(f.secao, [...(porSecao.get(f.secao) ?? []), rotulo])
+  }
+  const unidades = lista.reduce((soma, { qtd }) => soma + qtd, 0)
+  return [
+    'Olá! Tenho interesse nestas figurinhas (Copa 2026):',
+    '',
+    ...[...porSecao].map(([sigla, numeros]) => (sigla === '00' ? numeros.join(', ') : `${sigla}: ${numeros.join(', ')}`)),
+    '',
+    `Total: ${unidades} ${unidades === 1 ? 'figurinha' : 'figurinhas'}, ${reais(total)} estimado`,
+    'Sujeito a confirmação de disponibilidade.',
+  ].join('\n')
 }

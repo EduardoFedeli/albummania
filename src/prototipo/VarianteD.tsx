@@ -1,16 +1,24 @@
 // PROTÓTIPO · Variante D (direção escolhida): abertura da C, páginas da B, esgotadas apagadas como na A.
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import '../styles/tokens.css'
 import './varianteD.css'
 import { urlDaBandeira } from '../ui/bandeiras'
-import { interpretar, reais, useCarrinhoP, type DadosP, type FigurinhaP } from './dados'
+import { interpretar, montarMensagem, reais, useCarrinhoP, type DadosP, type FigurinhaP } from './dados'
 
 export const nomeD = 'Direção escolhida: C + B + A'
 
-export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
+const listaDeNomes = (nomes: string[]) =>
+  nomes.length > 1 ? `${nomes.slice(0, -1).join(', ')} e ${nomes.at(-1)}` : nomes[0]
+
+export function VarianteD({ secoes, precos, nomeLoja, whatsapp }: DadosP) {
   const carrinho = useCarrinhoP(precos)
   const [texto, setTexto] = useState('BRA 2, 3, 11, 17\nARG 22\nFWC 4\nESP 10, 15')
   const [procurado, setProcurado] = useState(texto)
+  const [selecionadas, setSelecionadas] = useState<Set<string>>(new Set())
+  const [enviado, setEnviado] = useState(false)
+  const [copiada, setCopiada] = useState(false)
+  const painel = useRef<HTMLDialogElement>(null)
+  const inicioDasPaginas = useRef<HTMLDivElement>(null)
 
   const porCodigo = useMemo(
     () => new Map(secoes.flatMap((s) => s.figurinhas).map((f) => [f.codigo, f])),
@@ -21,8 +29,7 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   const achadas = codigos.map((c) => porCodigo.get(c)).filter((f): f is FigurinhaP => !!f)
   const disponiveis = achadas.filter((f) => f.estoque > 0)
   const inexistentes = codigos.filter((c) => !porCodigo.has(c))
-
-  const numeroDe = (f: FigurinhaP) => (f.codigo === '00' ? '00' : String(f.numero))
+  const visiveis = selecionadas.size ? secoes.filter((s) => selecionadas.has(s.sigla)) : secoes
 
   const grupos = [
     { titulo: 'Especiais', secoes: secoes.filter((s) => !s.grupo) },
@@ -32,29 +39,66 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
     })),
   ]
 
+  const mensagem = montarMensagem(carrinho.lista, secoes, carrinho.total)
+  const numeroDe = (f: FigurinhaP) => (f.codigo === '00' ? '00' : String(f.numero))
+  const preco = (f: FigurinhaP) => reais(precos[f.tipo] ?? 0)
+
   const bandeira = (codigo: string | undefined, classe: string) =>
     codigo && <img className={classe} src={urlDaBandeira(codigo)} alt="" loading="lazy" />
+
+  const alternarSelecao = (sigla: string) => {
+    setSelecionadas((atual) => {
+      const nova = new Set(atual)
+      if (nova.has(sigla)) nova.delete(sigla)
+      else nova.add(sigla)
+      return nova
+    })
+    inicioDasPaginas.current?.scrollIntoView({ block: 'start' })
+  }
+
+  const passo = (f: FigurinhaP, qtd: number) => (
+    <div className="vd-passo">
+      <button onClick={() => carrinho.alterar(f, -1)} aria-label={`Tirar uma ${f.codigo}`}>−</button>
+      <output aria-live="polite">{qtd}</output>
+      <button
+        onClick={() => carrinho.alterar(f, 1)}
+        disabled={qtd >= f.estoque}
+        aria-label={`Mais uma ${f.codigo}`}
+      >
+        +
+      </button>
+    </div>
+  )
 
   const espaco = (f: FigurinhaP) => {
     const qtd = carrinho.qtdDe(f.codigo)
     const esgotada = f.estoque === 0
     return (
       <li key={f.codigo} style={{ '--c1': secaoDe.get(f.secao)!.cores[0] } as React.CSSProperties}>
-        <button
-          className={`vd-espaco${qtd ? ' no-pedido' : ''}`}
-          disabled={esgotada}
-          onClick={() => carrinho.alterar(f, qtd >= f.estoque ? -qtd : 1)}
-          aria-label={`${f.codigo}, ${f.nome}, ${esgotada ? 'acabou' : `${reais(precos[f.tipo] ?? 0)}, adicionar ao pedido`}`}
-        >
+        <div className={`vd-espaco${qtd ? ' no-pedido' : ''}${esgotada ? ' esgotada' : ''}`}>
           <span className="vd-codigo">{f.codigo}</span>
           <span className="vd-numeral" aria-hidden>{numeroDe(f)}</span>
           <span className="vd-nome">{f.nome}</span>
           <span className="vd-rodape">
-            {esgotada ? 'acabou' : reais(precos[f.tipo] ?? 0)}
+            {esgotada ? 'acabou' : preco(f)}
             {f.tipo === 'Especial' && !esgotada && <span className="vd-brilho"> ✦</span>}
           </span>
-          {qtd > 0 && <em className="vd-qtd">{qtd}</em>}
-        </button>
+          {!esgotada && (
+            <span className="vd-estoque">
+              {f.estoque} {f.estoque === 1 ? 'disponível' : 'disponíveis'}
+            </span>
+          )}
+          {!esgotada &&
+            (qtd === 0 ? (
+              <button
+                className="vd-adicionar"
+                onClick={() => carrinho.alterar(f, 1)}
+                aria-label={`Adicionar ${f.codigo}, ${f.nome}, ${preco(f)}`}
+              />
+            ) : (
+              passo(f, qtd)
+            ))}
+        </div>
       </li>
     )
   }
@@ -104,21 +148,32 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
       )}
 
       <div className="vd-corpo">
-        <nav className="vd-indice" aria-label="Seleções">
+        <nav className="vd-indice" aria-label="Filtrar por seleção">
           {grupos.map((grupo) => (
             <div key={grupo.titulo} className="vd-grupo">
               <span className="vd-grupo-titulo">{grupo.titulo}</span>
               {grupo.secoes.map((s) => (
-                <a key={s.sigla} href={`#${s.sigla}`} title={s.nome}>
+                <button
+                  key={s.sigla}
+                  title={s.nome}
+                  aria-pressed={selecionadas.has(s.sigla)}
+                  onClick={() => alternarSelecao(s.sigla)}
+                >
                   {bandeira(s.bandeira, 'vd-indice-bandeira')}
                   {s.sigla}
-                </a>
+                </button>
               ))}
             </div>
           ))}
         </nav>
-        <div className="vd-paginas">
-          {secoes.map((secao) => {
+        <div className="vd-paginas" ref={inicioDasPaginas}>
+          {selecionadas.size > 0 && (
+            <div className="vd-filtro">
+              <p>Mostrando: {listaDeNomes(visiveis.map((s) => s.nome))}.</p>
+              <button onClick={() => setSelecionadas(new Set())}>Mostrar todas</button>
+            </div>
+          )}
+          {visiveis.map((secao) => {
             const aVenda = secao.figurinhas.filter((f) => f.estoque > 0)
             return (
               <section
@@ -176,8 +231,68 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
             {carrinho.unidades} {carrinho.unidades === 1 ? 'figurinha' : 'figurinhas'}, {reais(carrinho.total)}
           </span>
         </div>
-        <button disabled={!carrinho.unidades}>Finalizar pedido</button>
+        <button onClick={() => painel.current?.showModal()}>Ver pedido</button>
       </footer>
+
+      <dialog ref={painel} className="vd-painel" aria-labelledby="vd-painel-titulo">
+        <div className="vd-painel-topo">
+          <h2 id="vd-painel-titulo">Seu pedido</h2>
+          <button className="vd-fechar" onClick={() => painel.current?.close()} aria-label="Fechar">×</button>
+        </div>
+        {carrinho.lista.length === 0 ? (
+          <p className="vd-painel-vazio">Seu pedido está vazio. Toque numa figurinha para adicionar.</p>
+        ) : (
+          <>
+            <ul className="vd-painel-itens">
+              {[...carrinho.lista]
+                .sort((a, b) => a.f.codigo.localeCompare(b.f.codigo, 'pt-BR', { numeric: true }))
+                .map(({ f, qtd }) => (
+                  <li key={f.codigo}>
+                    <div>
+                      <strong>{f.codigo}</strong> {f.nome}
+                      <span>{preco(f)} cada, {f.estoque} {f.estoque === 1 ? 'disponível' : 'disponíveis'}</span>
+                    </div>
+                    {passo(f, qtd)}
+                  </li>
+                ))}
+            </ul>
+            <div className="vd-painel-rodape">
+              <p>
+                <span>Total estimado</span>
+                <strong>{reais(carrinho.total)}</strong>
+              </p>
+              <a
+                className="vd-finalizar"
+                href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(mensagem)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setEnviado(true)}
+              >
+                Finalizar pedido no WhatsApp
+              </a>
+              {enviado && (
+                <div className="vd-pos-envio">
+                  <button
+                    onClick={() => {
+                      carrinho.limpar()
+                      setEnviado(false)
+                      painel.current?.close()
+                    }}
+                  >
+                    Pedido enviado? Limpar pedido
+                  </button>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(mensagem).then(() => setCopiada(true))}
+                  >
+                    {copiada ? 'Mensagem copiada' : 'Não abriu? Copiar mensagem'}
+                  </button>
+                </div>
+              )}
+              <p className="vd-aviso">O valor final e a disponibilidade são confirmados na conversa.</p>
+            </div>
+          </>
+        )}
+      </dialog>
     </div>
   )
 }
