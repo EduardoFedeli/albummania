@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { SECOES } from './secoes'
 
@@ -21,6 +21,13 @@ describe('SECOES', () => {
     for (const { grupo } of selecoes) porGrupo.set(grupo!, (porGrupo.get(grupo!) ?? 0) + 1)
     expect([...porGrupo.keys()]).toEqual('ABCDEFGHIJKL'.split(''))
     expect([...porGrupo.values()].every((quantidade) => quantidade === 4)).toBe(true)
+  })
+
+  it('toda seleção tem o arquivo da sua bandeira', () => {
+    const semArquivo = selecoes
+      .filter((s) => !s.bandeira || !existsSync(`src/assets/bandeiras/${s.bandeira}.svg`))
+      .map((s) => s.sigla)
+    expect(semArquivo).toEqual([])
   })
 
   it('não repete siglas e só usa cores hexadecimais', () => {

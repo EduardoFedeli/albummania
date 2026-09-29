@@ -3,23 +3,15 @@
 
 :root {
   /* Primitivos */
-  --azul-950: #0e1830;
   --azul-900: #14213d;
-  --azul-800: #1d2c4f;
-  --azul-700: #2b3a5c;
   --cinza-600: #5f6878;
   --cinza-400: #9aa2b1;
-  --cinza-300: #b4bccb;
-  --cinza-200: #d5dae3;
   --cinza-100: #e7eaf0;
-  --cinza-050: #f3f5f9;
+  --azul-050: #eef1f6;
   --branco: #ffffff;
-  --verde-600: #00a650;
-  --verde-400: #3ecf82;
+  --verde-700: #007a3b;
   --vermelho-600: #c81d32;
-  --vermelho-300: #ff8f9c;
   --ouro-600: #a8831a;
-  --ouro-400: #e0bd52;
 
   --tamanho-1: 0.8rem;
   --tamanho-2: 1rem;
@@ -39,23 +31,26 @@
   --espaco-8: 4rem;
 
   /* Semânticos: cor */
-  --cor-fundo: var(--branco);
-  --cor-superficie: var(--cinza-050);
+  --cor-fundo: var(--azul-050);
+  --cor-superficie: var(--branco);
   --cor-texto: var(--azul-900);
   --cor-texto-fraco: var(--cinza-600);
   --cor-texto-apagado: var(--cinza-400);
   --cor-borda: var(--cinza-100);
   --cor-borda-forte: var(--azul-900);
   --cor-apagado: var(--cinza-100);
-  --cor-acao: var(--verde-600);
-  --cor-texto-sobre-acao: var(--azul-900);
+  --cor-acao: var(--verde-700);
+  --cor-texto-sobre-acao: var(--branco);
   --cor-destaque: var(--azul-900);
   --cor-texto-sobre-destaque: var(--branco);
-  --cor-foco: var(--verde-600);
+  --cor-foco: var(--verde-700);
   --cor-erro: var(--vermelho-600);
   --cor-brilho: var(--ouro-600);
 
-  /* Mistura da cor da Seção (bandeira) com o fundo */
+  /* Retícula de impressão, como no papel do álbum: quebra o fundo liso sem competir com o texto. */
+  --textura-fundo: radial-gradient(circle, rgb(20 33 61 / 0.07) 1px, transparent 1.3px) 0 0 / 12px 12px;
+
+  /* Mistura da cor da Seção (bandeira) com a superfície */
   --mistura-cabecalho: 12%;
   --mistura-espaco: 16%;
   --mistura-numeral: 34%;

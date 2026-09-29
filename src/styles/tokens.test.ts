@@ -71,7 +71,7 @@ describe('contraste dos tokens', () => {
   it('o texto é legível sobre o espaço de qualquer uma das 50 Seções', () => {
     const proporcao = parseFloat(resolver('--mistura-espaco')) / 100
     const reprovadas = SECOES.filter(
-      (secao) => contraste(cor('texto'), misturar(secao.cores[0], cor('fundo'), proporcao)) < TEXTO_AA,
+      (secao) => contraste(cor('texto'), misturar(secao.cores[0], cor('superficie'), proporcao)) < TEXTO_AA,
     ).map((secao) => secao.sigla)
 
     expect(reprovadas).toEqual([])
