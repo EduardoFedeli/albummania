@@ -7,8 +7,8 @@ export interface Secao {
 }
 
 export const SECOES: Secao[] = [
-  { sigla: '00', nome: 'Abertura', cores: ['#C9A227', '#1F2A44'] },
-  { sigla: 'FWC', nome: 'Copa do Mundo', cores: ['#C9A227', '#1F2A44'] },
+  { sigla: '00', nome: 'Abertura', cores: ['#1F2A44', '#C9A227'] },
+  { sigla: 'FWC', nome: 'Copa do Mundo', cores: ['#1F2A44', '#C9A227'] },
 
   { sigla: 'MEX', nome: 'México', grupo: 'A', cores: ['#006847', '#FFFFFF', '#CE1126'] },
   { sigla: 'RSA', nome: 'África do Sul', grupo: 'A', cores: ['#007A4D', '#FFB612', '#DE3831'] },
@@ -36,7 +36,7 @@ export const SECOES: Secao[] = [
   { sigla: 'ECU', nome: 'Equador', grupo: 'E', cores: ['#FFDD00', '#034EA2', '#ED1C24'] },
 
   { sigla: 'NED', nome: 'Holanda', grupo: 'F', cores: ['#AE1C28', '#FFFFFF', '#21468B'] },
-  { sigla: 'JPN', nome: 'Japão', grupo: 'F', cores: ['#FFFFFF', '#BC002D'] },
+  { sigla: 'JPN', nome: 'Japão', grupo: 'F', cores: ['#BC002D', '#FFFFFF'] },
   { sigla: 'SWE', nome: 'Suécia', grupo: 'F', cores: ['#006AA7', '#FECC00'] },
   { sigla: 'TUN', nome: 'Tunísia', grupo: 'F', cores: ['#E70013', '#FFFFFF'] },
 
@@ -65,7 +65,7 @@ export const SECOES: Secao[] = [
   { sigla: 'UZB', nome: 'Uzbequistão', grupo: 'K', cores: ['#0099B5', '#FFFFFF', '#1EB53A'] },
   { sigla: 'COL', nome: 'Colômbia', grupo: 'K', cores: ['#FCD116', '#003893', '#CE1126'] },
 
-  { sigla: 'ENG', nome: 'Inglaterra', grupo: 'L', cores: ['#FFFFFF', '#CE1124'] },
+  { sigla: 'ENG', nome: 'Inglaterra', grupo: 'L', cores: ['#CE1124', '#FFFFFF'] },
   { sigla: 'CRO', nome: 'Croácia', grupo: 'L', cores: ['#FF0000', '#FFFFFF', '#171796'] },
   { sigla: 'GHA', nome: 'Gana', grupo: 'L', cores: ['#CE1126', '#FCD116', '#006B3F'] },
   { sigla: 'PAN', nome: 'Panamá', grupo: 'L', cores: ['#D21034', '#FFFFFF', '#005293'] },
