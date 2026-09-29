@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Unbounded:wght@600;800;900&display=swap');
+
+.vb {
+  --tinta: #14213d;
+  --pagina: #ffffff;
+  --acao: #00a650;
+  background: var(--pagina);
+  color: var(--tinta);
+  font-family: 'Instrument Sans', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 6.5rem;
+}
+
+.vb-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.vb-topo {
+  position: relative;
+  padding: 2rem 1rem 1.25rem;
+  overflow: hidden;
+}
+
+.vb-formas i {
+  position: absolute;
+  display: block;
+}
+
+.vb-formas i:nth-child(1) {
+  width: 120px;
+  height: 120px;
+  right: -30px;
+  top: -40px;
+  border-radius: 50%;
+  background: #009c3b;
+}
+
+.vb-formas i:nth-child(2) {
+  width: 70px;
+  height: 70px;
+  right: 60px;
+  top: -20px;
+  border-radius: 0 0 0 70px;
+  background: #ffdf00;
+}
+
+.vb-formas i:nth-child(3) {
+  width: 46px;
+  height: 46px;
+  right: 18px;
+  top: 64px;
+  border-radius: 12px;
+  background: #e4002b;
+}
+
+.vb-formas i:nth-child(4) {
+  width: 54px;
+  height: 54px;
+  right: 110px;
+  top: 38px;
+  border-radius: 50% 50% 0 50%;
+  background: #74acdf;
+}
+
+.vb-topo h1 {
+  position: relative;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1.05;
+  margin: 0 0 0.6rem;
+  max-width: 9ch;
+}
+
+.vb-topo p {
+  position: relative;
+  margin: 0 0 1rem;
+  max-width: 32ch;
+  line-height: 1.4;
+}
+
+.vb-busca input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--tinta);
+  border-radius: 14px;
+  color: var(--tinta);
+}
+
+.vb-busca input:focus-visible,
+.vb button:focus-visible,
+.vb-indice a:focus-visible {
+  outline: 3px solid var(--acao);
+  outline-offset: 2px;
+}
+
+.vb-indice {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0.6rem 1rem;
+  background: var(--pagina);
+  border-bottom: 1px solid #e3e6ee;
+  scrollbar-width: none;
+}
+
+.vb-indice a {
+  flex: none;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--tinta);
+  text-decoration: none;
+  padding: 0.55rem 0.7rem;
+  border-radius: 999px;
+  background: #eef1f6;
+}
+
+.vb-pagina {
+  padding: 0 1rem 1.5rem;
+  scroll-margin-top: 3.5rem;
+}
+
+.vb-cabecalho {
+  position: relative;
+  height: 108px;
+  margin: 1.5rem -1rem 1rem;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--c1) 12%, white);
+}
+
+.vb-blocos i {
+  position: absolute;
+  display: block;
+}
+
+.vb-blocos i:nth-child(1) {
+  width: 150px;
+  height: 150px;
+  right: -40px;
+  top: -30px;
+  border-radius: 50%;
+  background: var(--c1);
+}
+
+.vb-blocos i:nth-child(2) {
+  width: 90px;
+  height: 90px;
+  right: 80px;
+  bottom: -30px;
+  border-radius: 90px 0 0 0;
+  background: var(--c2);
+}
+
+.vb-blocos i:nth-child(3) {
+  width: 44px;
+  height: 44px;
+  right: 150px;
+  top: 14px;
+  border-radius: 10px;
+  background: var(--c3);
+  transform: rotate(18deg);
+}
+
+.vb-rotulo {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.9rem;
+  background: var(--pagina);
+  padding: 0.45rem 0.8rem 0.5rem;
+  border-radius: 12px;
+}
+
+.vb-rotulo h2 {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 800;
+  font-size: 1.45rem;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.vb-rotulo p {
+  margin: 0.15rem 0 0;
+  font-size: 0.9rem;
+}
+
+.vb-espacos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.vb-espaco {
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  min-height: 190px;
+  padding: 0.7rem 0.75rem 0.6rem;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--c1) 16%, white);
+  outline: 3px solid transparent;
+  transition: outline-color 0.15s;
+}
+
+.vb-espaco.no-pedido {
+  outline-color: var(--tinta);
+}
+
+.vb-codigo {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.vb-especial {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--c1) 70%, var(--tinta));
+}
+
+.vb-numeral {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: 4.2rem;
+  line-height: 1;
+  align-self: center;
+  justify-self: center;
+  color: color-mix(in srgb, var(--c1) 34%, white);
+}
+
+.vb-nome {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+
+.vb-acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.vb-acoes span {
+  margin-right: auto;
+  font-size: 0.9rem;
+}
+
+.vb-acoes output {
+  min-width: 1.2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.vb-acoes button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--tinta);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.vb-acoes button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.vb-pedido {
+  position: fixed;
+  inset: auto 0.6rem 0.6rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.75rem 0.75rem 1.1rem;
+  border-radius: 18px;
+  background: var(--tinta);
+  color: #fff;
+}
+
+.vb-pedido div {
+  display: grid;
+}
+
+.vb-pedido strong {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.vb-pedido span {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.vb-pedido button {
+  font: inherit;
+  font-weight: 700;
+  padding: 0.85rem 1.1rem;
+  border: 0;
+  border-radius: 12px;
+  background: var(--acao);
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.vb-pedido button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vb-espaco {
+    transition: none;
+  }
+}

@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Big+Shoulders+Text:wght@500;700&family=Shrikhand&display=swap');
+
+.va {
+  --papel: #ffffff;
+  --tinta: #3b2314;
+  --laranja: #e4572e;
+  --mostarda: #f2b134;
+  --turquesa: #17a398;
+  --apagado: #d9cfc3;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: 'Big Shoulders Text', sans-serif;
+  font-size: 1.05rem;
+  min-height: 100vh;
+  padding-bottom: 7rem;
+}
+
+.va-topo {
+  background: var(--tinta);
+  color: #fff;
+  padding: 1.75rem 1rem 1.25rem;
+}
+
+.va-topo h1 {
+  font-family: 'Shrikhand', serif;
+  font-weight: 400;
+  font-size: 2.4rem;
+  line-height: 1;
+  margin: 0;
+}
+
+.va-topo p {
+  margin: 0.4rem 0 0;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.va-listras {
+  height: 18px;
+  background: linear-gradient(
+    var(--laranja) 0 6px,
+    var(--mostarda) 6px 12px,
+    var(--turquesa) 12px 18px
+  );
+}
+
+.va-instrucao {
+  margin: 1.25rem 1rem 0.5rem;
+  font-weight: 500;
+  max-width: 34ch;
+}
+
+.va-secao {
+  padding: 1.25rem 1rem 0.5rem;
+}
+
+.va-secao-titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.va-secao-titulo h2 {
+  font-family: 'Shrikhand', serif;
+  font-weight: 400;
+  font-size: 1.9rem;
+  margin: 0;
+}
+
+.va-secao-titulo span {
+  font-weight: 700;
+  color: var(--laranja);
+}
+
+.va-bandeira {
+  display: flex;
+  height: 5px;
+  margin: 0.35rem 0 0.75rem;
+  width: 5.5rem;
+}
+
+.va-bandeira i {
+  flex: 1;
+}
+
+.va-grade {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.va-numero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.12;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  padding: 0.3rem 0.25rem 0.35rem;
+  background: var(--papel);
+  color: var(--tinta);
+  border: 2px solid var(--tinta);
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.va-numero b {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.va-numero small {
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.va-numero.especial::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  border-top: 14px solid var(--mostarda);
+  border-right: 14px solid transparent;
+}
+
+.va-numero:disabled {
+  border: 2px dashed var(--apagado);
+  color: var(--apagado);
+  cursor: default;
+}
+
+.va-numero.no-pedido {
+  background: var(--laranja);
+  border-color: var(--laranja);
+  color: #fff;
+}
+
+.va-numero em {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1.2rem;
+}
+
+.va-estoque {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--turquesa);
+}
+
+.va-numero:focus-visible,
+.va-cupom button:focus-visible {
+  outline: 3px solid var(--turquesa);
+  outline-offset: 2px;
+}
+
+.va-cupom {
+  position: fixed;
+  inset: auto 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1rem 1rem;
+  background:
+    radial-gradient(circle at 8px 0, transparent 6px, var(--mostarda) 6.5px) top / 16px 100% repeat-x;
+  color: var(--tinta);
+}
+
+.va-cupom div {
+  display: grid;
+}
+
+.va-cupom strong {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.va-cupom button {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 0.8rem 1.1rem;
+  border: 0;
+  border-radius: 4px;
+  background: var(--tinta);
+  color: #fff;
+  cursor: pointer;
+}
+
+.va-cupom button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
