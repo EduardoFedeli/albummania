@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: Fase 4 (dados).** Checklist e Seções prontos; falta criar a planilha definitiva ([passo a passo](./modelo-da-planilha.md#como-criar-a-planilha)). O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
+**📍 Estamos aqui: início da Fase 5 (design system).** A planilha definitiva está publicada com o checklist completo e o Estoque de demonstração. O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
 
 **Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 
@@ -39,18 +39,20 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 **Pronto quando:** um merge na `main` publica sozinho um site que lê a planilha. Não tem nada bonito ainda, mas o caminho inteiro, do código até o site no ar, funciona.
 
-## Fase 4: Dados
+## Fase 4: Dados ✅
 
 - [x] Checklist oficial da Copa 2026 → 980 linhas, com Código, Nome e Tipo, cruzando 3 fontes ([origem](./modelo-da-planilha.md#de-onde-vem-o-checklist))
 - [x] `src/data/secoes.ts`: sigla, nome, Grupo, ordem no Álbum e cores da bandeira de cada Seção (as cores serão ajustadas na Fase 5)
-- [ ] Planilha real: abas Catálogo e Config, validação de células, colunas protegidas (testar se impedem apagar linhas) e publicação
+- [x] Planilha real: abas Catálogo e Config, validação de células, colunas protegidas e publicação
+- [ ] Testar, com outra conta Google como editora, se a proteção impede apagar linhas (quando o Vendedor for adicionado)
 - [x] [`docs/modelo-da-planilha.md`](./modelo-da-planilha.md): o contrato da planilha, documentado
 - [x] Estoque de demonstração para o beta: `dados/catalogo-demo.csv`
 - [ ] Preencher o Estoque real com a lista do Vendedor (depois do beta)
 
 ## Fase 5: Design system
 
-- [ ] 3 variações descartáveis (Retrô 70, Álbum 2026, Caderno do colecionador) com dados reais → escolha
+- [x] 3 variações descartáveis (Retrô 70, Álbum 2026, Caderno do colecionador) com dados reais, em `?variante=A|B|C`
+- [ ] Escolher a variação (ou a mistura) que vira o design oficial
 - [ ] `tokens.css`: primitivos e semânticos, tema miolo (claro) e capa (escuro)
 - [ ] Componentes do design system, com todos os estados
 - [ ] Página `/styleguide`
@@ -62,6 +64,7 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 ### 6a. O mínimo para o beta
 
 - [ ] Ler e validar as abas + carregamento com cache (stale-while-revalidate)
+- [ ] Página de diagnóstico (`?diagnostico`): as linhas ignoradas pela validação, em português
 - [ ] Catálogo agrupado por Seção, índice de Seções e links `#SEÇÃO`
 - [ ] Carrinho: adicionar, quantidade, persistência e reconciliação
 - [ ] Pedido: total por Tipo, mensagem, `wa.me`, "copiar mensagem" e "limpar carrinho"

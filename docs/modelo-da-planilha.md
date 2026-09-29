@@ -48,7 +48,7 @@ Feito uma vez só, pelo dono da conta.
 
 1. **Criar** uma planilha nova no Google Drive e renomear para `Catálogo de Figurinhas`.
 2. **Importar o catálogo:** Arquivo → Importar → Fazer upload → `dados/catalogo-demo.csv` → *Substituir a página atual*. Depois, renomear a aba para `Catálogo`.
-3. **Consertar o `00`:** o Google converte `00` em `0` na importação. Selecione a coluna B → Formatar → Número → **Texto simples**, e digite `00` de novo na célula B2.
+3. **Consertar os códigos que o Google converteu:** numa planilha em português, a importação transforma `00` em `0` e os códigos de Marrocos (`MAR 1`…`MAR 20`) em **datas** ("mar. 1" = 1º de março). Selecione a coluna B → Formatar → Número → **Texto simples**. Depois digite `00` na célula B2 e cole `MAR 1` a `MAR 20` nas células B202 a B221. Nenhuma outra sigla coincide com abreviação de mês.
 4. **Congelar o cabeçalho:** Ver → Congelar → 1 linha.
 5. **Validar o Estoque:** selecione `E2:E981` → Dados → Validação de dados → *Maior ou igual a* `0` → **Rejeitar a entrada**, com o texto de ajuda "Use um número inteiro, 0 ou mais".
 6. **Menu do Tipo:** selecione `D2:D981` → Dados → Validação de dados → *Menu suspenso* com `Comum` e `Especial`.

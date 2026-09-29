@@ -331,6 +331,7 @@ flowchart LR
 
 - **GoatCounter:** visitas e o evento `pedido_finalizado`. Esse é o número que prova o valor do site para o Vendedor.
 - **Console do navegador:** os problemas de dados da §7, para diagnóstico quando o Vendedor disser "a figurinha X não aparece".
+- **Página de diagnóstico (`?diagnostico`):** lista, em português, as linhas que a validação ignorou e por quê. O protótipo da Fase 5 mostrou que isso é necessário: a importação converteu os 20 códigos de Marrocos em datas, e a regra "linha inválida é ignorada" teria feito o Marrocos sumir do site **em silêncio**. Um problema que só aparece no console é invisível para o Vendedor.
 - **Sem serviço de rastreamento de erros** (Sentry etc.). É desproporcional para o tamanho do projeto.
 
 ## 12. Estratégia de testes
