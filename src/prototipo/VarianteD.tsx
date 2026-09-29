@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react'
 import '../styles/tokens.css'
 import './varianteD.css'
+import { urlDaBandeira } from '../ui/bandeiras'
 import { interpretar, reais, useCarrinhoP, type DadosP, type FigurinhaP } from './dados'
 
 export const nomeD = 'Direção escolhida: C + B + A'
@@ -22,6 +23,17 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   const inexistentes = codigos.filter((c) => !porCodigo.has(c))
 
   const numeroDe = (f: FigurinhaP) => (f.codigo === '00' ? '00' : String(f.numero))
+
+  const grupos = [
+    { titulo: 'Especiais', secoes: secoes.filter((s) => !s.grupo) },
+    ...[...new Set(secoes.map((s) => s.grupo).filter(Boolean))].map((g) => ({
+      titulo: `Grupo ${g}`,
+      secoes: secoes.filter((s) => s.grupo === g),
+    })),
+  ]
+
+  const bandeira = (codigo: string | undefined, classe: string) =>
+    codigo && <img className={classe} src={urlDaBandeira(codigo)} alt="" loading="lazy" />
 
   const espaco = (f: FigurinhaP) => {
     const qtd = carrinho.qtdDe(f.codigo)
@@ -91,57 +103,71 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
         </section>
       )}
 
-      <nav className="vd-indice" aria-label="Seções">
-        {secoes.map((s) => (
-          <a key={s.sigla} href={`#${s.sigla}`}>{s.sigla}</a>
-        ))}
-      </nav>
-
-      {secoes.map((secao) => {
-        const aVenda = secao.figurinhas.filter((f) => f.estoque > 0)
-        return (
-          <section
-            key={secao.sigla}
-            id={secao.sigla}
-            className="vd-pagina"
-            style={
-              {
-                '--c1': secao.cores[0],
-                '--c2': secao.cores[1] ?? secao.cores[0],
-                '--c3': secao.cores[2] ?? secao.cores[0],
-              } as React.CSSProperties
-            }
-          >
-            <div className="vd-cabecalho">
-              <div className="vd-blocos" aria-hidden><i /><i /><i /></div>
-              <div className="vd-rotulo">
-                <h2>{secao.nome}</h2>
-                <p>
-                  {secao.grupo ? `Grupo ${secao.grupo}, ` : ''}
-                  {aVenda.length ? `${aVenda.length} de ${secao.figurinhas.length} à venda` : 'nenhuma à venda agora'}
-                </p>
-              </div>
-            </div>
-            <ol
-              className="vd-tira"
-              role="img"
-              aria-label={`À venda: ${aVenda.map(numeroDe).join(', ') || 'nenhuma'}`}
-            >
-              {secao.figurinhas.map((f) => (
-                <li
-                  key={f.codigo}
-                  className={
-                    f.estoque === 0 ? 'esgotada' : carrinho.qtdDe(f.codigo) ? 'no-pedido' : 'disponivel'
-                  }
-                >
-                  {numeroDe(f)}
-                </li>
+      <div className="vd-corpo">
+        <nav className="vd-indice" aria-label="Seleções">
+          {grupos.map((grupo) => (
+            <div key={grupo.titulo} className="vd-grupo">
+              <span className="vd-grupo-titulo">{grupo.titulo}</span>
+              {grupo.secoes.map((s) => (
+                <a key={s.sigla} href={`#${s.sigla}`} title={s.nome}>
+                  {bandeira(s.bandeira, 'vd-indice-bandeira')}
+                  {s.sigla}
+                </a>
               ))}
-            </ol>
-            {aVenda.length > 0 && <ul className="vd-espacos">{aVenda.map(espaco)}</ul>}
-          </section>
-        )
-      })}
+            </div>
+          ))}
+        </nav>
+        <div className="vd-paginas">
+          {secoes.map((secao) => {
+            const aVenda = secao.figurinhas.filter((f) => f.estoque > 0)
+            return (
+              <section
+                key={secao.sigla}
+                id={secao.sigla}
+                className="vd-pagina"
+                style={
+                  {
+                    '--c1': secao.cores[0],
+                    '--c2': secao.cores[1] ?? secao.cores[0],
+                    '--c3': secao.cores[2] ?? secao.cores[0],
+                  } as React.CSSProperties
+                }
+              >
+                <div className="vd-cabecalho">
+                  <div className="vd-blocos" aria-hidden><i /><i /><i /></div>
+                  <div className="vd-rotulo">
+                    <h2>
+                      {bandeira(secao.bandeira, 'vd-rotulo-bandeira')}
+                      {secao.nome}
+                    </h2>
+                    <p>
+                      {secao.grupo ? `Grupo ${secao.grupo}, ` : ''}
+                      {aVenda.length ? `${aVenda.length} de ${secao.figurinhas.length} à venda` : 'nenhuma à venda agora'}
+                    </p>
+                  </div>
+                </div>
+                <ol
+                  className="vd-tira"
+                  role="img"
+                  aria-label={`À venda: ${aVenda.map(numeroDe).join(', ') || 'nenhuma'}`}
+                >
+                  {secao.figurinhas.map((f) => (
+                    <li
+                      key={f.codigo}
+                      className={
+                        f.estoque === 0 ? 'esgotada' : carrinho.qtdDe(f.codigo) ? 'no-pedido' : 'disponivel'
+                      }
+                    >
+                      {numeroDe(f)}
+                    </li>
+                  ))}
+                </ol>
+                {aVenda.length > 0 && <ul className="vd-espacos">{aVenda.map(espaco)}</ul>}
+              </section>
+            )
+          })}
+        </div>
+      </div>
 
       <footer className="vd-pedido">
         <div>

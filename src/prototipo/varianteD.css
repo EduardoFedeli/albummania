@@ -3,13 +3,13 @@
 /* Variáveis são calculadas onde são declaradas: a mistura precisa ficar onde --c1 existe. */
 .vd-pagina,
 .vd-espacos > li {
-  --espaco-fundo: color-mix(in srgb, var(--c1) var(--mistura-espaco), var(--cor-fundo));
+  --espaco-fundo: color-mix(in srgb, var(--c1) var(--mistura-espaco), var(--cor-superficie));
 }
 
 .vd {
   /* Margem lateral que centraliza o conteúdo em telas largas e vira 1rem no celular. */
   --margem: max(var(--espaco-4), calc((100% - var(--largura-conteudo)) / 2));
-  background: var(--cor-fundo);
+  background: var(--textura-fundo), var(--cor-fundo);
   color: var(--cor-texto);
   font-family: var(--fonte-texto);
   font-size: var(--texto-base);
@@ -107,7 +107,7 @@
   padding: var(--espaco-3) var(--espaco-4);
   border: 2px solid var(--cor-borda-forte);
   border-radius: var(--raio-medio);
-  background: var(--cor-fundo);
+  background: var(--cor-superficie);
   color: var(--cor-texto);
   resize: vertical;
 }
@@ -173,14 +173,24 @@
   margin-top: var(--espaco-4);
   padding: var(--espaco-2) var(--margem);
   background: var(--cor-fundo);
+  box-shadow: 0 1px 0 var(--cor-borda);
   border-bottom: 1px solid var(--cor-borda);
   scrollbar-width: none;
 }
 
+.vd-grupo {
+  display: contents;
+}
+
+.vd-grupo-titulo {
+  display: none;
+}
+
 .vd-indice a {
   flex: none;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
   min-height: var(--alvo-minimo);
   padding: 0 var(--espaco-3);
   border-radius: var(--raio-pilula);
@@ -189,6 +199,23 @@
   font-weight: var(--peso-forte);
   font-size: var(--texto-pequeno);
   text-decoration: none;
+}
+
+.vd-indice-bandeira,
+.vd-rotulo-bandeira {
+  flex: none;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px var(--cor-borda);
+}
+
+.vd-indice-bandeira {
+  width: 20px;
+  height: 15px;
+}
+
+.vd-rotulo-bandeira {
+  width: 28px;
+  height: 21px;
 }
 
 .vd-pagina {
@@ -203,7 +230,7 @@
   height: 88px;
   margin: var(--espaco-5) calc(-1 * var(--espaco-4)) var(--espaco-3);
   overflow: hidden;
-  background: color-mix(in srgb, var(--c1) var(--mistura-cabecalho), var(--cor-fundo));
+  background: color-mix(in srgb, var(--c1) var(--mistura-cabecalho), var(--cor-superficie));
 }
 
 .vd-blocos i {
@@ -243,12 +270,15 @@
   position: absolute;
   left: var(--espaco-4);
   bottom: var(--espaco-3);
-  background: var(--cor-fundo);
+  background: var(--cor-superficie);
   padding: var(--espaco-1) var(--espaco-3) var(--espaco-2);
   border-radius: var(--raio-medio);
 }
 
 .vd-rotulo h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
   font-family: var(--fonte-titulo);
   font-weight: var(--peso-titulo);
   font-size: var(--titulo-secao);
@@ -291,7 +321,7 @@
 }
 
 .vd-tira .esgotada {
-  border: 1.5px dashed var(--cor-apagado);
+  border: 1.5px dashed var(--cor-texto-apagado);
   color: var(--cor-texto-apagado);
 }
 
@@ -376,8 +406,8 @@
 }
 
 .vd-espaco:disabled {
-  background: var(--cor-fundo);
-  border: 2px dashed var(--cor-apagado);
+  background: transparent;
+  border: 2px dashed var(--cor-texto-apagado);
   cursor: default;
 }
 
@@ -462,5 +492,61 @@
 
   .vd-tira li {
     height: 36px;
+  }
+}
+
+/* Desktop largo: o índice vira uma barra lateral fixa, agrupada como uma tabela de grupos da Copa. */
+@media (min-width: 72rem) {
+  .vd {
+    --largura-conteudo: 76rem;
+  }
+
+  .vd-corpo {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: var(--espaco-6);
+    padding-inline: var(--margem);
+  }
+
+  .vd-indice {
+    position: sticky;
+    top: var(--espaco-4);
+    align-self: start;
+    display: grid;
+    gap: var(--espaco-3);
+    max-height: calc(100vh - 2 * var(--espaco-4));
+    overflow-y: auto;
+    margin: var(--espaco-5) 0 0;
+    padding: 0 var(--espaco-1) 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+  }
+
+  .vd-grupo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--espaco-1);
+  }
+
+  .vd-grupo-titulo {
+    display: block;
+    grid-column: 1 / -1;
+    font-size: var(--texto-pequeno);
+    font-weight: var(--peso-medio);
+    color: var(--cor-texto-fraco);
+  }
+
+  .vd-indice a {
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: var(--espaco-1) 0;
+    border-radius: var(--raio-pequeno);
+    font-size: 0.72rem;
+  }
+
+  .vd-pagina {
+    padding-inline: 0;
   }
 }
