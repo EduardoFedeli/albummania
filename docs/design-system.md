@@ -6,8 +6,7 @@
 
 O site parece as páginas internas do próprio álbum. Cada Figurinha é mostrada como o **espaço vazio do álbum**, com o Código em destaque, porque é isso que o colecionador procura quando folheia as páginas. A metáfora vem do domínio, não é decoração: ela reforça a busca por Código.
 
-- **Tema claro = miolo** (as páginas internas).
-- **Tema escuro = capa** (papelão escuro, com o Código em destaque metalizado).
+- **Tema único, claro**: as páginas internas do álbum. O tema escuro foi descartado em 2026-09-29, porque é complexidade sem retorno para quem abre um link de WhatsApp para comprar figurinhas.
 
 ### O que o álbum real ensina
 
@@ -46,7 +45,7 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 
 1. **`0` × `O`:** na Unbounded eles são quase iguais. Por isso ela fica **só em títulos e no numeral decorativo**, que sempre vem junto do Código escrito. Códigos, índice, quantidades e preços usam a Instrument Sans, com números tabulares.
 2. **Rolagem longa:** cada Seção mostra uma **tira com os 20 números** (disponíveis tingidas, as do pedido em azul-marinho, as esgotadas tracejadas), e embaixo ficam os espaços grandes **só das disponíveis**. A página do Brasil caiu de ~2.200px para ~1.000px. No resultado da Lista de Faltantes, as esgotadas continuam como espaços apagados, com "acabou".
-3. **Contraste AA:** garantido por teste automático ([`tokens.test.ts`](../src/styles/tokens.test.ts)): cada par de texto e fundo, nos dois temas, e o texto sobre o espaço de **cada uma das 50 Seções**. O teste foi sabotado de propósito para provar que reprova quando deve.
+3. **Contraste AA:** garantido por teste automático ([`tokens.test.ts`](../src/styles/tokens.test.ts)): cada par de texto e fundo, e o texto sobre o espaço de **cada uma das 50 Seções**. O teste foi sabotado de propósito para provar que reprova quando deve.
 4. **Tirar do Carrinho:** fica a cargo do componente Painel do Carrinho, com − e +. Tocar num espaço só adiciona.
 
 ## Critérios de pronto (acessibilidade)
@@ -59,11 +58,12 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 
 ## Decisões
 
-- **Tema:** claro por padrão, sempre (não segue a preferência do sistema). Existe um botão para o tema escuro, e a escolha fica salva no navegador.
+- **Tema:** só claro. Sem botão de tema e sem seguir a preferência do sistema.
+- **Layout:** mobile-first. No celular, o conteúdo ocupa a tela com margem de 1rem. Em telas largas, fica numa coluna de no máximo `--largura-conteudo` (64rem), centralizada, com a grade de espaços se adaptando à largura (3 colunas no celular, 6 no desktop), a tira de números numa linha só e a barra do pedido como pílula centralizada de até `--largura-leitura` (38rem). [Tela no desktop](./design/layout-desktop.png).
 - **Tokens em duas camadas**, em CSS custom properties:
   - *primitivos*: valores brutos (`--green-700: …`);
   - *semânticos*: o uso (`--color-action: var(--green-700)`).
-  Os componentes só usam tokens semânticos. Trocar a paleta a pedido do Vendedor significa mexer só nos primitivos, e cada tema é um conjunto de valores semânticos.
+  Os componentes só usam tokens semânticos. Trocar a paleta a pedido do Vendedor significa mexer só nos primitivos.
 - **Styleguide:** a página `/styleguide` é publicada junto com o site e mostra paleta, tipografia e todos os componentes em todos os estados.
 - **Prancha:** uma imagem de apresentação (paleta, tipografia e componentes numa composição só) enviada ao Vendedor junto com o beta. Ela é **gerada automaticamente** a partir de uma seção do `/styleguide`, com uma captura de tela em alta resolução. Assim é uma única fonte da verdade: se um token muda, a prancha muda junto, sem retrabalho num editor de imagens. O formato de "prancha" é inspiração, mas o estilo segue o nosso conceito, e não o visual genérico de kits de UI.
 - **Cor por Seção:** cada Seção tem de 2 a 3 cores tiradas da bandeira, guardadas num arquivo de dados no código (é um fato fixo, e o Vendedor não mexe nisso). A cor aparece **só no cabeçalho da Seção e na tinta de fundo dos espaços**, como decoração. O texto fica sempre sobre o papel neutro. Os componentes recebem a cor como parâmetro e precisam funcionar com qualquer uma das 48.
@@ -91,7 +91,6 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 - Barra do Pedido (fixa no rodapé)
 - Painel do Carrinho (com − e +)
 - Chip de Tipo
-- Botão de tema (miolo/capa)
 - Aviso de reconciliação do Carrinho
 - Aviso de catálogo defasado / erro
 - Skeleton de carregamento
@@ -100,15 +99,16 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 
 ## Tokens
 
-A fonte da verdade é [`src/styles/tokens.css`](../src/styles/tokens.css). Os componentes usam **só os tokens semânticos** (`--cor-texto`, `--espaco-4`...), nunca os primitivos nem valores soltos. Telas dos dois temas: [miolo](./design/tokens-miolo.png) e [capa](./design/tokens-capa.png).
+A fonte da verdade é [`src/styles/tokens.css`](../src/styles/tokens.css). Os componentes usam **só os tokens semânticos** (`--cor-texto`, `--espaco-4`...), nunca os primitivos nem valores soltos. [Tela com os tokens aplicados](./design/tokens-miolo.png).
 
 | Grupo | Tokens | Regra |
 |---|---|---|
-| **Cor** | fundo, superfície, texto, texto fraco/apagado, borda, ação, destaque, foco, erro, brilho | tinta azul-marinho `#14213D`; ação verde; o tema capa só troca os valores |
-| **Cor da Seção** | `--mistura-cabecalho`, `--mistura-espaco`, `--mistura-numeral` | a cor da bandeira é misturada ao fundo com `color-mix()`, então funciona em qualquer tema; texto nunca fica direto sobre a cor pura |
+| **Cor** | fundo, superfície, texto, texto fraco/apagado, borda, ação, destaque, foco, erro, brilho | tinta azul-marinho `#14213D`; ação verde |
+| **Cor da Seção** | `--mistura-cabecalho`, `--mistura-espaco`, `--mistura-numeral` | a cor da bandeira é misturada ao fundo com `color-mix()`, então se adapta a qualquer fundo; texto nunca fica direto sobre a cor pura |
 | **Tipografia** | `--fonte-titulo` (Unbounded), `--fonte-texto` (Instrument Sans), escala 1,25 de 0,8 a 3,05rem | Unbounded só em títulos e no numeral decorativo |
 | **Espaço** | `--espaco-1` a `--espaco-8` (4px a 64px) | múltiplos de 4px |
 | **Forma** | raios 8/12/16px e pílula; `--alvo-minimo: 44px` | todo controle tocável tem pelo menos 44px |
+| **Layout** | `--largura-conteudo: 64rem`, `--largura-leitura: 38rem` | conteúdo centralizado em telas largas; campos de texto e a barra do pedido não passam da largura de leitura |
 | **Movimento** | `--duracao-rapida: 150ms` | zera com `prefers-reduced-motion` |
 
 **Pegadinha registrada:** uma variável CSS é calculada **onde é declarada**, não onde é usada. A mistura com a cor da Seção precisa ser declarada no elemento que conhece `--c1` (a Seção ou o espaço), e não na raiz.

@@ -27,7 +27,7 @@ O projeto tem três restrições que moldam tudo o que vem abaixo:
 | RF6 | Mostrar o total estimado, calculado pelo Preço de cada Tipo. |
 | RF7 | Finalizar o Pedido abrindo o WhatsApp com uma mensagem compacta agrupada por Seção, com a alternativa de copiar a mensagem. |
 | RF8 | Abrir direto numa Seção pelo link (`…/#BRA`). |
-| RF9 | Começar no tema claro, com botão para o escuro e a escolha salva. |
+| RF9 | Funcionar bem do celular ao desktop: no desktop, o conteúdo fica numa coluna centralizada (o tema escuro, que ocupava este item, foi descartado). |
 | RF10 | Gerar uma prévia de link (Open Graph) quando for compartilhado no WhatsApp. |
 | RF11 | Registrar um evento anônimo `pedido_finalizado`. |
 | RF12 | Publicar a página `/styleguide` para o Vendedor aprovar o visual. |
@@ -155,7 +155,6 @@ A identidade de uma Figurinha é o par **Álbum + Código**. O Carrinho guarda *
 |---|---|
 | `carrinho:v1` | `{ itens: ItemDoCarrinho[] }` |
 | `catalogo-cache:v1` | `{ salvoEm, figurinhas, config }`: o último Catálogo válido |
-| `tema` | `"claro"` ou `"escuro"` |
 
 O sufixo `:v1` versiona o formato: se ele mudar, o código ignora dados `v1` antigos em vez de quebrar. Todo acesso ao localStorage fica protegido, porque ele pode não existir (aba anônima, cookies bloqueados), e nesse caso o site funciona só com memória.
 

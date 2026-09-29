@@ -53,7 +53,7 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 - [x] 3 variações descartáveis (Retrô 70, Álbum 2026, Caderno do colecionador) com dados reais, em `?variante=A|B|C`
 - [x] Escolher a direção: mistura de C (abertura com a Lista de Faltantes) + B (páginas e espaços) + A (esgotadas apagadas), como Variante D ([decisão](./design-system.md#direção-escolhida-2026-09-28))
-- [x] `tokens.css`: primitivos e semânticos, tema miolo (claro) e capa (escuro), com contraste AA garantido por teste nas 50 Seções; os 4 pontos abertos resolvidos ([tokens](./design-system.md#tokens))
+- [x] `tokens.css`: primitivos e semânticos, tema claro, com contraste AA garantido por teste nas 50 Seções; os 4 pontos abertos resolvidos ([tokens](./design-system.md#tokens))
 - [ ] Componentes do design system, com todos os estados
 - [ ] Página `/styleguide`
 - [ ] Remover `src/prototipo/` da `main` quando os componentes oficiais existirem
@@ -80,7 +80,7 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 - [ ] Busca tolerante (código, nome sem acento, Seção)
 - [ ] Lista de Faltantes
-- [ ] Filtro de Tipo e tema escuro
+- [ ] Filtro de Tipo
 - [ ] Prévia de link (Open Graph), analytics e crédito no rodapé
 
 ## Fase 7: Qualidade
