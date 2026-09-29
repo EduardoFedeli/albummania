@@ -43,6 +43,13 @@ jobs:
         env:
           VITE_VERSAO: ${{ github.sha }}
 
+      - name: Conferir que o protótipo não vazou para o build
+        run: |
+          if grep -rqE "seletor-prototipo|vd-espaco|fonts.googleapis" dist; then
+            echo "::error::Código do protótipo encontrado no build de produção"
+            exit 1
+          fi
+
       - name: Empacotar para o Pages
         uses: actions/upload-pages-artifact@v5
         with:
