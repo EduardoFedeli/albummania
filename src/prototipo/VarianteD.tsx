@@ -1,5 +1,6 @@
 // PROTÓTIPO · Variante D (direção escolhida): abertura da C, páginas da B, esgotadas apagadas como na A.
 import { useMemo, useState } from 'react'
+import '../styles/tokens.css'
 import './varianteD.css'
 import { interpretar, reais, useCarrinhoP, type DadosP, type FigurinhaP } from './dados'
 
@@ -9,6 +10,9 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   const carrinho = useCarrinhoP(precos)
   const [texto, setTexto] = useState('BRA 2, 3, 11, 17\nARG 22\nFWC 4\nESP 10, 15')
   const [procurado, setProcurado] = useState(texto)
+  const [tema, setTema] = useState<'miolo' | 'capa'>(
+    new URLSearchParams(location.search).get('tema') === 'capa' ? 'capa' : 'miolo',
+  )
 
   const porCodigo = useMemo(
     () => new Map(secoes.flatMap((s) => s.figurinhas).map((f) => [f.codigo, f])),
@@ -20,12 +24,13 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   const disponiveis = achadas.filter((f) => f.estoque > 0)
   const inexistentes = codigos.filter((c) => !porCodigo.has(c))
 
+  const numeroDe = (f: FigurinhaP) => (f.codigo === '00' ? '00' : String(f.numero))
+
   const espaco = (f: FigurinhaP) => {
     const qtd = carrinho.qtdDe(f.codigo)
-    const s = secaoDe.get(f.secao)!
     const esgotada = f.estoque === 0
     return (
-      <li key={f.codigo} style={{ '--c1': s.cores[0] } as React.CSSProperties}>
+      <li key={f.codigo} style={{ '--c1': secaoDe.get(f.secao)!.cores[0] } as React.CSSProperties}>
         <button
           className={`vd-espaco${qtd ? ' no-pedido' : ''}`}
           disabled={esgotada}
@@ -33,7 +38,7 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
           aria-label={`${f.codigo}, ${f.nome}, ${esgotada ? 'acabou' : `${reais(precos[f.tipo] ?? 0)}, adicionar ao pedido`}`}
         >
           <span className="vd-codigo">{f.codigo}</span>
-          <span className="vd-numeral" aria-hidden>{f.codigo === '00' ? '00' : f.numero}</span>
+          <span className="vd-numeral" aria-hidden>{numeroDe(f)}</span>
           <span className="vd-nome">{f.nome}</span>
           <span className="vd-rodape">
             {esgotada ? 'acabou' : reais(precos[f.tipo] ?? 0)}
@@ -46,10 +51,19 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
   }
 
   return (
-    <div className="vd">
+    <div className="vd" data-tema={tema}>
       <header className="vd-topo">
         <div className="vd-formas" aria-hidden><i /><i /><i /></div>
-        <p className="vd-loja">{nomeLoja}</p>
+        <div className="vd-barra">
+          <p className="vd-loja">{nomeLoja}</p>
+          <button
+            className="vd-tema"
+            aria-pressed={tema === 'capa'}
+            onClick={() => setTema(tema === 'capa' ? 'miolo' : 'capa')}
+          >
+            {tema === 'capa' ? 'Tema claro' : 'Tema escuro'}
+          </button>
+        </div>
         <h1>Quais faltam no seu álbum?</h1>
         <label className="vd-oculto" htmlFor="vd-lista">Sua lista de faltantes</label>
         <textarea
@@ -96,7 +110,7 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
       </nav>
 
       {secoes.map((secao) => {
-        const aVenda = secao.figurinhas.filter((f) => f.estoque > 0).length
+        const aVenda = secao.figurinhas.filter((f) => f.estoque > 0)
         return (
           <section
             key={secao.sigla}
@@ -116,19 +130,37 @@ export function VarianteD({ secoes, precos, nomeLoja }: DadosP) {
                 <h2>{secao.nome}</h2>
                 <p>
                   {secao.grupo ? `Grupo ${secao.grupo}, ` : ''}
-                  {aVenda ? `${aVenda} de ${secao.figurinhas.length} à venda` : 'nenhuma à venda agora'}
+                  {aVenda.length ? `${aVenda.length} de ${secao.figurinhas.length} à venda` : 'nenhuma à venda agora'}
                 </p>
               </div>
             </div>
-            <ul className="vd-espacos">{secao.figurinhas.map(espaco)}</ul>
+            <ol
+              className="vd-tira"
+              role="img"
+              aria-label={`À venda: ${aVenda.map(numeroDe).join(', ') || 'nenhuma'}`}
+            >
+              {secao.figurinhas.map((f) => (
+                <li
+                  key={f.codigo}
+                  className={
+                    f.estoque === 0 ? 'esgotada' : carrinho.qtdDe(f.codigo) ? 'no-pedido' : 'disponivel'
+                  }
+                >
+                  {numeroDe(f)}
+                </li>
+              ))}
+            </ol>
+            {aVenda.length > 0 && <ul className="vd-espacos">{aVenda.map(espaco)}</ul>}
           </section>
         )
       })}
 
       <footer className="vd-pedido">
         <div>
-          <strong>Meu pedido: {carrinho.unidades}</strong>
-          <span>{reais(carrinho.total)} estimado</span>
+          <strong>Meu pedido</strong>
+          <span>
+            {carrinho.unidades} {carrinho.unidades === 1 ? 'figurinha' : 'figurinhas'}, {reais(carrinho.total)}
+          </span>
         </div>
         <button disabled={!carrinho.unidades}>Finalizar pedido</button>
       </footer>
