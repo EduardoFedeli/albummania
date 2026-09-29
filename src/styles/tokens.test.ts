@@ -13,13 +13,12 @@ function bloco(seletor: string): Tokens {
   return Object.fromEntries([...declaracoes].map(([, nome, valor]) => [nome, valor.trim()]))
 }
 
-const miolo = bloco(':root')
-const temas = { miolo, capa: { ...miolo, ...bloco("[data-tema='capa']") } }
+const tokens = bloco(':root')
 
-function resolver(tokens: Tokens, nome: string): string {
+function resolver(nome: string): string {
   const valor = tokens[nome]
   const referencia = valor?.match(/^var\((--[\w-]+)\)$/)
-  return referencia ? resolver(tokens, referencia[1]) : valor
+  return referencia ? resolver(referencia[1]) : valor
 }
 
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))
@@ -46,8 +45,8 @@ const contraste = (a: string, b: string) => {
 const TEXTO_AA = 4.5
 const ELEMENTO_AA = 3
 
-describe.each(Object.entries(temas))('tema %s', (_, tokens) => {
-  const cor = (nome: string) => resolver(tokens, `--cor-${nome}`)
+describe('contraste dos tokens', () => {
+  const cor = (nome: string) => resolver(`--cor-${nome}`)
 
   it.each([
     ['texto', 'fundo'],
@@ -70,7 +69,7 @@ describe.each(Object.entries(temas))('tema %s', (_, tokens) => {
   })
 
   it('o texto é legível sobre o espaço de qualquer uma das 50 Seções', () => {
-    const proporcao = parseFloat(resolver(tokens, '--mistura-espaco')) / 100
+    const proporcao = parseFloat(resolver('--mistura-espaco')) / 100
     const reprovadas = SECOES.filter(
       (secao) => contraste(cor('texto'), misturar(secao.cores[0], cor('fundo'), proporcao)) < TEXTO_AA,
     ).map((secao) => secao.sigla)

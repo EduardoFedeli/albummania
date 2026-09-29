@@ -1,5 +1,5 @@
 /* Tokens do design system: primitivos (valores brutos) → semânticos (o uso).
-   Componentes usam só os semânticos. Tema claro = miolo do álbum; escuro = capa. */
+   Componentes usam só os semânticos. */
 
 :root {
   /* Primitivos */
@@ -83,29 +83,9 @@
   --raio-grande: 16px;
   --raio-pilula: 999px;
   --alvo-minimo: 44px;
+  --largura-conteudo: 64rem;
+  --largura-leitura: 38rem;
   --duracao-rapida: 150ms;
-}
-
-[data-tema='capa'] {
-  --cor-fundo: var(--azul-950);
-  --cor-superficie: var(--azul-800);
-  --cor-texto: var(--cinza-050);
-  --cor-texto-fraco: var(--cinza-300);
-  --cor-texto-apagado: var(--cinza-600);
-  --cor-borda: var(--azul-700);
-  --cor-borda-forte: var(--cinza-050);
-  --cor-apagado: var(--azul-800);
-  --cor-acao: var(--verde-400);
-  --cor-texto-sobre-acao: var(--azul-950);
-  --cor-destaque: var(--cinza-050);
-  --cor-texto-sobre-destaque: var(--azul-950);
-  --cor-foco: var(--verde-400);
-  --cor-erro: var(--vermelho-300);
-  --cor-brilho: var(--ouro-400);
-
-  --mistura-cabecalho: 22%;
-  --mistura-espaco: 24%;
-  --mistura-numeral: 48%;
 }
 
 @media (prefers-reduced-motion: reduce) {
