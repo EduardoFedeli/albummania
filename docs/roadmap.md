@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: Fase 5 (design system).** Direção escolhida (Variante D do protótipo); próximo passo: os tokens. O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
+**📍 Estamos aqui: Fase 5 (design system).** Direção escolhida e tokens prontos; próximo passo: os componentes e a página `/styleguide`. O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
 
 **Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 
@@ -53,7 +53,7 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 - [x] 3 variações descartáveis (Retrô 70, Álbum 2026, Caderno do colecionador) com dados reais, em `?variante=A|B|C`
 - [x] Escolher a direção: mistura de C (abertura com a Lista de Faltantes) + B (páginas e espaços) + A (esgotadas apagadas), como Variante D ([decisão](./design-system.md#direção-escolhida-2026-09-28))
-- [ ] `tokens.css`: primitivos e semânticos, tema miolo (claro) e capa (escuro), resolvendo os 4 pontos abertos da decisão (numerais inequívocos, rolagem, contraste, tirar do Carrinho)
+- [x] `tokens.css`: primitivos e semânticos, tema miolo (claro) e capa (escuro), com contraste AA garantido por teste nas 50 Seções; os 4 pontos abertos resolvidos ([tokens](./design-system.md#tokens))
 - [ ] Componentes do design system, com todos os estados
 - [ ] Página `/styleguide`
 - [ ] Remover `src/prototipo/` da `main` quando os componentes oficiais existirem

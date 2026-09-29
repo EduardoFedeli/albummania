@@ -42,12 +42,12 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 
 **Base provisória, até os tokens:** Unbounded (títulos e numerais) + Instrument Sans (texto), tinta `#14213D`, ação `#00A650`, espaços em 3 colunas no celular. Tocar num espaço adiciona a Figurinha, e ela ganha contorno e um selo com a quantidade.
 
-**A resolver na criação dos tokens:**
+**Os 4 pontos em aberto, resolvidos nos tokens (2026-09-29):**
 
-1. **Na Unbounded, o `0` e o `O` são quase iguais** (o `00` do índice parece "OO"). Como o Código é o que o colecionador procura, os numerais precisam ser inequívocos: outra fonte para os números, ou uma com zero diferenciado.
-2. **Rolagem longa:** 50 Seções × 20 espaços. Avaliar esgotadas mais compactas ou Seções recolhíveis.
-3. **Contraste AA:** o texto sobre o verde de ação, o cinza do "acabou" e o selo de quantidade. O numeral tom sobre tom é decorativo, porque o Código escrito carrega a informação.
-4. **Tirar do Carrinho:** hoje, tocar num espaço que já está no máximo zera a quantidade. Isso precisa de um controle claro (o painel do Carrinho resolve na Fase 6).
+1. **`0` × `O`:** na Unbounded eles são quase iguais. Por isso ela fica **só em títulos e no numeral decorativo**, que sempre vem junto do Código escrito. Códigos, índice, quantidades e preços usam a Instrument Sans, com números tabulares.
+2. **Rolagem longa:** cada Seção mostra uma **tira com os 20 números** (disponíveis tingidas, as do pedido em azul-marinho, as esgotadas tracejadas), e embaixo ficam os espaços grandes **só das disponíveis**. A página do Brasil caiu de ~2.200px para ~1.000px. No resultado da Lista de Faltantes, as esgotadas continuam como espaços apagados, com "acabou".
+3. **Contraste AA:** garantido por teste automático ([`tokens.test.ts`](../src/styles/tokens.test.ts)): cada par de texto e fundo, nos dois temas, e o texto sobre o espaço de **cada uma das 50 Seções**. O teste foi sabotado de propósito para provar que reprova quando deve.
+4. **Tirar do Carrinho:** fica a cargo do componente Painel do Carrinho, com − e +. Tocar num espaço só adiciona.
 
 ## Critérios de pronto (acessibilidade)
 
@@ -83,18 +83,32 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 
 ## Componentes
 
-- Linha de Figurinha
-- Cabeçalho de Seção
+- Espaço de Figurinha (disponível, no pedido, esgotada)
+- Tira de números da Seção
+- Cabeçalho de Seção (blocos da bandeira + rótulo)
 - Índice de Seções
+- Busca pela Lista de Faltantes e o seu resultado
+- Barra do Pedido (fixa no rodapé)
+- Painel do Carrinho (com − e +)
 - Chip de Tipo
-- Busca / Lista de Faltantes
-- Barra do Carrinho (fixa no rodapé)
-- Painel do Carrinho
+- Botão de tema (miolo/capa)
 - Aviso de reconciliação do Carrinho
 - Aviso de catálogo defasado / erro
 - Skeleton de carregamento
 - Imagem de prévia do link (Open Graph)
+- Prancha do design system
 
-## Tipografia, paleta e espaçamento
+## Tokens
 
-*A definir na exploração visual.*
+A fonte da verdade é [`src/styles/tokens.css`](../src/styles/tokens.css). Os componentes usam **só os tokens semânticos** (`--cor-texto`, `--espaco-4`...), nunca os primitivos nem valores soltos. Telas dos dois temas: [miolo](./design/tokens-miolo.png) e [capa](./design/tokens-capa.png).
+
+| Grupo | Tokens | Regra |
+|---|---|---|
+| **Cor** | fundo, superfície, texto, texto fraco/apagado, borda, ação, destaque, foco, erro, brilho | tinta azul-marinho `#14213D`; ação verde; o tema capa só troca os valores |
+| **Cor da Seção** | `--mistura-cabecalho`, `--mistura-espaco`, `--mistura-numeral` | a cor da bandeira é misturada ao fundo com `color-mix()`, então funciona em qualquer tema; texto nunca fica direto sobre a cor pura |
+| **Tipografia** | `--fonte-titulo` (Unbounded), `--fonte-texto` (Instrument Sans), escala 1,25 de 0,8 a 3,05rem | Unbounded só em títulos e no numeral decorativo |
+| **Espaço** | `--espaco-1` a `--espaco-8` (4px a 64px) | múltiplos de 4px |
+| **Forma** | raios 8/12/16px e pílula; `--alvo-minimo: 44px` | todo controle tocável tem pelo menos 44px |
+| **Movimento** | `--duracao-rapida: 150ms` | zera com `prefers-reduced-motion` |
+
+**Pegadinha registrada:** uma variável CSS é calculada **onde é declarada**, não onde é usada. A mistura com a cor da Seção precisa ser declarada no elemento que conhece `--c1` (a Seção ou o espaço), e não na raiz.
