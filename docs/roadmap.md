@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: Fase 5 (design system).** Direção, tokens e interações validados no protótipo (Variante D); próximo passo: os componentes oficiais e a página `/styleguide`. O esqueleto andante está no ar em https://eduardofedeli.github.io/catalogo-figurinhas/.
+**📍 Estamos aqui: prévia pronta para o Vendedor** (atalho do marco 🎯, em https://eduardofedeli.github.io/catalogo-figurinhas/previa/). Enquanto ele responde, seguimos com os componentes oficiais (Fase 5) e o domínio (Fase 6a).
 
 **Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 
@@ -59,7 +59,7 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 - [ ] Página `/styleguide`
 - [ ] Remover `src/prototipo/` da `main` quando os componentes oficiais existirem
 - [ ] Revisão de acessibilidade AA
-- [ ] **Prancha do design system**: imagem PNG com paleta, tipografia e componentes, gerada automaticamente a partir do `/styleguide`
+- [x] **Prancha do design system**: imagem PNG com paleta, tipografia e componentes, gerada automaticamente a partir dos componentes reais (`npm run imagens` → `docs/design/prancha.png`)
 
 ## Fase 6: Funcionalidades (commits pequenos por funcionalidade, domínio com TDD)
 
@@ -73,8 +73,8 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 
 ### 🎯 Marco: beta para o Vendedor
 
-- [ ] Beta publicado com o checklist completo e Estoque de demonstração
-- [ ] Enviar ao Vendedor: link do beta + prancha do design system + [perguntas](./perguntas-ao-vendedor.md) (oferta de cadastrar as figurinhas, manual de Estoque, preço por Tipo)
+- [x] **Atalho:** prévia publicada numa URL própria (`/previa/`), feita da Variante D do protótipo, com o checklist completo, o Estoque de demonstração e a prévia do link no WhatsApp (Open Graph). O site principal não carrega nada do protótipo (trava no CI)
+- [ ] Enviar ao Vendedor: link da prévia + prancha do design system + [perguntas](./perguntas-ao-vendedor.md) (oferta de cadastrar as figurinhas, manual de Estoque, preço por Tipo)
 - [ ] Incorporar as respostas (preços, nome, cores, ajustes de visual)
 
 ### 6b. O restante

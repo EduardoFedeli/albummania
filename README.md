@@ -2,7 +2,7 @@
 
 Catálogo online para um colecionador vender as suas figurinhas repetidas do álbum da Copa do Mundo 2026. O comprador monta o pedido no site e finaliza pelo WhatsApp. Não há pagamento online, backend nem banco de dados: o estoque vive numa planilha Google que o próprio vendedor atualiza.
 
-> **Status:** esqueleto andante. O site lê a planilha e é publicado automaticamente; o visual e as funcionalidades vêm a seguir ([roadmap](docs/roadmap.md)).
+> **Status:** a [prévia para o Vendedor](https://eduardofedeli.github.io/catalogo-figurinhas/previa/) está no ar, com dados reais da planilha; o site definitivo está em construção ([roadmap](docs/roadmap.md)).
 
 ## Como rodar
 
@@ -10,6 +10,7 @@ Catálogo online para um colecionador vender as suas figurinhas repetidas do ál
 npm install       # instala as dependências
 npm run dev       # site local em http://localhost:5173/catalogo-figurinhas/
 npm test          # roda os testes
+npm run imagens   # gera a prancha do design system e a imagem da prévia do link
 ```
 
 A cada push na `main`, o GitHub Actions verifica tipos, roda os testes, faz o build e publica no GitHub Pages ([publicar.yml](.github/workflows/publicar.yml)).

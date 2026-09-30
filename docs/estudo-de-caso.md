@@ -65,3 +65,14 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **A verdade de campo decide.** Uma foto da página da Espanha no álbum real bateu figurinha por figurinha. E os totais bateram com os números oficiais: 980 figurinhas, 68 especiais. Se o BRA 16 estivesse errado, quem procurasse o "BRA 16" receberia o jogador errado.
 - **Testar os dados, não só o código.** Um teste automático confere, a cada push, que existem exatamente 980 figurinhas, sem repetição, de 1 a 20 em cada seleção. Uma linha perdida entre 980 passaria despercebida por qualquer revisão manual.
 - **Fato fixo mora no código, dado vivo mora na planilha.** As cores das bandeiras e a ordem das seleções nunca mudam, então ficam no código, onde o vendedor não consegue estragar sem querer. Estoque e preço mudam toda semana, então ficam na planilha, onde ele consegue mexer sozinho.
+
+### Marco: a prévia para o vendedor
+
+**Decisão:** em vez de esperar o site definitivo (componentes reescritos e regras de negócio com testes), publiquei o próprio protótipo como uma **prévia numa URL separada**, com os dados reais da planilha, para o vendedor avaliar enquanto o interesse pelo álbum ainda está alto. O retorno dele (preços, nome, cores, "quero diferente") pode mudar os componentes, então era melhor ouvir **antes** de construí-los. O site principal continua intocado, e o CI barra qualquer vestígio do protótipo nele.
+
+**Aprendi:**
+
+- **Uma prancha que se atualiza sozinha.** A imagem com o design system não foi desenhada num editor. Um script abre uma página montada com os componentes reais, com as cores lidas dos próprios tokens, e tira a foto em 4K. Se uma cor mudar, basta rodar `npm run imagens`.
+- **O Windows não diferencia maiúsculas nos nomes de arquivo.** `prancha.tsx` e `Prancha.tsx` viraram o mesmo arquivo na minha máquina, mas seriam dois arquivos no Linux do GitHub, e o build quebraria só lá.
+- **Um enfeite também ocupa lugar no grid.** Uma `div` só com formas decorativas posicionadas de forma absoluta ainda ocupava a primeira célula do CSS Grid e empurrava todo o layout. A solução foi tirá-la do fluxo.
+- **A prévia do link no WhatsApp tem regras:** a imagem precisa de endereço absoluto e de ser leve (a nossa tem ~70 KB). E uma prévia com estoque de exemplo não deve aparecer no Google, por isso leva `noindex`.

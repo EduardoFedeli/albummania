@@ -323,6 +323,7 @@ flowchart LR
 
 - **Sem PRs:** o projeto é solo, então os commits vão direto na `main`. A proteção fica no CI: o deploy só acontece se todas as verificações passarem, e um commit quebrado nunca chega ao site.
 - **Dois ambientes:** local (`npm run dev`) e produção (Pages). Não há homologação.
+- **Três páginas no build:** a principal (`index.html`), a prévia para o Vendedor (`previa/`) e a prancha (`previa/prancha.html`). A prévia usa o protótipo de propósito, e por isso a trava do CI verifica **só os arquivos que a página principal carrega**.
 - **URLs dos CSVs em variáveis de ambiente** (`VITE_CSV_CATALOGO_URL`, `VITE_CSV_CONFIG_URL`). O E2E aponta para arquivos de exemplo do repositório, e o CI nunca depende do Google.
 - **Pegadinha do GitHub Pages:** o site fica em `/catalogo-figurinhas/`, não na raiz. O Vite precisa de `base: '/catalogo-figurinhas/'`, senão todo CSS e JS dá 404 em produção, mesmo funcionando no local.
 
