@@ -43,12 +43,15 @@ jobs:
         env:
           VITE_VERSAO: ${{ github.sha }}
 
-      - name: Conferir que o protótipo não vazou para o build
+      # A prévia (previa/) usa o protótipo de propósito; a página principal não pode carregar nada dele.
+      - name: Conferir que o protótipo não vazou para a página principal
         run: |
-          if grep -rqE "seletor-prototipo|vd-espaco|fonts.googleapis" dist; then
-            echo "::error::Código do protótipo encontrado no build de produção"
-            exit 1
-          fi
+          for arquivo in $(grep -oE 'assets/[^"]+\.(js|css)' dist/index.html | sort -u); do
+            if grep -qE "seletor-prototipo|vd-espaco|fonts.googleapis" "dist/$arquivo"; then
+              echo "::error::Código do protótipo encontrado em $arquivo, carregado pela página principal"
+              exit 1
+            fi
+          done
 
       - name: Empacotar para o Pages
         uses: actions/upload-pages-artifact@v5
