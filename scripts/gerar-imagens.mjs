@@ -4,7 +4,6 @@ import { chromium } from 'playwright'
 import { preview } from 'vite'
 
 const PORTA = 4173
-const PRANCHA = `http://localhost:${PORTA}/catalogo-figurinhas/previa/prancha.html`
 
 async function capturar(navegador, { url, largura, altura, escala, destino }) {
   const pagina = await navegador.newPage({ viewport: { width: largura, height: altura }, deviceScaleFactor: escala })
@@ -18,6 +17,8 @@ async function capturar(navegador, { url, largura, altura, escala, destino }) {
 
 mkdirSync('public/previa', { recursive: true })
 const servidor = await preview({ preview: { port: PORTA, strictPort: true, open: false } })
+// O caminho vem do `base` do vite.config.ts: renomear o repositório não quebra o script.
+const PRANCHA = `http://localhost:${PORTA}${servidor.config.base}previa/prancha.html`
 // No Windows, o Edge já instalado basta; em outros ambientes, defina PLAYWRIGHT_CHANNEL (ex.: chromium).
 const navegador = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL ?? 'msedge' })
 

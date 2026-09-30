@@ -33,7 +33,7 @@ function lerCatalogo(csv: string): FigurinhaP[] {
 
 function lerConfig(csv: string) {
   const precos: Record<string, number> = {}
-  let nomeLoja = 'Figurinhas'
+  let nomeLoja = 'ÁlbumMania'
   let whatsapp = ''
   for (const [chave, valor] of csv.split(/\r?\n/).map(colunas)) {
     if (chave?.startsWith('Preço ')) precos[chave.slice(6)] = Number(valor.replace(',', '.'))

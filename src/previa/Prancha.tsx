@@ -93,8 +93,8 @@ export function Prancha() {
       </div>
 
       <header className="pr-topo">
-        <h1>Figurinhas da Copa 2026</h1>
-        <p>Guia visual do site: as cores, as letras e as peças da página.</p>
+        <h1>ÁlbumMania</h1>
+        <p>Figurinhas da Copa 2026. Guia visual do site: as cores, as letras e as peças da página.</p>
       </header>
 
       <section className="pr-cartao pr-cores">
@@ -246,8 +246,8 @@ export function ImagemDoLink() {
         <i />
       </div>
       <div className="pr-og-texto">
-        <h1>Figurinhas da Copa 2026</h1>
-        <p>Veja o que tem à venda e peça pelo WhatsApp.</p>
+        <h1>ÁlbumMania</h1>
+        <p>Figurinhas da Copa 2026: veja o que tem à venda e peça pelo WhatsApp.</p>
         <div className="pr-og-bandeiras">
           {['BRA', 'ARG', 'FRA', 'ESP', 'POR', 'GER'].map((sigla) => (
             <Bandeira key={sigla} sigla={sigla} className="pr-og-bandeira" />

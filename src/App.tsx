@@ -24,10 +24,13 @@ export default function App() {
 
   return (
     <main>
-      <h1>Catálogo de Figurinhas</h1>
+      <h1>ÁlbumMania</h1>
       {estado.tipo === 'carregando' && <p>Carregando a planilha…</p>}
       {estado.tipo === 'pronto' && <p>{estado.linhas} figurinhas carregadas da planilha.</p>}
       {estado.tipo === 'erro' && <p>Não foi possível carregar a planilha: {estado.mensagem}</p>}
+      <p>
+        <a href="previa/">Ver a prévia do catálogo</a>
+      </p>
       <p>
         <small>Versão: {import.meta.env.VITE_VERSAO?.slice(0, 7) ?? 'local'}</small>
       </p>
