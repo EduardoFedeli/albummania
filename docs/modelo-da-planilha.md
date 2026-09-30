@@ -46,7 +46,7 @@ O checklist foi montado **cruzando três fontes independentes**, porque nenhuma 
 
 Feito uma vez só, pelo dono da conta.
 
-1. **Criar** uma planilha nova no Google Drive e renomear para `Catálogo de Figurinhas`.
+1. **Criar** uma planilha nova no Google Drive e renomear para `ÁlbumMania`.
 2. **Importar o catálogo:** Arquivo → Importar → Fazer upload → `dados/catalogo-demo.csv` → *Substituir a página atual*. Depois, renomear a aba para `Catálogo`.
 3. **Consertar os códigos que o Google converteu:** numa planilha em português, a importação transforma `00` em `0` e os códigos de Marrocos (`MAR 1`…`MAR 20`) em **datas** ("mar. 1" = 1º de março). Selecione a coluna B → Formatar → Número → **Texto simples**. Depois digite `00` na célula B2 e cole `MAR 1` a `MAR 20` nas células B202 a B221. Nenhuma outra sigla coincide com abreviação de mês.
 4. **Congelar o cabeçalho:** Ver → Congelar → 1 linha.

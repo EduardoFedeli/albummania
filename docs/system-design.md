@@ -1,4 +1,4 @@
-# System Design: Catálogo de Figurinhas
+# System Design: ÁlbumMania
 
 > **Status:** proposta · **Última revisão:** 2026-09-27
 > **Leia antes:** [CONTEXT.md](../CONTEXT.md) (vocabulário) e [docs/adr/](./adr/) (decisões). Este documento mostra como as decisões se encaixam. O porquê de cada uma está nos ADRs.
@@ -325,7 +325,7 @@ flowchart LR
 - **Dois ambientes:** local (`npm run dev`) e produção (Pages). Não há homologação.
 - **Três páginas no build:** a principal (`index.html`), a prévia para o Vendedor (`previa/`) e a prancha (`previa/prancha.html`). A prévia usa o protótipo de propósito, e por isso a trava do CI verifica **só os arquivos que a página principal carrega**.
 - **URLs dos CSVs em variáveis de ambiente** (`VITE_CSV_CATALOGO_URL`, `VITE_CSV_CONFIG_URL`). O E2E aponta para arquivos de exemplo do repositório, e o CI nunca depende do Google.
-- **Pegadinha do GitHub Pages:** o site fica em `/catalogo-figurinhas/`, não na raiz. O Vite precisa de `base: '/catalogo-figurinhas/'`, senão todo CSS e JS dá 404 em produção, mesmo funcionando no local.
+- **Pegadinha do GitHub Pages:** o site fica em `/albummania/` (o nome do repositório), não na raiz. O Vite precisa de `base: '/albummania/'`, senão todo CSS e JS dá 404 em produção, mesmo funcionando no local.
 
 ## 11. Observabilidade
 
@@ -360,7 +360,7 @@ Nada de teste de aparência ("o botão é amarelo"). O design é verificado olha
   - **(b)** subdomínio gratuito com o nome da loja (ex.: Vercel);
   - **(c)** domínio próprio, que funciona tanto no GitHub Pages quanto na Vercel.
 
-  Com (b) ou (c), o site passa a morar na raiz do domínio, e o `base` do Vite deixa de ser `/catalogo-figurinhas/`. Com (b), o deploy passa a ser feito pela integração Git da Vercel, e não pelo `publicar.yml`. **Trocar o endereço depois de divulgado quebra os links já compartilhados**, então a decisão precisa vir antes do lançamento, não antes do beta.
+  Com (b) ou (c), o site passa a morar na raiz do domínio, e o `base` do Vite deixa de ser `/albummania/`. Com (b), o deploy passa a ser feito pela integração Git da Vercel, e não pelo `publicar.yml`. **Trocar o endereço depois de divulgado quebra os links já compartilhados**, então a decisão precisa vir antes do lançamento, não antes do beta.
 
 O esvaziamento do Carrinho foi decidido na revisão e está na §5.3.
 

@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: prévia pronta para o Vendedor** (atalho do marco 🎯, em https://eduardofedeli.github.io/catalogo-figurinhas/previa/). Enquanto ele responde, seguimos com os componentes oficiais (Fase 5) e o domínio (Fase 6a).
+**📍 Estamos aqui: prévia pronta para o Vendedor** (atalho do marco 🎯, em https://eduardofedeli.github.io/albummania/previa/). Enquanto ele responde, seguimos com os componentes oficiais (Fase 5) e o domínio (Fase 6a).
 
 **Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
 

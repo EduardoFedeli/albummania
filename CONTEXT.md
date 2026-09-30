@@ -1,4 +1,4 @@
-# Loja de Figurinhas
+# ÁlbumMania
 
 Catálogo público onde um Vendedor anuncia as suas figurinhas avulsas de álbum. O site só monta o Pedido: a negociação e a Venda acontecem no WhatsApp, fora do sistema.
 

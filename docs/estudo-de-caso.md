@@ -1,4 +1,4 @@
-# Estudo de caso: Catálogo de Figurinhas
+# Estudo de caso: ÁlbumMania
 
 > Diário de bordo do projeto. Uma entrada por fase ou PR, com a decisão mais importante e o que eu aprendi. No fim, vira o post do LinkedIn e a página do portfólio.
 
