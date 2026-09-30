@@ -50,21 +50,40 @@ export interface DadosP {
   whatsapp: string
 }
 
-export function useDadosPrototipo(): DadosP | null {
-  const [dados, setDados] = useState<DadosP | null>(null)
+export type EstadoDosDados = { tipo: 'carregando' } | { tipo: 'pronto'; dados: DadosP } | { tipo: 'erro' }
+
+export function useDadosPrototipo() {
+  const [estado, setEstado] = useState<EstadoDosDados>({ tipo: 'carregando' })
+  const [tentativa, setTentativa] = useState(0)
+
   useEffect(() => {
+    let ativo = true
     Promise.all([
       buscarCsv(import.meta.env.VITE_CSV_CATALOGO_URL),
       buscarCsv(import.meta.env.VITE_CSV_CONFIG_URL),
-    ]).then(([catalogo, config]) => {
-      const figurinhas = lerCatalogo(catalogo)
-      setDados({
-        ...lerConfig(config),
-        secoes: SECOES.map((s) => ({ ...s, figurinhas: figurinhas.filter((f) => f.secao === s.sigla) })),
+    ])
+      .then(([catalogo, config]) => {
+        const figurinhas = lerCatalogo(catalogo)
+        const dados = {
+          ...lerConfig(config),
+          secoes: SECOES.map((s) => ({ ...s, figurinhas: figurinhas.filter((f) => f.secao === s.sigla) })),
+        }
+        if (ativo) setEstado({ tipo: 'pronto', dados })
       })
-    })
-  }, [])
-  return dados
+      .catch(() => {
+        if (ativo) setEstado({ tipo: 'erro' })
+      })
+    return () => {
+      ativo = false
+    }
+  }, [tentativa])
+
+  const tentarDeNovo = () => {
+    setEstado({ tipo: 'carregando' })
+    setTentativa((t) => t + 1)
+  }
+
+  return { estado, tentarDeNovo }
 }
 
 export function useCarrinhoP(precos: Record<string, number> | undefined) {

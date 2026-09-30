@@ -25,6 +25,7 @@ export function VarianteD({ secoes, precos, nomeLoja, whatsapp }: DadosP) {
     [secoes],
   )
   const secaoDe = useMemo(() => new Map(secoes.map((s) => [s.sigla, s])), [secoes])
+  const posicaoNoAlbum = useMemo(() => new Map(secoes.map((s, i) => [s.sigla, i])), [secoes])
   const codigos = interpretar(procurado)
   const achadas = codigos.map((c) => porCodigo.get(c)).filter((f): f is FigurinhaP => !!f)
   const disponiveis = achadas.filter((f) => f.estoque > 0)
@@ -109,6 +110,9 @@ export function VarianteD({ secoes, precos, nomeLoja, whatsapp }: DadosP) {
         <div className="vd-formas" aria-hidden><i /><i /><i /></div>
         <p className="vd-loja">{nomeLoja}</p>
         <h1>Quais faltam no seu álbum?</h1>
+        <p className="vd-dica" id="vd-dica">
+          Cole a lista do jeito que você anota, por exemplo: BRA 3, 7, 12; ARG 10.
+        </p>
         <label className="vd-oculto" htmlFor="vd-lista">Sua lista de faltantes</label>
         <textarea
           id="vd-lista"
@@ -116,6 +120,7 @@ export function VarianteD({ secoes, precos, nomeLoja, whatsapp }: DadosP) {
           onChange={(e) => setTexto(e.target.value)}
           rows={4}
           spellCheck={false}
+          aria-describedby="vd-dica"
           placeholder="Ex.: BRA 3, 7, 12; ARG 10"
         />
         <button className="vd-procurar" onClick={() => setProcurado(texto)}>
@@ -245,7 +250,10 @@ export function VarianteD({ secoes, precos, nomeLoja, whatsapp }: DadosP) {
           <>
             <ul className="vd-painel-itens">
               {[...carrinho.lista]
-                .sort((a, b) => a.f.codigo.localeCompare(b.f.codigo, 'pt-BR', { numeric: true }))
+                .sort(
+                  (a, b) =>
+                    posicaoNoAlbum.get(a.f.secao)! - posicaoNoAlbum.get(b.f.secao)! || a.f.numero - b.f.numero,
+                )
                 .map(({ f, qtd }) => (
                   <li key={f.codigo}>
                     <div>

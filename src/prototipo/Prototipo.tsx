@@ -16,7 +16,7 @@ function lerChave(): Chave {
 }
 
 export function Prototipo() {
-  const dados = useDadosPrototipo()
+  const { estado } = useDadosPrototipo()
   const [chave, setChave] = useState<Chave>(lerChave)
 
   const ir = (passo: number) => {
@@ -41,7 +41,11 @@ export function Prototipo() {
   const [nome, Variante] = variantes[chave]
   return (
     <>
-      {dados ? <Variante {...dados} /> : <p style={{ padding: '2rem' }}>Carregando a planilha…</p>}
+      {estado.tipo === 'pronto' ? (
+        <Variante {...estado.dados} />
+      ) : (
+        <p style={{ padding: '2rem' }}>{estado.tipo === 'erro' ? 'Erro ao ler a planilha.' : 'Carregando a planilha…'}</p>
+      )}
       <div className="seletor-prototipo" role="toolbar" aria-label="Variantes do protótipo">
         <button onClick={() => ir(-1)} aria-label="Variante anterior">‹</button>
         <span>{chave}: {nome}</span>
