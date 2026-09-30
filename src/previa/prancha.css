@@ -1,0 +1,429 @@
+html,
+body {
+  margin: 0;
+}
+
+/* Formas decorativas nas cores das bandeiras, como nas páginas do álbum.
+   Absolutas: se fossem itens do grid, ocupariam uma célula e empurrariam o conteúdo. */
+.pr-formas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pr-formas i {
+  position: absolute;
+  display: block;
+}
+
+.pr-formas i:nth-child(1) {
+  width: 260px;
+  height: 260px;
+  right: -70px;
+  top: -110px;
+  border-radius: 50%;
+  background: #009c3b;
+}
+
+.pr-formas i:nth-child(2) {
+  width: 130px;
+  height: 130px;
+  right: 150px;
+  top: -40px;
+  border-radius: 0 0 0 130px;
+  background: #ffdf00;
+}
+
+.pr-formas i:nth-child(3) {
+  width: 70px;
+  height: 70px;
+  right: 56px;
+  top: 118px;
+  border-radius: 18px;
+  background: #74acdf;
+  transform: rotate(14deg);
+}
+
+.pr-formas i:nth-child(4) {
+  width: 44px;
+  height: 44px;
+  right: 300px;
+  top: 66px;
+  border-radius: 12px;
+  background: #e4002b;
+  transform: rotate(-12deg);
+}
+
+/* Prancha: 1920×1080, capturada em 2x. */
+
+.pr {
+  position: relative;
+  box-sizing: border-box;
+  width: 1920px;
+  height: 1080px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 52px 64px 32px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto 1fr 1fr auto;
+  grid-template-areas:
+    'topo topo topo'
+    'cores letras letras'
+    'figurinha selecao filtro'
+    'figurinha selecao pedido'
+    'rodape rodape rodape';
+  gap: 22px;
+}
+
+.pr-topo {
+  grid-area: topo;
+  position: relative;
+}
+
+.pr-topo h1 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-numeral);
+  font-size: 64px;
+  line-height: 1;
+}
+
+.pr-topo p {
+  margin: var(--espaco-3) 0 0;
+  font-size: 22px;
+  color: var(--cor-texto-fraco);
+}
+
+.pr-cartao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding: 22px 24px 24px;
+  border-radius: 20px;
+  background: var(--cor-superficie);
+}
+
+.pr-cartao h2 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-forte);
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.pr-legenda {
+  margin: 4px 0 16px;
+  font-size: 15px;
+  color: var(--cor-texto-fraco);
+}
+
+.pr-cores {
+  grid-area: cores;
+}
+
+.pr-letras {
+  grid-area: letras;
+}
+
+.pr-figurinha {
+  grid-area: figurinha;
+}
+
+.pr-selecao {
+  grid-area: selecao;
+}
+
+.pr-filtro {
+  grid-area: filtro;
+}
+
+.pr-pedido {
+  grid-area: pedido;
+}
+
+.pr-rodape {
+  grid-area: rodape;
+  margin: 0;
+  font-size: 13px;
+  color: var(--cor-texto-fraco);
+}
+
+.pr-amostras {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.pr-amostras li {
+  display: grid;
+  gap: 2px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.pr-amostra {
+  height: 48px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px var(--cor-borda);
+}
+
+.pr-amostras span:last-child {
+  color: var(--cor-texto-fraco);
+  font-variant-numeric: tabular-nums;
+}
+
+.pr-tons {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+
+.pr-tons li {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--c1) var(--mistura-espaco), var(--cor-superficie));
+  font-weight: var(--peso-forte);
+  font-size: 12px;
+}
+
+.pr-fontes {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr auto;
+  align-items: start;
+  gap: 40px;
+  margin-top: 12px;
+}
+
+.pr-fonte-nome {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--cor-texto-fraco);
+}
+
+.pr-amostra-titulo {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-titulo);
+  font-size: 44px;
+  line-height: 1.06;
+}
+
+.pr-amostra-numeral {
+  display: inline-grid;
+  place-items: center;
+  width: 170px;
+  height: 150px;
+  margin: 0;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--c1) var(--mistura-espaco), var(--cor-superficie));
+  color: color-mix(in srgb, var(--c1) var(--mistura-numeral), var(--cor-superficie));
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-numeral);
+  font-size: 84px;
+  line-height: 1;
+}
+
+.pr-amostra-texto {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 22px;
+  line-height: 1.45;
+}
+
+.pr-amostra-digitos {
+  margin: 20px 0 0;
+  font-size: 32px;
+  font-weight: var(--peso-forte);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Componentes do site dentro da prancha: só ajustes de posição e tamanho. */
+
+.pr .vd-espacos {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* A figurinha é o elemento-assinatura: aqui ela ocupa o cartão inteiro, em tamanho grande. */
+.pr-figurinha .vd-espacos,
+.pr-selecao .vd-espacos {
+  flex: 1;
+  min-height: 0;
+}
+
+.pr-figurinha .vd-espaco {
+  padding: 14px 14px 0;
+}
+
+.pr-figurinha .vd-espaco.esgotada {
+  padding-bottom: 14px;
+}
+
+.pr-figurinha .vd-numeral {
+  font-size: 88px;
+}
+
+.pr-figurinha .vd-codigo,
+.pr-figurinha .vd-nome,
+.pr-figurinha .vd-rodape,
+.pr-figurinha .vd-estoque {
+  font-size: 16px;
+}
+
+.pr-selecao .vd-espaco {
+  min-height: 0;
+}
+
+.pr-selecao .vd-pagina {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pr-pedido .vd-finalizar {
+  margin-top: 12px;
+}
+
+.pr .vd-pagina {
+  padding: 0;
+  content-visibility: visible;
+}
+
+.pr .vd-cabecalho {
+  margin: 0 0 12px;
+}
+
+.vd-rotulo h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-titulo);
+  font-size: var(--titulo-secao);
+  line-height: var(--entrelinha-titulo);
+}
+
+.pr .vd-tira {
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.pr .vd-tira li {
+  height: 34px;
+}
+
+.pr .vd-indice {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  max-height: none;
+  margin: 0;
+  padding: 14px;
+  overflow: visible;
+  border: 0;
+  border-radius: 14px;
+  background: var(--textura-fundo), var(--cor-fundo);
+}
+
+.pr .vd-indice button {
+  flex-direction: row;
+  gap: var(--espaco-2);
+  padding: 0 var(--espaco-3);
+  border-radius: var(--raio-pilula);
+  font-size: var(--texto-pequeno);
+}
+
+.pr .vd-filtro {
+  margin: 12px 0 0;
+  background: var(--textura-fundo), var(--cor-fundo);
+}
+
+.pr .vd-pedido {
+  position: static;
+  inset: auto;
+}
+
+/* Imagem da prévia do link: 1200×630, o tamanho que o WhatsApp usa no cartão grande. */
+
+.pr-og {
+  position: relative;
+  box-sizing: border-box;
+  width: 1200px;
+  height: 630px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 60px 64px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 36px;
+}
+
+.pr-og-texto {
+  position: relative;
+}
+
+.pr-og h1 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-numeral);
+  font-size: 64px;
+  line-height: 1.02;
+}
+
+.pr-og-texto p {
+  margin: 20px 0 0;
+  font-size: 28px;
+  line-height: 1.35;
+}
+
+.pr-og-bandeiras {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.pr-og-bandeira {
+  width: 48px;
+  height: 36px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px var(--cor-borda);
+}
+
+.pr-og .vd-espacos {
+  position: relative;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pr-og .vd-espaco {
+  min-height: 310px;
+  padding: 14px 14px 0;
+}
+
+.pr-og .vd-numeral {
+  font-size: 84px;
+}
+
+.pr-og .vd-codigo,
+.pr-og .vd-nome,
+.pr-og .vd-rodape,
+.pr-og .vd-estoque {
+  font-size: 17px;
+}

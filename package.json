@@ -10,7 +10,8 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "imagens": "vite build && node scripts/gerar-imagens.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
