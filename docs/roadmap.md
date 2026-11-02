@@ -12,7 +12,6 @@ Do início à entrega. Cada fase termina num resultado verificável. O projeto �
 - [x] Glossário do domínio: [CONTEXT.md](../CONTEXT.md)
 - [x] Decisões de arquitetura: [ADR-0001 a 0004](./adr/)
 - [x] Conceito visual: [design-system.md](./design-system.md)
-- [x] Lista de perguntas ao Vendedor: [perguntas-ao-vendedor.md](./perguntas-ao-vendedor.md)
 
 ## Fase 1: Documentação de engenharia ✅
 

@@ -66,9 +66,9 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **Testar os dados, não só o código.** Um teste automático confere, a cada push, que existem exatamente 980 figurinhas, sem repetição, de 1 a 20 em cada seleção. Uma linha perdida entre 980 passaria despercebida por qualquer revisão manual.
 - **Fato fixo mora no código, dado vivo mora na planilha.** As cores das bandeiras e a ordem das seleções nunca mudam, então ficam no código, onde o vendedor não consegue estragar sem querer. Estoque e preço mudam toda semana, então ficam na planilha, onde ele consegue mexer sozinho.
 
-### Marco: a prévia para o vendedor
+### Marco: a prévia
 
-**Decisão:** em vez de esperar o site definitivo (componentes reescritos e regras de negócio com testes), publiquei o próprio protótipo como uma **prévia numa URL separada**, com os dados reais da planilha, para o vendedor avaliar enquanto o interesse pelo álbum ainda está alto. O retorno dele (preços, nome, cores, "quero diferente") pode mudar os componentes, então era melhor ouvir **antes** de construí-los. O site principal continua intocado, e o CI barra qualquer vestígio do protótipo nele.
+**Decisão:** em vez de esperar o site definitivo (componentes reescritos e regras de negócio com testes), publiquei o próprio protótipo como uma **prévia numa URL separada**, com os dados da planilha, para colher retorno enquanto o interesse pelo álbum ainda estava alto. Esse retorno (preços, nome, cores) podia mudar os componentes, então era melhor ouvir **antes** de construí-los. O site principal continua intocado, e o CI barra qualquer vestígio do protótipo nele.
 
 **Aprendi:**
 
