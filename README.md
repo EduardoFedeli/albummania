@@ -1,25 +1,65 @@
 # ÁlbumMania
 
-Catálogo online para um colecionador vender as suas figurinhas repetidas do álbum da Copa do Mundo 2026. O comprador monta o pedido no site e finaliza pelo WhatsApp. Não há pagamento online, backend nem banco de dados: o estoque vive numa planilha Google que o próprio vendedor atualiza.
+Catálogo online de figurinhas avulsas do álbum da Copa do Mundo 2026. Quem procura cola a lista do que falta, o site mostra o que tem, monta o pedido e envia pelo WhatsApp. Não há backend nem banco de dados: o estoque vive numa planilha do Google.
 
-> **Status:** a [prévia para o Vendedor](https://eduardofedeli.github.io/albummania/previa/) está no ar, com dados reais da planilha; o site definitivo está em construção ([roadmap](docs/roadmap.md)).
+**Demonstração:** https://eduardofedeli.github.io/albummania/previa/ (quantidades e preços de exemplo) · [Read in English](README.en.md)
+
+<p align="center">
+  <img src="docs/readme/desktop.png" alt="ÁlbumMania no computador" width="72%">
+  <img src="docs/readme/mobile.png" alt="ÁlbumMania no celular" width="24%">
+</p>
+
+## O que ele faz
+
+- **Lista de faltantes colada:** a pessoa cola a lista do jeito que anota (`BRA 3, 7, 12; ARG 10`), o site mostra o que tem e o que não tem e adiciona tudo ao pedido de uma vez.
+- **Busca tolerante:** encontra `bra10`, `BRA 10` ou `bra-10`, e nomes sem acento.
+- **Carrinho que sobrevive ao fechar a aba**, sempre limitado ao estoque.
+- **Total estimado** pelo preço de cada tipo de figurinha.
+- **Pedido pelo WhatsApp**, com a mensagem agrupada por seção, ou copiada para colar onde quiser.
+
+## Stack
+
+| Camada | Tecnologia |
+|---|---|
+| Interface | React 19, TypeScript, Vite |
+| Dados | Planilha do Google publicada como CSV |
+| Testes | Vitest |
+| CI/CD e hospedagem | GitHub Actions e GitHub Pages |
+
+## Como funciona por dentro
+
+```mermaid
+flowchart LR
+    G["Push na main"] --> A["GitHub Actions<br>tipos, testes e build"]
+    A --> P["GitHub Pages"]
+    P -->|"site estático"| N["Navegador<br>React e TypeScript"]
+    S["Planilha do Google<br>estoque e preços"] -->|"CSV publicado"| N
+    N -->|"pedido pronto"| W["WhatsApp"]
+```
+
+Três decisões que explicam o desenho:
+
+- **A planilha é a fonte da verdade.** Quem vende atualiza o estoque numa ferramenta que já conhece, e não há servidor nem banco de dados para manter: o custo de operação é zero.
+- **A planilha é lida direto no navegador.** As abas publicadas como CSV são lidas pelo próprio site. Esses links já são públicos por natureza, então não há segredo para esconder.
+- **As regras ficam fora do React.** Busca, leitura da lista e carrinho são TypeScript puro, testados sem precisar da interface.
+
+A cada push na `main`, o GitHub Actions confere os tipos, roda os testes, faz o build e publica no GitHub Pages. As decisões completas estão em [`docs/adr`](docs/adr); a arquitetura, com os fluxos, os modos de falha e os riscos, em [`docs/system-design.md`](docs/system-design.md); o glossário do domínio em [`CONTEXT.md`](CONTEXT.md); e o design system em [`docs/design-system.md`](docs/design-system.md).
 
 ## Como rodar
 
+Você precisa de Node.js 24, a mesma versão do pipeline.
+
 ```bash
-npm install       # instala as dependências
-npm run dev       # site local em http://localhost:5173/albummania/
-npm test          # roda os testes
-npm run imagens   # gera a prancha do design system e a imagem da prévia do link
+git clone https://github.com/EduardoFedeli/albummania.git
+cd albummania
+cp .env.example .env
+npm install
+npm run dev   # http://localhost:5173/albummania/previa/
+npm test
 ```
 
-A cada push na `main`, o GitHub Actions verifica tipos, roda os testes, faz o build e publica no GitHub Pages ([publicar.yml](.github/workflows/publicar.yml)).
+O `.env.example` já aponta para uma planilha de teste. No GitHub Actions, as mesmas URLs vêm das variáveis do repositório.
 
-## Documentação
+## Autor
 
-- [docs/roadmap.md](docs/roadmap.md): as fases do projeto e em que ponto estamos.
-- [CONTEXT.md](CONTEXT.md): o glossário do domínio.
-- [docs/system-design.md](docs/system-design.md): a arquitetura, os fluxos, os modos de falha e os riscos.
-- [docs/adr/](docs/adr/): as decisões de arquitetura e o porquê de cada uma.
-- [docs/design-system.md](docs/design-system.md): o conceito visual, os tokens e os componentes.
-- [docs/perguntas-ao-vendedor.md](docs/perguntas-ao-vendedor.md): o que falta saber do cliente.
+Desenvolvido por **Eduardo Fedeli** ([GitHub](https://github.com/EduardoFedeli) · [LinkedIn](https://www.linkedin.com/in/eduardofedeli)).
