@@ -3,7 +3,8 @@ node_modules/
 dist/
 coverage/
 
-# Ambiente: o .env (URLs públicas) é versionado; sobrescritas locais não
+# Ambiente: o .env fica só no computador; o .env.example vai para o Git
+.env
 *.local
 
 # Logs

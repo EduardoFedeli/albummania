@@ -42,6 +42,8 @@ jobs:
         run: npm run build
         env:
           VITE_VERSAO: ${{ github.sha }}
+          VITE_CSV_CATALOGO_URL: ${{ vars.VITE_CSV_CATALOGO_URL }}
+          VITE_CSV_CONFIG_URL: ${{ vars.VITE_CSV_CONFIG_URL }}
 
       # A prévia (previa/) usa o protótipo de propósito; a página principal não pode carregar nada dele.
       - name: Conferir que o protótipo não vazou para a página principal

@@ -55,6 +55,6 @@ Feito uma vez só, pelo dono da conta.
 7. **Proteger:** Dados → Proteger páginas e intervalos → intervalo `A1:D981` → *Restringir quem pode editar* → **Somente você**. Faça o mesmo para `E1:F1` (os cabeçalhos de Estoque e Imagem). Assim, o Vendedor, como editor, só consegue mudar Estoque e Imagem.
 8. **Criar a aba `Config`** com as quatro linhas da tabela acima.
 9. **Publicar:** Arquivo → Compartilhar → Publicar na Web → escolha a aba **Catálogo**, formato **CSV** → Publicar. Repita para a aba **Config**. Confira se a opção *Republicar automaticamente quando forem feitas alterações* está marcada.
-10. **Atualizar o site:** as duas URLs publicadas vão no [`.env`](../.env).
+10. **Atualizar o site:** as duas URLs publicadas vão nas variáveis do repositório no GitHub (`VITE_CSV_CATALOGO_URL` e `VITE_CSV_CONFIG_URL`), que o GitHub Actions lê no build. Para rodar no computador, elas vão no `.env`, copiado do [`.env.example`](../.env.example).
 
 **Pendência:** confirmar que a proteção impede um *editor* de apagar linhas. O dono da planilha nunca é bloqueado pela proteção, então o teste precisa ser feito com outra conta Google, como editora.
