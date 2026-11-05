@@ -13,6 +13,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         principal: pagina('./index.html'),
+        admin: pagina('./admin/index.html'),
         previa: pagina('./previa/index.html'),
         prancha: pagina('./previa/prancha.html'),
       },

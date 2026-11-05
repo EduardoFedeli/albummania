@@ -49,10 +49,10 @@ export function ordenarColecoes(colecoes: Colecao[]): Colecao[] {
 }
 
 /** Ordem da Vitrine: pela ordem das Coleções e, dentro de cada uma, pelo Código (ou pelo Nome, se não houver Código). */
-export function ordenarItens(itens: Item[], colecoes: Colecao[]): Item[] {
+export function ordenarItens<T extends Item>(itens: T[], colecoes: Colecao[]): T[] {
   const posicao = new Map(ordenarColecoes(colecoes).map((colecao, indice) => [colecao.id, indice]))
-  const lugar = (item: Item) => posicao.get(item.colecaoId) ?? posicao.size
-  const rotulo = (item: Item) => item.codigo ?? item.nome
+  const lugar = (item: T) => posicao.get(item.colecaoId) ?? posicao.size
+  const rotulo = (item: T) => item.codigo ?? item.nome
 
   return [...itens].sort((a, b) => lugar(a) - lugar(b) || comoSeLe.compare(rotulo(a), rotulo(b)))
 }
