@@ -57,8 +57,9 @@
 
   /* Semânticos: tipografia. Unbounded só em títulos e no numeral decorativo:
      o 0 e o O dela são quase iguais, então Códigos e números legíveis usam a de texto. */
-  --fonte-titulo: 'Unbounded', system-ui, sans-serif;
-  --fonte-texto: 'Instrument Sans', system-ui, sans-serif;
+  /* As versões "Variable" vêm do Fontsource, servidas pelo próprio site (a página principal não usa o Google Fonts). */
+  --fonte-titulo: 'Unbounded Variable', 'Unbounded', system-ui, sans-serif;
+  --fonte-texto: 'Instrument Sans Variable', 'Instrument Sans', system-ui, sans-serif;
   --peso-texto: 400;
   --peso-medio: 600;
   --peso-forte: 700;

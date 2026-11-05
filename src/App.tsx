@@ -1,39 +1,64 @@
 import { useEffect, useState } from 'react'
-import { buscarCsv } from './infra/planilha'
+import type { Catalogo } from './domain/catalogo'
+import { buscarCatalogo } from './infra/supabase'
+import { Vitrine } from './ui/Vitrine'
+import './ui/vitrine.css'
 
-type Estado =
-  | { tipo: 'carregando' }
-  | { tipo: 'pronto'; linhas: number }
-  | { tipo: 'erro'; mensagem: string }
+// União discriminada: é impossível estar "carregando" e "com erro" ao mesmo tempo.
+type Estado = { tipo: 'carregando' } | { tipo: 'pronto'; catalogo: Catalogo } | { tipo: 'erro' }
 
 export default function App() {
   const [estado, setEstado] = useState<Estado>({ tipo: 'carregando' })
+  const [tentativa, setTentativa] = useState(0)
 
   useEffect(() => {
-    buscarCsv(import.meta.env.VITE_CSV_CATALOGO_URL)
-      .then((csv) => {
-        const comConteudo = csv
-          .split(/\r?\n/)
-          .filter((linha) => linha.replaceAll(',', '').trim() !== '')
-        setEstado({ tipo: 'pronto', linhas: comConteudo.length - 1 })
+    let ativo = true
+    buscarCatalogo()
+      .then((catalogo) => {
+        if (ativo) setEstado({ tipo: 'pronto', catalogo })
       })
       .catch((erro: unknown) => {
-        setEstado({ tipo: 'erro', mensagem: String(erro) })
+        console.error('Não foi possível carregar o Catálogo:', erro)
+        if (ativo) setEstado({ tipo: 'erro' })
       })
-  }, [])
+    // Se o componente sair da tela antes da resposta, a resposta atrasada é ignorada.
+    return () => {
+      ativo = false
+    }
+  }, [tentativa])
+
+  if (estado.tipo === 'pronto') return <Vitrine catalogo={estado.catalogo} />
+
+  if (estado.tipo === 'erro') {
+    return (
+      <main className="vt-pagina">
+        <div className="vt-aviso" role="alert">
+          <p>Não deu para carregar o catálogo agora. Confira a sua internet e tente de novo.</p>
+          <button
+            className="vt-botao"
+            onClick={() => {
+              setEstado({ tipo: 'carregando' })
+              setTentativa((n) => n + 1)
+            }}
+          >
+            Tentar de novo
+          </button>
+        </div>
+      </main>
+    )
+  }
 
   return (
-    <main>
-      <h1>ÁlbumMania</h1>
-      {estado.tipo === 'carregando' && <p>Carregando a planilha…</p>}
-      {estado.tipo === 'pronto' && <p>{estado.linhas} figurinhas carregadas da planilha.</p>}
-      {estado.tipo === 'erro' && <p>Não foi possível carregar a planilha: {estado.mensagem}</p>}
-      <p>
-        <a href="previa/">Ver a prévia do catálogo</a>
+    <main className="vt-pagina" aria-busy="true">
+      <p className="so-leitor" role="status">
+        Carregando o catálogo…
       </p>
-      <p>
-        <small>Versão: {import.meta.env.VITE_VERSAO?.slice(0, 7) ?? 'local'}</small>
-      </p>
+      <div className="vt-esqueleto-topo" />
+      <ul className="vt-grade" aria-hidden="true">
+        {Array.from({ length: 8 }, (_, i) => (
+          <li key={i} className="vt-esqueleto" />
+        ))}
+      </ul>
     </main>
   )
 }

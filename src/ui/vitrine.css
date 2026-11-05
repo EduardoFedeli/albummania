@@ -1,0 +1,312 @@
+/* Vitrine. Só tokens semânticos (design-system.md): trocar a paleta é mexer só nos primitivos. */
+
+.vt-pagina {
+  max-width: var(--largura-conteudo);
+  margin: 0 auto;
+  padding: var(--espaco-6) var(--espaco-4) var(--espaco-7);
+}
+
+/* ─── Topo ─────────────────────────────────────────────────────────────── */
+
+.vt-topo {
+  display: grid;
+  gap: var(--espaco-3);
+  padding-bottom: var(--espaco-5);
+}
+
+.vt-sobretitulo {
+  margin: 0;
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-forte);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-texto-fraco);
+}
+
+.vt-marca {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-titulo);
+  font-size: var(--tamanho-6);
+  line-height: var(--entrelinha-titulo);
+  overflow-wrap: anywhere;
+}
+
+.vt-chamada {
+  margin: 0;
+  max-width: var(--largura-leitura);
+  color: var(--cor-texto-fraco);
+}
+
+.vt-busca {
+  display: block;
+  max-width: var(--largura-leitura);
+  margin-top: var(--espaco-2);
+}
+
+.vt-busca input {
+  width: 100%;
+  min-height: calc(var(--alvo-minimo) + var(--espaco-2));
+  padding: 0 var(--espaco-5);
+  border: 2px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-superficie);
+}
+
+.vt-busca input::placeholder {
+  color: var(--cor-texto-fraco);
+}
+
+/* ─── Coleções ─────────────────────────────────────────────────────────── */
+
+/* No celular, uma faixa de arrastar; em telas largas, os botões quebram linha. */
+.vt-colecoes {
+  display: flex;
+  gap: var(--espaco-2);
+  margin: 0 calc(-1 * var(--espaco-4));
+  padding: var(--espaco-1) var(--espaco-4) var(--espaco-3);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+@media (min-width: 48rem) {
+  .vt-colecoes {
+    flex-wrap: wrap;
+    margin: 0;
+    padding: var(--espaco-1) 0 var(--espaco-3);
+    overflow: visible;
+  }
+}
+
+.vt-colecao {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--alvo-minimo);
+  padding: 0 var(--espaco-4);
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-superficie);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  transition:
+    background var(--duracao-rapida),
+    color var(--duracao-rapida);
+}
+
+.vt-colecao[aria-pressed='true'] {
+  background: var(--cor-destaque);
+  color: var(--cor-texto-sobre-destaque);
+}
+
+.vt-colecao-total {
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.vt-contagem {
+  margin: var(--espaco-2) 0 var(--espaco-4);
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-fraco);
+}
+
+/* ─── Grade de Itens ───────────────────────────────────────────────────── */
+
+.vt-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr));
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .vt-grade {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+    gap: var(--espaco-4);
+  }
+}
+
+.vt-item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-medio);
+  background: var(--cor-superficie);
+}
+
+/* Proporção de um card (5 × 7). Foto deitada ou figurinha quadrada cabem inteiras, sem corte. */
+.vt-item-foto {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 5 / 7;
+  background: var(--cor-apagado);
+  container-type: inline-size;
+}
+
+.vt-item-foto img {
+  width: 100%;
+  height: 100%;
+  padding: var(--espaco-2);
+  object-fit: contain;
+}
+
+/* Sem Foto, aparece o espaço vazio do álbum com o numeral gigante (design-system.md). */
+.vt-item-numeral {
+  font-family: var(--fonte-titulo);
+  font-weight: var(--peso-numeral);
+  font-size: clamp(var(--tamanho-5), 30cqi, var(--tamanho-7));
+  line-height: 1;
+  color: var(--cor-texto-apagado);
+  user-select: none;
+}
+
+.vt-item-raridade {
+  position: absolute;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  max-width: calc(100% - var(--espaco-4));
+  padding: 0.125rem var(--espaco-2);
+  overflow: hidden;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-destaque);
+  color: var(--cor-texto-sobre-destaque);
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-forte);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vt-item-dados {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  padding: var(--espaco-3);
+}
+
+.vt-item-dados p,
+.vt-item-dados h3 {
+  margin: 0;
+}
+
+.vt-item-codigo {
+  font-size: var(--texto-pequeno);
+  font-weight: var(--peso-forte);
+  letter-spacing: 0.04em;
+  color: var(--cor-texto-fraco);
+  font-variant-numeric: tabular-nums;
+}
+
+.vt-item-nome {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.vt-item-equipe {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-fraco);
+}
+
+/* O Preço fica sempre no pé do cartão, alinhado entre os cartões da mesma linha. */
+.vt-item-rodape {
+  margin-top: auto;
+  padding-top: var(--espaco-2);
+}
+
+.vt-item-preco {
+  font-size: var(--titulo-secao);
+  font-weight: var(--peso-forte);
+  font-variant-numeric: tabular-nums;
+}
+
+.vt-item-estoque {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-fraco);
+}
+
+/* ─── Botões, avisos e rodapé ──────────────────────────────────────────── */
+
+.vt-botao {
+  min-height: var(--alvo-minimo);
+  padding: 0 var(--espaco-6);
+  border: 2px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-superficie);
+  font-weight: var(--peso-forte);
+  cursor: pointer;
+}
+
+.vt-mais {
+  display: block;
+  margin: var(--espaco-6) auto 0;
+}
+
+.vt-aviso {
+  display: grid;
+  justify-items: center;
+  gap: var(--espaco-4);
+  max-width: var(--largura-leitura);
+  margin: var(--espaco-6) auto;
+  padding: var(--espaco-6) var(--espaco-5);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  background: var(--cor-superficie);
+  text-align: center;
+}
+
+.vt-aviso p {
+  margin: 0;
+}
+
+.vt-rodape {
+  max-width: var(--largura-conteudo);
+  margin: 0 auto;
+  padding: var(--espaco-5) var(--espaco-4) var(--espaco-7);
+  border-top: 1px solid var(--cor-borda);
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-fraco);
+}
+
+.vt-rodape p {
+  margin: 0;
+}
+
+/* ─── Carregando ───────────────────────────────────────────────────────── */
+
+.vt-esqueleto-topo {
+  height: 9rem;
+  margin-bottom: var(--espaco-6);
+  border-radius: var(--raio-grande);
+  background: var(--cor-apagado);
+  animation: vt-pulsar 1.2s ease-in-out infinite;
+}
+
+.vt-esqueleto {
+  aspect-ratio: 5 / 9;
+  border-radius: var(--raio-medio);
+  background: var(--cor-apagado);
+  animation: vt-pulsar 1.2s ease-in-out infinite;
+}
+
+@keyframes vt-pulsar {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-esqueleto-topo,
+  .vt-esqueleto {
+    animation: none;
+  }
+}

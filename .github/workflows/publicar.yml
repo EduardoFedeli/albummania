@@ -42,6 +42,8 @@ jobs:
         run: npm run build
         env:
           VITE_VERSAO: ${{ github.sha }}
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_CHAVE_PUBLICA: ${{ vars.VITE_SUPABASE_CHAVE_PUBLICA }}
           VITE_CSV_CATALOGO_URL: ${{ vars.VITE_CSV_CATALOGO_URL }}
           VITE_CSV_CONFIG_URL: ${{ vars.VITE_CSV_CONFIG_URL }}
 
