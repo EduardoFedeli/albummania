@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada etapa termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: V2, Etapa 2** (o Admin).
+**📍 Estamos aqui: V2, Etapa 3** (Carrinho e Pedido).
 
 **Estratégia com o Vendedor:** ele quer soluções, não perguntas. Entregamos o site funcionando, com o Admin, e só depois perguntamos o que sobrar. O valor é fixo, sem mensalidade, e o Eduardo opera o site.
 
@@ -20,13 +20,14 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 - [x] Vitrine lendo o Catálogo do Supabase: Coleções, cartões com Foto ou numeral, Preço e Estoque
 - [x] Busca tolerante: sem acento e com o Código digitado de qualquer jeito ("HR-013", "hr013", "hr 013")
 
-### Etapa 2: Admin
+### Etapa 2: Admin ✅
 
-- [ ] Login com e-mail e senha, e sair
-- [ ] Coleções: criar, renomear e ordenar
-- [ ] Itens: cadastrar, editar e apagar, com a Foto comprimida no navegador
-- [ ] Baixa rápida: achar o Item e usar − / + no Estoque, pensada para o celular
-- [ ] Loja: nome e número do WhatsApp
+- [x] Login com e-mail e senha, e sair (`/admin/`, página separada: a Vitrine não carrega a biblioteca do Supabase, e o CI confere)
+- [x] Coleções: criar, renomear, ordenar e apagar (só as vazias)
+- [x] Itens: cadastrar, editar e apagar, com a Foto comprimida no navegador (WebP, lado maior de até 1.000 px), e "Salvar e cadastrar outro" para cadastrar em sequência
+- [x] Baixa rápida: achar o Item e usar − / + no Estoque, pensada para o celular
+- [x] Loja: nome e número do WhatsApp, aceitando o número digitado com máscara
+- [x] Teste no projeto real: o Eduardo entrou com a própria conta e cadastrou uma Foto, que apareceu na Vitrine (as políticas do Storage funcionam)
 
 ### Etapa 3: Carrinho e Pedido
 

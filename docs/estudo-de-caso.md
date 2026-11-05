@@ -88,3 +88,14 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **O Vite só entrega ao navegador variáveis que começam com `VITE_`.** Copiei as variáveis do painel do Supabase no formato do Next.js (`NEXT_PUBLIC_...`), e o site abriu com "não deu para carregar o catálogo". O banco estava certo; o nome estava errado.
 - **A API devolve no máximo 1.000 linhas por pedido.** O site de referência tem 1.895 itens. Sem ler em páginas, quase metade sumiria sem nenhum erro.
 - **Foto é questão de direito autoral, não só de visual.** Revender o card comprado é permitido, mas a imagem pertence a quem a fez. Por isso a loja usa só fotos que o próprio vendedor tira.
+
+### V2, Etapa 2: o Admin
+
+**Decisão:** o Admin é uma página separada (`/admin/`), no mesmo build da loja. Só ela carrega a biblioteca do Supabase, e um passo do CI barra o deploy se o código do Admin vazar para a vitrine. As regras do cadastro (ler o preço digitado, validar o formulário, reordenar as coleções) ficaram em TypeScript puro, com testes, e a tela só chama essas funções.
+
+**Aprendi:**
+
+- **Pensar no celular de quem usa.** O vendedor vai dar baixa no estoque logo depois de vender, com o celular na mão. Por isso o − e o + ficam na própria lista, e um "salvar e cadastrar outro" mantém a coleção e o preço para cadastrar uma seleção inteira em sequência.
+- **Foto de celular tem vários MB.** O navegador reduz a foto antes de enviar: no teste, uma imagem de 780 × 4.982 pixels virou um WebP de 13 KB. Assim o 1 GB gratuito do Supabase cabe milhares de fotos.
+- **Testar o caminho inteiro sem a senha de ninguém.** Um script abre o Admin num navegador de verdade e simula as respostas do Supabase. Ele faz login, dá baixa, cadastra um item com foto e confere o que cada ação mandaria ao banco. Foi assim que apareceram dois detalhes: um link com cara de botão saindo azul e mensagens de erro que não sumiam depois de corrigir o campo.
+- **Erro do banco não é mensagem para o usuário.** O código `23503` vira "Essa Coleção ainda tem Itens. Mova ou apague os Itens antes.", e o texto técnico fica só no console.
