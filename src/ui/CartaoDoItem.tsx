@@ -1,9 +1,17 @@
 import { formatarPreco, type Item } from '../domain/catalogo'
 import { numeral } from './numeral'
 
-export function CartaoDoItem({ item }: { item: Item }) {
+interface Props {
+  item: Item
+  /** Quantas unidades deste Item já estão no Carrinho. */
+  quantidade: number
+  aoAdicionar: () => void
+  aoDiminuir: () => void
+}
+
+export function CartaoDoItem({ item, quantidade, aoAdicionar, aoDiminuir }: Props) {
   return (
-    <li className="vt-item">
+    <li className="vt-item" data-no-pedido={quantidade > 0 || undefined}>
       <div className="vt-item-foto">
         {item.foto ? (
           <img
@@ -30,6 +38,29 @@ export function CartaoDoItem({ item }: { item: Item }) {
             {item.estoque === 1 ? 'Última unidade' : `${item.estoque} disponíveis`}
           </p>
         </div>
+
+        {quantidade === 0 ? (
+          <button className="vt-adicionar" onClick={aoAdicionar} aria-label={`Adicionar ${item.nome} ao pedido`}>
+            + Adicionar
+          </button>
+        ) : (
+          <div className="vt-passos" role="group" aria-label={`${item.nome} no pedido`}>
+            <button className="vt-passo" onClick={aoDiminuir} aria-label={`Tirar 1 de ${item.nome}`}>
+              −
+            </button>
+            <output className="vt-passos-valor" aria-live="polite">
+              {quantidade}
+            </output>
+            <button
+              className="vt-passo"
+              onClick={aoAdicionar}
+              disabled={quantidade >= item.estoque}
+              aria-label={`Pôr mais 1 de ${item.nome}`}
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
     </li>
   )

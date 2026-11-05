@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { combinaComBusca } from '../domain/busca'
+import { quantidadeNoCarrinho, resumir } from '../domain/carrinho'
 import { ordenarColecoes, ordenarItens, type Catalogo } from '../domain/catalogo'
+import { BarraDoPedido } from './BarraDoPedido'
 import { CartaoDoItem } from './CartaoDoItem'
+import { PainelDoPedido } from './PainelDoPedido'
+import { useCarrinho } from './useCarrinho'
 
 /** Quantos Itens aparecem de cada vez. O resto vem no "Mostrar mais". */
 const POR_VEZ = 48
@@ -13,6 +17,12 @@ export function Vitrine({ catalogo }: { catalogo: Catalogo }) {
   const [colecaoId, setColecaoId] = useState<number | null>(null)
   const [termo, setTermo] = useState('')
   const [quantos, setQuantos] = useState(POR_VEZ)
+  const [painelAberto, setPainelAberto] = useState(false)
+  const pedido = useCarrinho(catalogo.itens)
+  const resumo = useMemo(
+    () => resumir(pedido.carrinho, catalogo.itens, colecoes),
+    [pedido.carrinho, catalogo.itens, colecoes],
+  )
 
   useEffect(() => {
     document.title = loja.nome
@@ -70,6 +80,15 @@ export function Vitrine({ catalogo }: { catalogo: Catalogo }) {
           </label>
         </header>
 
+        {pedido.aviso && (
+          <div className="vt-aviso-pedido" role="status">
+            <p>{pedido.aviso}</p>
+            <button className="vt-botao" onClick={pedido.fecharAviso}>
+              Entendi
+            </button>
+          </div>
+        )}
+
         {comItens.length > 1 && (
           <nav className="vt-colecoes" aria-label="Coleções">
             <button className="vt-colecao" aria-pressed={colecaoId === null} onClick={() => escolherColecao(null)}>
@@ -111,7 +130,13 @@ export function Vitrine({ catalogo }: { catalogo: Catalogo }) {
             <>
               <ul className="vt-grade">
                 {visiveis.slice(0, quantos).map((item) => (
-                  <CartaoDoItem key={item.id} item={item} />
+                  <CartaoDoItem
+                    key={item.id}
+                    item={item}
+                    quantidade={quantidadeNoCarrinho(pedido.carrinho, item.id)}
+                    aoAdicionar={() => pedido.adicionar(item)}
+                    aoDiminuir={() => pedido.diminuir(item.id)}
+                  />
                 ))}
               </ul>
               {visiveis.length > quantos && (
@@ -124,11 +149,25 @@ export function Vitrine({ catalogo }: { catalogo: Catalogo }) {
         </section>
       </main>
 
-      <footer className="vt-rodape">
+      <footer className="vt-rodape" data-com-barra={resumo.quantidade > 0 || undefined}>
         <p>
           Loja independente, sem vínculo com Panini, Topps ou FIFA. As marcas citadas pertencem aos seus donos.
         </p>
       </footer>
+
+      <BarraDoPedido resumo={resumo} aoAbrir={() => setPainelAberto(true)} />
+
+      {painelAberto && (
+        <PainelDoPedido
+          resumo={resumo}
+          colecoes={colecoes}
+          loja={loja}
+          aoAdicionar={pedido.adicionar}
+          aoDiminuir={pedido.diminuir}
+          aoLimpar={pedido.limpar}
+          aoFechar={() => setPainelAberto(false)}
+        />
+      )}
     </>
   )
 }
