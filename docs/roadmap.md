@@ -2,7 +2,7 @@
 
 Do início à entrega. Cada etapa termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: V2, Etapa 3** (Carrinho e Pedido).
+**📍 Estamos aqui: V2, Etapa 4** (no ar: hospedagem, domínio e o site se cuidando sozinho).
 
 **Estratégia com o Vendedor:** ele quer soluções, não perguntas. Entregamos o site funcionando, com o Admin, e só depois perguntamos o que sobrar. O valor é fixo, sem mensalidade, e o Eduardo opera o site.
 
@@ -28,11 +28,14 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 - [x] Baixa rápida: achar o Item e usar − / + no Estoque, pensada para o celular
 - [x] Loja: nome e número do WhatsApp, aceitando o número digitado com máscara
 - [x] Teste no projeto real: o Eduardo entrou com a própria conta e cadastrou uma Foto, que apareceu na Vitrine (as políticas do Storage funcionam)
+- [x] Gravação barrada pela RLS avisa "Nada foi salvo" em vez de parecer que deu certo (um UPDATE barrado não dá erro, só altera zero linhas)
 
-### Etapa 3: Carrinho e Pedido
+### Etapa 3: Carrinho e Pedido ✅
 
-- [ ] Carrinho (domínio com TDD): adicionar, quantidade até o Estoque, persistência e reconciliação
-- [ ] Pedido: total, mensagem, `wa.me`, "copiar mensagem" e "limpar carrinho"
+- [x] Carrinho (domínio com TDD): adicionar, quantidade até o Estoque, persistência no navegador e reconciliação com aviso ao Comprador
+- [x] Pedido: mensagem agrupada por Coleção com subtotais e total estimado, `wa.me`, "Não abriu? Copiar mensagem" e "Pedido enviado? Limpar pedido"
+- [x] Loja sem WhatsApp configurado: o painel oferece só copiar a mensagem
+- [ ] **Eduardo:** pôr um número na aba Loja do Admin e fazer um Pedido de teste pelo celular
 
 ### Etapa 4: no ar
 

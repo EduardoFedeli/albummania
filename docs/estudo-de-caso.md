@@ -99,3 +99,14 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **Foto de celular tem vários MB.** O navegador reduz a foto antes de enviar: no teste, uma imagem de 780 × 4.982 pixels virou um WebP de 13 KB. Assim o 1 GB gratuito do Supabase cabe milhares de fotos.
 - **Testar o caminho inteiro sem a senha de ninguém.** Um script abre o Admin num navegador de verdade e simula as respostas do Supabase. Ele faz login, dá baixa, cadastra um item com foto e confere o que cada ação mandaria ao banco. Foi assim que apareceram dois detalhes: um link com cara de botão saindo azul e mensagens de erro que não sumiam depois de corrigir o campo.
 - **Erro do banco não é mensagem para o usuário.** O código `23503` vira "Essa Coleção ainda tem Itens. Mova ou apague os Itens antes.", e o texto técnico fica só no console.
+
+### V2, Etapa 3: o carrinho e o pedido
+
+**Decisão:** o carrinho guarda no navegador só o id do item e a quantidade. Preço e estoque vêm sempre do catálogo atual. Quando a loja abre, o carrinho salvo é conferido com o estoque de agora: o item que acabou sai, a quantidade acima do estoque cai, e o comprador é avisado. O pedido continua sendo só uma mensagem de WhatsApp. Como o site não sabe se o WhatsApp abriu, ele oferece copiar a mensagem e só esvazia o carrinho quando o comprador pede.
+
+**Aprendi:**
+
+- **Um UPDATE barrado pela RLS não dá erro.** Ele altera zero linhas e responde "ok". Explicando uma pergunta sobre o código, percebi que a baixa no admin podia "dar certo" na tela sem mudar nada no banco. Agora cada gravação pede as linhas de volta e avisa quando não vem nenhuma.
+- **Hook customizado.** O `useCarrinho` junta o estado, a gravação no navegador e a conferência com o estoque. A vitrine só chama "adicionar" e "diminuir", sem saber que existe localStorage.
+- **A área de transferência do Windows troca as quebras de linha.** O teste comparou a mensagem copiada com a do link e achou 10 caracteres a mais: cada quebra de linha virou `\r\n`. Não era defeito do site, e investigar antes de "consertar" evitou mexer em código que estava certo.
+- **Testar como um comprador.** Um script adiciona itens, bate no limite do estoque, abre o WhatsApp numa aba, copia a mensagem, recarrega a página e simula o vendedor vendendo no meio do caminho.
