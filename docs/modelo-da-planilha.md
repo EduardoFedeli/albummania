@@ -1,5 +1,7 @@
 # Modelo da planilha
 
+> **V1.** Na V2 o Catálogo vem do Supabase ([ADR-0005](./adr/0005-catalogo-no-supabase-com-admin.md)). Esta planilha só alimenta a prévia em `/previa/`.
+
 O contrato entre a planilha Google e o código. Os nomes das abas e das colunas funcionam como uma API: se mudarem, o site deixa de ler os dados (system design §7). Decisões relacionadas: [ADR-0001](./adr/0001-planilha-google-como-fonte-da-verdade.md) e [ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md).
 
 ## Aba `Catálogo`

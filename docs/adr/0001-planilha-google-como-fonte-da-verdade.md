@@ -1,4 +1,10 @@
+---
+status: substituído pelo ADR-0005
+---
+
 # Planilha Google como fonte da verdade, sem backend nem banco de dados
+
+> **Substituído** em 2026-11-05 pelo [ADR-0005](./0005-catalogo-no-supabase-com-admin.md): o Vendedor passou a precisar de Fotos, de Coleções livres e de um Admin com login.
 
 O Catálogo é lido de uma Planilha Google que o próprio Vendedor edita. O site é estático e não tem backend, banco de dados nem painel administrativo. O Vendedor precisa se virar sozinho, já usa planilhas e o projeto não justifica o custo de manter um servidor, autenticação e segurança.
 

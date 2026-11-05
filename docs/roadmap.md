@@ -1,103 +1,58 @@
 # Roadmap
 
-Do início à entrega. Cada fase termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
+Do início à entrega. Cada etapa termina num resultado verificável. O projeto é solo: commits pequenos direto na `main`, sem PRs.
 
-**📍 Estamos aqui: prévia pronta para o Vendedor** (atalho do marco 🎯, em https://eduardofedeli.github.io/albummania/previa/). Enquanto ele responde, seguimos com os componentes oficiais (Fase 5) e o domínio (Fase 6a).
+**📍 Estamos aqui: V2, Etapa 2** (o Admin).
 
-**Estratégia com o Vendedor:** as perguntas só vão junto com algo para ele avaliar, ou seja, o **beta** (marco 🎯 na Fase 6). Até lá, trabalhamos com o checklist oficial e um Estoque de demonstração.
+**Estratégia com o Vendedor:** ele quer soluções, não perguntas. Entregamos o site funcionando, com o Admin, e só depois perguntamos o que sobrar. O valor é fixo, sem mensalidade, e o Eduardo opera o site.
 
-## Fase 0: Descoberta e decisões ✅
+## V1: figurinhas da Copa 2026 com planilha ✅ (até 2026-11-02)
 
-- [x] Entender o problema, o domínio e as restrições (sessão de perguntas)
-- [x] Glossário do domínio: [CONTEXT.md](../CONTEXT.md)
-- [x] Decisões de arquitetura: [ADR-0001 a 0004](./adr/)
-- [x] Conceito visual: [design-system.md](./design-system.md)
+Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurinhas, design system e a prévia em `/previa/`. Está tudo na tag `v1-planilha`, e as decisões, nos ADRs 0001 a 0004.
 
-## Fase 1: Documentação de engenharia ✅
+## V2: loja de qualquer Coleção, com Admin
 
-- [x] System design: [system-design.md](./system-design.md)
-- [x] Roadmap (este arquivo) e início do [estudo de caso](./estudo-de-caso.md)
+### Etapa 1: fundação e Vitrine ✅
 
-## Fase 2: Spikes, validar os riscos antes de codar ✅
+- [x] [ADR-0005](./adr/0005-catalogo-no-supabase-com-admin.md) (Supabase e Admin), vocabulário novo no [CONTEXT.md](../CONTEXT.md) e a [pesquisa sobre fotos](./fotos-e-direitos.md)
+- [x] Esquema do banco com RLS ([`supabase/schema.sql`](../supabase/schema.sql)) e dados de exemplo
+- [x] Projeto criado no Supabase (São Paulo), SQL rodado e conta de administrador do Eduardo
+- [x] Vitrine lendo o Catálogo do Supabase: Coleções, cartões com Foto ou numeral, Preço e Estoque
+- [x] Busca tolerante: sem acento e com o Código digitado de qualquer jeito ("HR-013", "hr013", "hr 013")
 
-- [x] **S1:** CORS liberado; a edição aparece para todos em até ~5 min ([ADR-0003](./adr/0003-planilha-lida-no-navegador-via-csv-publicado.md))
-- [x] **S3:** números chegam como `"1,5"` (formatados, com vírgula)
-- [x] **S2:** um Pedido de 200 figurinhas (~1.100 caracteres) abre inteiro no celular e no computador
-- [x] Registrar os resultados: ADR-0003 `accepted`
-- (movido para a Fase 4) testar se a proteção de colunas impede o Vendedor de apagar linhas, na planilha real
+### Etapa 2: Admin
 
-**Pronto quando:** nenhum risco da §13 do system design estiver sem resposta.
+- [ ] Login com e-mail e senha, e sair
+- [ ] Coleções: criar, renomear e ordenar
+- [ ] Itens: cadastrar, editar e apagar, com a Foto comprimida no navegador
+- [ ] Baixa rápida: achar o Item e usar − / + no Estoque, pensada para o celular
+- [ ] Loja: nome e número do WhatsApp
 
-## Fase 3: Esqueleto andante (walking skeleton) ✅
+### Etapa 3: Carrinho e Pedido
 
-- [x] Projeto Vite + React + TypeScript e Vitest (o Playwright entra com o primeiro teste E2E, quando houver um fluxo para testar)
-- [x] CI no GitHub Actions (typecheck, testes e build a cada push na `main`): `.github/workflows/publicar.yml`
-- [ ] Deploy automático no GitHub Pages, só se o CI passar (com o `base` do Vite)
-- [x] Uma página que lê o CSV da planilha de teste e mostra quantas linhas vieram
-- [x] Ativar o GitHub Pages (Settings → Pages → Source: GitHub Actions) e confirmar o site no ar
+- [ ] Carrinho (domínio com TDD): adicionar, quantidade até o Estoque, persistência e reconciliação
+- [ ] Pedido: total, mensagem, `wa.me`, "copiar mensagem" e "limpar carrinho"
 
-**Pronto quando:** um merge na `main` publica sozinho um site que lê a planilha. Não tem nada bonito ainda, mas o caminho inteiro, do código até o site no ar, funciona.
+### Etapa 4: no ar
 
-## Fase 4: Dados ✅
+- [ ] ADR-0006: hospedagem no Cloudflare Pages (o GitHub Pages proíbe loja on-line, e o plano Hobby da Vercel não permite uso comercial). Confirmar os termos da Cloudflare
+- [ ] Deploy, `base` do Vite na raiz e domínio
+- [ ] Acesso automático diário, para o Supabase não pausar, e alerta se o site cair
+- [ ] Rodapé com o contato do Vendedor, e README e system design atualizados para a V2
 
-- [x] Checklist oficial da Copa 2026 → 980 linhas, com Código, Nome e Tipo, cruzando 3 fontes ([origem](./modelo-da-planilha.md#de-onde-vem-o-checklist))
-- [x] `src/data/secoes.ts`: sigla, nome, Grupo, ordem no Álbum e cores da bandeira de cada Seção (as cores serão ajustadas na Fase 5)
-- [x] Planilha real: abas Catálogo e Config, validação de células, colunas protegidas e publicação
-- [ ] Testar, com outra conta Google como editora, se a proteção impede apagar linhas (quando o Vendedor for adicionado)
-- [x] [`docs/modelo-da-planilha.md`](./modelo-da-planilha.md): o contrato da planilha, documentado
-- [x] Estoque de demonstração para o beta: `dados/catalogo-demo.csv`
-- [ ] Preencher o Estoque real com a lista do Vendedor (depois do beta)
+### Etapa 5: entrega
 
-## Fase 5: Design system
+- [ ] Mostrar ao Vendedor e cadastrar uma Coleção com ele
+- [ ] Manual de 1 página
+- [ ] Perguntas que sobrarem, depois que ele vir o site funcionando
 
-- [x] 3 variações descartáveis (Retrô 70, Álbum 2026, Caderno do colecionador) com dados reais, em `?variante=A|B|C`
-- [x] Escolher a direção: mistura de C (abertura com a Lista de Faltantes) + B (páginas e espaços) + A (esgotadas apagadas), como Variante D ([decisão](./design-system.md#direção-escolhida-2026-09-28))
-- [x] `tokens.css`: primitivos e semânticos, tema claro, com contraste AA garantido por teste nas 50 Seções; os 4 pontos abertos resolvidos ([tokens](./design-system.md#tokens))
-- [x] Interações validadas no protótipo com dados reais: filtro por seleção, Estoque visível, − / + no espaço e no Painel do Carrinho, mensagem do Pedido
-- [ ] Componentes do design system, com todos os estados
-- [ ] Página `/styleguide`
-- [ ] Remover `src/prototipo/` da `main` quando os componentes oficiais existirem
-- [ ] Revisão de acessibilidade AA
-- [x] **Prancha do design system**: imagem PNG com paleta, tipografia e componentes, gerada automaticamente a partir dos componentes reais (`npm run imagens` → `docs/design/prancha.png`)
+### Se ele pedir depois
 
-## Fase 6: Funcionalidades (commits pequenos por funcionalidade, domínio com TDD)
+- Importação em massa (planilha mais Fotos em lote)
+- Lista de Faltantes colada na busca, como na V1
+- Analytics de visitas e Pedidos
 
-### 6a. O mínimo para o beta
+## Portfólio
 
-- [ ] Ler e validar as abas + carregamento com cache (stale-while-revalidate)
-- [ ] Página de diagnóstico (`?diagnostico`): as linhas ignoradas pela validação, em português
-- [ ] Catálogo agrupado por Seção, índice por Grupo como filtro de seleções e links `#SEÇÃO`
-- [ ] Carrinho: adicionar, quantidade, persistência e reconciliação
-- [ ] Pedido: total por Tipo, mensagem, `wa.me`, "copiar mensagem" e "limpar carrinho"
-
-### 🎯 Marco: beta para o Vendedor
-
-- [x] **Atalho:** prévia publicada numa URL própria (`/previa/`), feita da Variante D do protótipo, com o checklist completo, o Estoque de demonstração e a prévia do link no WhatsApp (Open Graph). O site principal não carrega nada do protótipo (trava no CI)
-- [ ] Enviar ao Vendedor: link da prévia + prancha do design system + [perguntas](./perguntas-ao-vendedor.md) (oferta de cadastrar as figurinhas, manual de Estoque, preço por Tipo)
-- [ ] Incorporar as respostas (preços, nome, cores, ajustes de visual)
-
-### 6b. O restante
-
-- [ ] Busca tolerante (código, nome sem acento, Seção)
-- [ ] Lista de Faltantes
-- [ ] Filtro de Tipo
-- [ ] Prévia de link (Open Graph), analytics e crédito no rodapé
-
-## Fase 7: Qualidade
-
-- [ ] Teste E2E do fluxo completo
-- [ ] Auditoria de acessibilidade e de performance (metas da §2 do system design)
-- [ ] Teste em celulares reais (Android e iPhone), com rede ruim
-
-## Fase 8: Entrega
-
-- [ ] Manual do Vendedor (1 página, com prints)
-- [ ] Apresentar o site e a planilha ao Vendedor, e ele fazer uma Baixa sozinho na sua frente
-- [ ] Trocar a planilha de teste pela real e publicar o link
-- [ ] Acompanhar a primeira semana (analytics e dúvidas)
-
-## Fase 9: Portfólio
-
-- [ ] Fechar o estudo de caso com resultados (Pedidos gerados, aprendizados)
-- [ ] Post no LinkedIn
-- [ ] Página do projeto no portfólio
+- [ ] Fechar o estudo de caso com a virada da V1 para a V2
+- [ ] Post no LinkedIn e página do projeto no portfólio

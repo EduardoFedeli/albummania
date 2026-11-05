@@ -1,62 +1,66 @@
 # ÁlbumMania
 
-Catálogo público onde um Vendedor anuncia as suas figurinhas avulsas de álbum. O site só monta o Pedido: a negociação e a Venda acontecem no WhatsApp, fora do sistema.
+Loja on-line onde um Vendedor anuncia as suas figurinhas, cards e colecionáveis avulsos, organizados nas Coleções que ele mesmo cria. O site só monta o Pedido: a negociação, o pagamento e a Venda acontecem no WhatsApp, fora do sistema.
 
-## Pessoas
+## Pessoas e lugares
 
 **Vendedor**:
-O dono das figurinhas, que mantém o Estoque e negocia pelo WhatsApp.
-_Evitar_: gerente, admin, lojista
+O dono da loja, que cadastra Coleções e Itens no Admin e negocia pelo WhatsApp.
+_Evitar_: gerente, lojista, usuário
 
 **Comprador**:
 O visitante do site que monta um Carrinho e envia um Pedido.
 _Evitar_: cliente, usuário
 
+**Vitrine**:
+A parte pública do site, onde o Comprador vê o Catálogo.
+_Evitar_: loja, home
+
+**Admin**:
+A área do site protegida por login (`/admin/`), onde o Vendedor cadastra Coleções e Itens e dá Baixa.
+_Evitar_: painel (esse nome já é do Painel do Carrinho), dashboard
+
 ## Catálogo
 
-**Figurinha**:
-Um cromo avulso de um Álbum Panini, identificado pelo seu Código.
-_Evitar_: card, carta, produto, item (cards como Adrenalyn/Match Attax são outro produto e estão fora do escopo)
+**Coleção**:
+Um grupo de Itens criado pelo Vendedor, com o nome que ele quiser (ex.: "Match Attax 26/27", "Adrenalyn XL Copa 2026: Brilhantes", "Colecionáveis").
+_Evitar_: categoria, álbum
 
-**Álbum**:
-A coleção Panini à qual a Figurinha pertence (ex.: Copa do Mundo 2026).
-_Evitar_: coleção, categoria
-
-**Seção**:
-Um agrupamento de Figurinhas dentro do Álbum, normalmente uma seleção (BRA, ARG) ou uma seção especial (FWC).
-_Evitar_: categoria, time
-
-**Grupo**:
-Um conjunto de quatro seleções da fase de grupos da Copa (A a L), que define a ordem das Seções no Álbum. As seções especiais não têm Grupo.
-_Evitar_: chave
+**Item**:
+O que está à venda: uma figurinha, um card ou um colecionável (lata, envelope, álbum). Tem Nome, Preço e Estoque, e pode ter Código, Equipe, Raridade e Foto.
+_Evitar_: produto, card (card é um tipo de Item, não o nome geral)
 
 **Código**:
-O identificador impresso na Figurinha, formado pela sigla da Seção e um número (ex.: "BRA 10", "FWC 3"). A única exceção é a figurinha de abertura, cujo Código é só "00".
+O identificador impresso no Item (ex.: "HR-013", "BRA 10"). É opcional, porque colecionáveis normalmente não têm.
 _Evitar_: ID, número
 
-**Estoque**:
-Quantas unidades de uma Figurinha o Vendedor tem para vender. Só o Vendedor altera, sempre à mão.
-_Evitar_: quantidade (reservado para o que o Comprador escolhe no Carrinho), status, disponível
+**Equipe**:
+A seleção ou o clube do jogador do Item, quando houver. Serve para a busca.
+_Evitar_: time (em código, `time` parece hora), país, seleção
 
-**Tipo**:
-A classificação da Figurinha que define o seu Preço. No álbum da Copa 2026 há dois: **Especial** (as metalizadas: "00", FWC e os escudos) e **Comum** (todas as outras, inclusive a foto do time). Vem do checklist oficial do Álbum, não do Vendedor.
-_Evitar_: raridade, categoria
+**Raridade**:
+Um selo opcional, escrito pelo Vendedor (ex.: "Brilhante", "Edição limitada", "1 em 540 pacotes"). Só é exibido e não muda o Preço.
+_Evitar_: tipo, categoria
 
 **Preço**:
-O valor unitário de uma Figurinha, definido pelo seu Tipo. O valor final é sempre o que for acertado na Venda.
+O valor unitário de um Item, definido pelo Vendedor Item a Item e guardado em centavos. O valor final é sempre o que for acertado na Venda.
 _Evitar_: valor, "a combinar"
 
+**Estoque**:
+Quantas unidades de um Item o Vendedor tem para vender. Só o Vendedor altera, no Admin.
+_Evitar_: quantidade (reservado para o que o Comprador escolhe no Carrinho), status, disponível
+
+**Foto**:
+A imagem do Item, enviada pelo Vendedor no Admin. O combinado é ser uma foto do próprio Item, nunca uma imagem tirada de outro site ([fotos-e-direitos.md](docs/fotos-e-direitos.md)).
+_Evitar_: imagem oficial
+
 **Catálogo**:
-O conjunto de Figurinhas com Estoque maior que zero, exibido no site.
+O conjunto de Itens com Estoque maior que zero, exibido na Vitrine.
 
 ## Pedido
 
-**Lista de Faltantes**:
-Os Códigos que o Comprador procura, colados de uma vez na busca (ex.: "BRA 3, 7, 12; ARG 1").
-_Evitar_: wishlist, lista de desejos
-
 **Carrinho**:
-As Figurinhas e quantidades que o Comprador está escolhendo. Existe só no navegador dele.
+Os Itens e quantidades que o Comprador está escolhendo. Existe só no navegador dele.
 _Evitar_: lista; "Meu pedido" é só o rótulo na interface
 
 **Pedido**:
@@ -64,20 +68,26 @@ A mensagem de WhatsApp gerada a partir do Carrinho no momento de "Finalizar pedi
 _Evitar_: compra, checkout, ordem
 
 **Venda**:
-O acordo fechado entre Comprador e Vendedor no WhatsApp. Acontece fora do sistema, que nunca fica sabendo dela.
+O acordo fechado entre Comprador e Vendedor no WhatsApp, com pagamento e frete combinados ali. Acontece fora do sistema, que nunca fica sabendo dela.
 _Evitar_: compra
 
 **Baixa**:
-Quando o Vendedor reduz o Estoque à mão depois de uma Venda, ou de uma venda feita fora do site.
+Quando o Vendedor reduz o Estoque no Admin depois de uma Venda, ou de uma venda feita fora do site.
 
 ## Relações
 
-- Uma Figurinha pertence a exatamente uma Seção de um Álbum.
-- Uma Figurinha tem exatamente um Tipo, e todas as Figurinhas do mesmo Tipo têm o mesmo Preço.
-- Um Pedido nasce de um Carrinho e não reserva nem baixa Estoque.
+- Um Item pertence a exatamente uma Coleção. Uma Coleção que ainda tem Itens não pode ser apagada.
+- Cada Item tem o seu Preço. Não existe preço por Raridade nem por Coleção.
+- Um Pedido nasce de um Carrinho e não reserva nem baixa Estoque ([ADR-0002](docs/adr/0002-pedido-nao-reserva-estoque.md)).
 - Uma Venda pode cobrir o Pedido inteiro, parte dele ou nada. A Baixa reflete só o que foi de fato vendido.
 
 ## Ambiguidades resolvidas
 
-- "gerente": é a relação dele com o seu amigo, não um papel no sistema. No domínio, ele é o **Vendedor**.
+- "categoria" e "coleção": no domínio é **Coleção**, a palavra do colecionador. O site de referência (Tramujas Cards) usa as duas para coisas que se misturam.
+- "card": é um tipo de **Item**, ao lado da figurinha e do colecionável.
+- "admin": é a área do site (**Admin**). A pessoa que a usa é o **Vendedor**.
 - "comprar": o site não vende. O botão cria um **Pedido**, e a **Venda** acontece no WhatsApp.
+
+## Antes da V2
+
+Até 2026-11-02, o site vendia só figurinhas do álbum da Copa 2026, lidas de uma planilha, e usava os termos Álbum, Seção, Grupo, Tipo (Comum/Especial, com preço por Tipo) e Lista de Faltantes. Eles saíram do domínio com o [ADR-0005](docs/adr/0005-catalogo-no-supabase-com-admin.md). A versão antiga está na tag `v1-planilha`.

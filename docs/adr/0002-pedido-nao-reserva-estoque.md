@@ -2,6 +2,8 @@
 
 Clicar em "Finalizar pedido" só abre o WhatsApp com a mensagem pronta. Nada é gravado e o Estoque não muda. A Baixa é sempre feita à mão pelo Vendedor, editando o Estoque na planilha, depois de a Venda se concretizar.
 
+> **Continua valendo na V2** (2026-11-05). A única mudança é que a Baixa passou a ser feita no Admin, e não mais na planilha ([ADR-0005](./0005-catalogo-no-supabase-com-admin.md)).
+
 ## Opções consideradas
 
 - **Baixa automática ao finalizar**: rejeitada. O Comprador pode desistir no WhatsApp, fechar só parte do Pedido ou nem enviar a mensagem, e o Vendedor teria que caçar e desfazer baixas fantasmas.

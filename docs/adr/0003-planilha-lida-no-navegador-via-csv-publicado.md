@@ -1,8 +1,10 @@
 ---
-status: accepted
+status: substituído pelo ADR-0005
 ---
 
 # A planilha é lida pelo navegador, via CSV publicado, a cada visita
+
+> **Substituído** em 2026-11-05 pelo [ADR-0005](./0005-catalogo-no-supabase-com-admin.md). Só a prévia da V1 (`/previa/`) ainda lê a planilha.
 
 O site busca, direto do navegador e em paralelo, duas abas publicadas como CSV ("Publicar na web", uma URL por aba) toda vez que alguém abre a página:
 

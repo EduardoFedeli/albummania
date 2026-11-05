@@ -1,5 +1,7 @@
 # System Design: ÁlbumMania
 
+> **Este documento descreve a V1** (figurinhas da Copa 2026, lidas de uma planilha). A V2, com Supabase e Admin, está no [ADR-0005](./adr/0005-catalogo-no-supabase-com-admin.md), e este documento será revisado na Etapa 4 do [roadmap](./roadmap.md).
+>
 > **Status:** proposta · **Última revisão:** 2026-09-27
 > **Leia antes:** [CONTEXT.md](../CONTEXT.md) (vocabulário) e [docs/adr/](./adr/) (decisões). Este documento mostra como as decisões se encaixam. O porquê de cada uma está nos ADRs.
 

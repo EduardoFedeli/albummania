@@ -76,3 +76,15 @@ As restrições: custo zero, sem pagamento online e, principalmente, **ele preci
 - **O Windows não diferencia maiúsculas nos nomes de arquivo.** `prancha.tsx` e `Prancha.tsx` viraram o mesmo arquivo na minha máquina, mas seriam dois arquivos no Linux do GitHub, e o build quebraria só lá.
 - **Um enfeite também ocupa lugar no grid.** Uma `div` só com formas decorativas posicionadas de forma absoluta ainda ocupava a primeira célula do CSS Grid e empurrava todo o layout. A solução foi tirá-la do fluxo.
 - **A prévia do link no WhatsApp tem regras:** a imagem precisa de endereço absoluto e de ser leve (a nossa tem ~70 KB). E uma prévia com estoque de exemplo não deve aparecer no Google, por isso leva `noindex`.
+
+### V2, Etapa 1: o cliente voltou com outro pedido
+
+**Decisão:** o vendedor viu a prévia e pediu algo bem maior: cadastrar qualquer figurinha, card ou colecionável, com foto e preço por item, numa área com login. A planilha não dava conta disso. O catálogo foi para um banco Postgres no Supabase, e o site continua estático: a vitrine lê o banco direto do navegador, e quem pode gravar é decidido dentro do próprio banco. Em vez de mandar uma lista de perguntas, resolvi entregar o site funcionando primeiro e perguntar só o que sobrar.
+
+**Aprendi:**
+
+- **Requisito muda, e as decisões registradas mostram o tamanho da mudança.** Dois ADRs foram substituídos, e os outros dois continuaram de pé: o pedido segue sem reservar estoque, e as regras seguem fora do React. Os tokens, o CI e o design system também foram aproveitados.
+- **GRANT e RLS são duas portas.** O GRANT diz o que cada papel pode tentar fazer numa tabela, e a RLS diz em quais linhas vale. Testei como visitante: ler o catálogo funciona, e gravar é recusado já na primeira porta. A chave que vai no JavaScript não é segredo, porque a segurança está no banco.
+- **O Vite só entrega ao navegador variáveis que começam com `VITE_`.** Copiei as variáveis do painel do Supabase no formato do Next.js (`NEXT_PUBLIC_...`), e o site abriu com "não deu para carregar o catálogo". O banco estava certo; o nome estava errado.
+- **A API devolve no máximo 1.000 linhas por pedido.** O site de referência tem 1.895 itens. Sem ler em páginas, quase metade sumiria sem nenhum erro.
+- **Foto é questão de direito autoral, não só de visual.** Revender o card comprado é permitido, mas a imagem pertence a quem a fez. Por isso a loja usa só fotos que o próprio vendedor tira.
