@@ -34,6 +34,19 @@ function falhar(erro: { code?: string; message?: string }): never {
   throw new Error(mensagemDoBanco(erro))
 }
 
+/**
+ * Um UPDATE ou DELETE barrado pela RLS não dá erro: ele só altera zero linhas.
+ * Por isso cada gravação pede de volta as linhas alteradas e reclama quando não vem nenhuma.
+ * Sem isso, uma Baixa "daria certo" na tela sem mudar nada no banco.
+ */
+function conferirAlteracao(resposta: { data: unknown[] | null; error: { code?: string; message?: string } | null }) {
+  if (resposta.error) falhar(resposta.error)
+  if (!resposta.data || resposta.data.length === 0) {
+    console.error('A gravação não alterou nenhuma linha (RLS ou linha que não existe mais).')
+    throw new Error('Nada foi salvo. Recarregue a página e tente de novo; se continuar, saia e entre de novo.')
+  }
+}
+
 const doItem = (linha: LinhaDoItem): ItemDoAdmin => ({
   ...itemDaLinha(linha, conexaoDoAmbiente().url),
   caminhoDaFoto: linha.foto,
@@ -130,13 +143,11 @@ export async function atualizarItem(id: number, item: ItemParaSalvar, foto: stri
 }
 
 export async function mudarEstoque(id: number, estoque: number): Promise<void> {
-  const { error } = await supabase().from('itens').update({ estoque }).eq('id', id)
-  if (error) falhar(error)
+  conferirAlteracao(await supabase().from('itens').update({ estoque }).eq('id', id).select('id'))
 }
 
 export async function apagarItem(item: ItemDoAdmin): Promise<void> {
-  const { error } = await supabase().from('itens').delete().eq('id', item.id)
-  if (error) falhar(error)
+  conferirAlteracao(await supabase().from('itens').delete().eq('id', item.id).select('id'))
   if (item.caminhoDaFoto) await apagarFoto(item.caminhoDaFoto)
 }
 
@@ -171,24 +182,20 @@ export async function criarColecao(nome: string, ordem: number): Promise<Colecao
 }
 
 export async function renomearColecao(id: number, nome: string): Promise<void> {
-  const { error } = await supabase().from('colecoes').update({ nome }).eq('id', id)
-  if (error) falhar(error)
+  conferirAlteracao(await supabase().from('colecoes').update({ nome }).eq('id', id).select('id'))
 }
 
 export async function salvarOrdem(colecoes: Colecao[]): Promise<void> {
   const respostas = await Promise.all(
-    colecoes.map((c) => supabase().from('colecoes').update({ ordem: c.ordem }).eq('id', c.id)),
+    colecoes.map((c) => supabase().from('colecoes').update({ ordem: c.ordem }).eq('id', c.id).select('id')),
   )
-  const comErro = respostas.find((r) => r.error)
-  if (comErro?.error) falhar(comErro.error)
+  respostas.forEach(conferirAlteracao)
 }
 
 export async function apagarColecao(id: number): Promise<void> {
-  const { error } = await supabase().from('colecoes').delete().eq('id', id)
-  if (error) falhar(error)
+  conferirAlteracao(await supabase().from('colecoes').delete().eq('id', id).select('id'))
 }
 
 export async function salvarLoja(loja: Loja): Promise<void> {
-  const { error } = await supabase().from('loja').update(loja).eq('id', 1)
-  if (error) falhar(error)
+  conferirAlteracao(await supabase().from('loja').update(loja).eq('id', 1).select('id'))
 }
