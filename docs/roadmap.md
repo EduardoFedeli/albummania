@@ -43,8 +43,8 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 - [x] `base` do Vite na raiz e o workflow publicando no Cloudflare com o wrangler (pula a publicação, com aviso, enquanto o token não existir)
 - [x] Rodapé com o WhatsApp da loja, prévia do link (Open Graph) com título e descrição
 - [x] README, README em inglês (com prints novos) e system design reescritos para a V2; [manual de operação](./operacao.md)
-- [ ] **Eduardo:** conta na Cloudflare, token e Account ID no GitHub ([operacao.md](./operacao.md#1-cloudflare-pages))
-- [ ] Primeiro deploy no Cloudflare: confirmar o endereço e atualizar o README e a prévia da V1 (o `og:url` dela ainda aponta para o GitHub Pages)
+- [x] Conta na Cloudflare, token e Account ID no GitHub ([operacao.md](./operacao.md#1-cloudflare-pages))
+- [x] Primeiro deploy no Cloudflare: a loja está em https://albummania-966.pages.dev (o nome sem número já era de outra pessoa), lendo o Supabase real. A prévia da V1 passou a apontar para lá
 - [ ] **Eduardo:** desligar o GitHub Pages depois de conferir o site no ar
 - [ ] **Eduardo:** acesso diário ao banco no cron-job.org, com aviso de falha por e-mail ([operacao.md](./operacao.md#2-acesso-diário-ao-banco-cron-joborg))
 

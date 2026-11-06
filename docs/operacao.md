@@ -6,8 +6,8 @@ O manual de quem cuida do site (o Eduardo). O Vendedor usa só o Admin. As decis
 
 | O quê | Onde |
 |---|---|
-| Loja (Vitrine) | Cloudflare Pages, no endereço `*.pages.dev` do projeto `albummania` |
-| Admin | o mesmo endereço, com `/admin/` no fim |
+| Loja (Vitrine) | https://albummania-966.pages.dev, no projeto `albummania` do Cloudflare Pages. O "-966" veio porque `albummania.pages.dev` já era de outra pessoa |
+| Admin | https://albummania-966.pages.dev/admin/ |
 | Banco, login e Fotos | Supabase, projeto `albummania` (região São Paulo), organização E.J Studios, na conta do Eduardo |
 | Publicação | GitHub Actions ([`publicar.yml`](../.github/workflows/publicar.yml)), a cada push na `main` |
 | Acesso diário e alarme | cron-job.org, na conta do Eduardo |
