@@ -39,16 +39,24 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 
 ### Etapa 4: no ar
 
-- [ ] ADR-0006: hospedagem no Cloudflare Pages (o GitHub Pages proíbe loja on-line, e o plano Hobby da Vercel não permite uso comercial). Confirmar os termos da Cloudflare
-- [ ] Deploy, `base` do Vite na raiz e domínio
-- [ ] Acesso automático diário, para o Supabase não pausar, e alerta se o site cair
-- [ ] Rodapé com o contato do Vendedor, e README e system design atualizados para a V2
+- [x] [ADR-0006](./adr/0006-hospedagem-no-cloudflare-pages.md): Cloudflare Pages no endereço gratuito `*.pages.dev`, sem comprar domínio. Termos conferidos: o plano gratuito não restringe uso comercial, só proíbe coletar dados de cartão no site
+- [x] `base` do Vite na raiz e o workflow publicando no Cloudflare com o wrangler (pula a publicação, com aviso, enquanto o token não existir)
+- [x] Rodapé com o WhatsApp da loja, prévia do link (Open Graph) com título e descrição
+- [x] README, README em inglês (com prints novos) e system design reescritos para a V2; [manual de operação](./operacao.md)
+- [ ] **Eduardo:** conta na Cloudflare, token e Account ID no GitHub ([operacao.md](./operacao.md#1-cloudflare-pages))
+- [ ] Primeiro deploy no Cloudflare: confirmar o endereço e atualizar o README e a prévia da V1 (o `og:url` dela ainda aponta para o GitHub Pages)
+- [ ] **Eduardo:** desligar o GitHub Pages depois de conferir o site no ar
+- [ ] **Eduardo:** acesso diário ao banco no cron-job.org, com aviso de falha por e-mail ([operacao.md](./operacao.md#2-acesso-diário-ao-banco-cron-joborg))
 
 ### Etapa 5: entrega
 
+- [ ] Apagar os dados de exemplo e criar a conta do Vendedor no Admin ([operacao.md](./operacao.md#criar-a-conta-do-vendedor-ou-de-outro-administrador))
 - [ ] Mostrar ao Vendedor e cadastrar uma Coleção com ele
-- [ ] Manual de 1 página
-- [ ] Perguntas que sobrarem, depois que ele vir o site funcionando
+- [ ] Manual de 1 página para o Vendedor
+- [ ] "Trocar senha" no Admin
+- [ ] Imagem da prévia do link da loja (Open Graph)
+- [ ] Levar os scripts de teste ponta a ponta (Vitrine e Admin) para o repositório
+- [ ] Perguntas que sobrarem, depois que ele vir o site funcionando (nome e domínio, rodapé com CPF ou CNPJ, autorização para o portfólio)
 
 ### Se ele pedir depois
 

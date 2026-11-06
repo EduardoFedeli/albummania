@@ -1,8 +1,8 @@
 # ÁlbumMania
 
-Catálogo online de figurinhas avulsas do álbum da Copa do Mundo 2026. Quem procura cola a lista do que falta, o site mostra o que tem, monta o pedido e envia pelo WhatsApp. Não há backend nem banco de dados: o estoque vive numa planilha do Google.
+Loja on-line de figurinhas, cards e colecionáveis avulsos. Quem vende cadastra as coleções e os itens, com foto, preço e estoque, num painel com login. Quem compra busca, monta o pedido e envia pelo WhatsApp, onde a venda é combinada. Não há servidor próprio, e o custo mensal é zero.
 
-**Demonstração:** https://eduardofedeli.github.io/albummania/previa/ (quantidades e preços de exemplo) · [Read in English](README.en.md)
+[Read in English](README.en.md)
 
 <p align="center">
   <img src="docs/readme/desktop.png" alt="ÁlbumMania no computador" width="72%">
@@ -11,54 +11,71 @@ Catálogo online de figurinhas avulsas do álbum da Copa do Mundo 2026. Quem pro
 
 ## O que ele faz
 
-- **Lista de faltantes colada:** a pessoa cola a lista do jeito que anota (`BRA 3, 7, 12; ARG 10`), o site mostra o que tem e o que não tem e adiciona tudo ao pedido de uma vez.
-- **Busca tolerante:** encontra `bra10`, `BRA 10` ou `bra-10`, e nomes sem acento.
-- **Carrinho que sobrevive ao fechar a aba**, sempre limitado ao estoque.
-- **Total estimado** pelo preço de cada tipo de figurinha.
-- **Pedido pelo WhatsApp**, com a mensagem agrupada por seção, ou copiada para colar onde quiser.
+**Para quem compra:**
+
+- **Busca tolerante:** acha `HR-013` digitado como `hr013` ou `hr 013`, e nomes sem acento.
+- **Coleções como filtro**, e o item sem foto aparece com o numeral do álbum no lugar.
+- **Carrinho que sobrevive a fechar a aba**, limitado ao estoque e conferido de novo a cada visita: se um item acabou, ele sai e o comprador é avisado.
+- **Pedido pelo WhatsApp**, agrupado por coleção, com subtotais e total estimado, ou copiado para colar onde quiser.
+
+**Para quem vende, em `/admin/`:**
+
+- Login com e-mail e senha.
+- Coleções livres: criar, renomear, ordenar e apagar.
+- Itens com foto tirada no próprio celular, comprimida no navegador antes de subir (de vários MB para dezenas de KB).
+- **Baixa rápida:** − e + no estoque, direto na lista.
 
 ## Stack
 
 | Camada | Tecnologia |
 |---|---|
 | Interface | React 19, TypeScript, Vite |
-| Dados | Planilha do Google publicada como CSV |
+| Banco, login e fotos | Supabase: Postgres com Row Level Security, Auth e Storage |
 | Testes | Vitest |
-| CI/CD e hospedagem | GitHub Actions e GitHub Pages |
+| Hospedagem e CI/CD | Cloudflare Pages e GitHub Actions |
 
 ## Como funciona por dentro
 
 ```mermaid
 flowchart LR
-    G["Push na main"] --> A["GitHub Actions<br>tipos, testes e build"]
-    A --> P["GitHub Pages"]
-    P -->|"site estático"| N["Navegador<br>React e TypeScript"]
-    S["Planilha do Google<br>estoque e preços"] -->|"CSV publicado"| N
+    G["Push na main"] --> A["GitHub Actions<br>tipos, testes, build e travas"]
+    A -->|"wrangler"| C["Cloudflare Pages<br>site estático"]
+    C --> N["Navegador do comprador"]
+    N -->|"lê o catálogo (REST)"| S["Supabase<br>Postgres, Auth e Storage"]
+    V["Vendedor em /admin/"] -->|"login e gravação"| S
     N -->|"pedido pronto"| W["WhatsApp"]
+    K["cron-job.org"] -->|"consulta diária"| S
 ```
 
 Três decisões que explicam o desenho:
 
-- **A planilha é a fonte da verdade.** Quem vende atualiza o estoque numa ferramenta que já conhece, e não há servidor nem banco de dados para manter: o custo de operação é zero.
-- **A planilha é lida direto no navegador.** As abas publicadas como CSV são lidas pelo próprio site. Esses links já são públicos por natureza, então não há segredo para esconder.
-- **As regras ficam fora do React.** Busca, leitura da lista e carrinho são TypeScript puro, testados sem precisar da interface.
+- **Não há servidor próprio.** O navegador fala direto com o Supabase, e quem pode gravar é decidido no próprio banco, por Row Level Security. A chave que vai no JavaScript é pública de propósito: ler o catálogo é livre, e gravar exige uma conta que esteja na tabela de administradores.
+- **A vitrine é leve.** Ela lê o banco com `fetch`, sem a biblioteca do Supabase, e o painel do vendedor fica numa página separada. Um passo do CI barra o deploy se o código do painel vazar para a vitrine.
+- **As regras ficam fora do React.** Busca, carrinho, mensagem do pedido, leitura do preço digitado e validação do formulário são TypeScript puro, com testes.
 
-A cada push na `main`, o GitHub Actions confere os tipos, roda os testes, faz o build e publica no GitHub Pages. As decisões completas estão em [`docs/adr`](docs/adr); a arquitetura, com os fluxos, os modos de falha e os riscos, em [`docs/system-design.md`](docs/system-design.md); o glossário do domínio em [`CONTEXT.md`](CONTEXT.md); e o design system em [`docs/design-system.md`](docs/design-system.md).
+A cada push na `main`, o GitHub Actions confere os tipos, roda os testes, faz o build, aplica as travas e publica no Cloudflare Pages. As decisões estão em [`docs/adr`](docs/adr), a arquitetura em [`docs/system-design.md`](docs/system-design.md), a operação (contas, deploy e o que fazer quando algo para) em [`docs/operacao.md`](docs/operacao.md), o glossário do domínio em [`CONTEXT.md`](CONTEXT.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
 
 ## Como rodar
 
-Você precisa de Node.js 24, a mesma versão do pipeline.
+Você precisa do Node.js 24, a mesma versão do pipeline, e de um projeto no Supabase (o plano gratuito basta).
+
+1. No **SQL Editor** do Supabase, rode [`supabase/schema.sql`](supabase/schema.sql) e, se quiser dados de exemplo, [`supabase/exemplo.sql`](supabase/exemplo.sql).
+2. Depois:
 
 ```bash
 git clone https://github.com/EduardoFedeli/albummania.git
 cd albummania
-cp .env.example .env
+cp .env.example .env   # preencha com a URL e a chave publicável do seu projeto
 npm install
-npm run dev   # http://localhost:5173/albummania/previa/
+npm run dev            # loja em http://localhost:5173 e painel em /admin/
 npm test
 ```
 
-O `.env.example` já aponta para uma planilha de teste. No GitHub Actions, as mesmas URLs vêm das variáveis do repositório.
+Para entrar no painel, crie um usuário no Supabase e coloque-o na tabela `administradores`: o passo a passo está em [`docs/operacao.md`](docs/operacao.md).
+
+## História
+
+A primeira versão vendia só figurinhas do álbum da Copa 2026, com o estoque numa planilha do Google. Ela está na tag [`v1-planilha`](https://github.com/EduardoFedeli/albummania/tree/v1-planilha), e o [estudo de caso](docs/estudo-de-caso.md) conta por que o projeto mudou.
 
 ## Autor
 
