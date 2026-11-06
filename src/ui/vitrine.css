@@ -618,3 +618,16 @@
   border-radius: var(--raio-pequeno);
   font: inherit;
 }
+
+/* ─── Rodapé: contato da loja ──────────────────────────────────────────── */
+
+.vt-rodape .vt-rodape-contato {
+  margin-bottom: var(--espaco-2);
+  font-size: var(--texto-base);
+  color: var(--cor-texto);
+}
+
+.vt-rodape-contato a {
+  font-weight: var(--peso-forte);
+  color: var(--cor-texto);
+}

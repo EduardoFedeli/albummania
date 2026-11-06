@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { combinaComBusca } from '../domain/busca'
 import { quantidadeNoCarrinho, resumir } from '../domain/carrinho'
 import { ordenarColecoes, ordenarItens, type Catalogo } from '../domain/catalogo'
+import { formatarWhatsapp } from '../domain/pedido'
 import { BarraDoPedido } from './BarraDoPedido'
 import { CartaoDoItem } from './CartaoDoItem'
 import { PainelDoPedido } from './PainelDoPedido'
@@ -150,6 +151,14 @@ export function Vitrine({ catalogo }: { catalogo: Catalogo }) {
       </main>
 
       <footer className="vt-rodape" data-com-barra={resumo.quantidade > 0 || undefined}>
+        {loja.whatsapp && (
+          <p className="vt-rodape-contato">
+            Atendimento pelo WhatsApp:{' '}
+            <a href={`https://wa.me/${loja.whatsapp}`} target="_blank" rel="noopener noreferrer">
+              {formatarWhatsapp(loja.whatsapp)}
+            </a>
+          </p>
+        )}
         <p>
           Loja independente, sem vínculo com Panini, Topps ou FIFA. As marcas citadas pertencem aos seus donos.
         </p>
