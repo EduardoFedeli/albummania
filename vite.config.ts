@@ -6,8 +6,7 @@ import { defineConfig } from 'vite'
 const pagina = (caminho: string) => fileURLToPath(new URL(caminho, import.meta.url))
 
 export default defineConfig({
-  // O Pages serve o site em /albummania/ (o nome do repositório); sem isso, CSS e JS dão 404 em produção.
-  base: '/albummania/',
+  // O Cloudflare Pages serve o site na raiz do endereço (ADR-0006), então o `base` é o padrão, "/".
   plugins: [react()],
   build: {
     rolldownOptions: {

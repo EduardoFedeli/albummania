@@ -1,4 +1,4 @@
-# A cada push na main: verifica, constrói e publica no GitHub Pages.
+# A cada push na main: verifica, constrói e publica no Cloudflare Pages (ADR-0006).
 # Se qualquer verificação falhar, o site continua na versão anterior.
 name: Publicar site
 
@@ -9,15 +9,13 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: publicar
   cancel-in-progress: false
 
 jobs:
-  verificar-e-construir:
+  verificar-construir-e-publicar:
     runs-on: ubuntu-latest
     steps:
       - name: Baixar o código
@@ -67,18 +65,34 @@ jobs:
             fi
           done
 
-      - name: Empacotar para o Pages
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: dist
+      # Os segredos não podem ser lidos num "if", então este passo só responde se o token existe.
+      # O token fica restrito a este passo e aos de publicar: o build e os testes nunca o veem.
+      - name: Conferir se o Cloudflare está configurado
+        id: cloudflare
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -n "$TOKEN" ]; then
+            echo "configurado=sim" >> "$GITHUB_OUTPUT"
+          else
+            echo "configurado=nao" >> "$GITHUB_OUTPUT"
+            echo "::warning::Falta o segredo CLOUDFLARE_API_TOKEN (docs/operacao.md): o site foi verificado, mas não publicado."
+          fi
 
-  publicar:
-    needs: verificar-e-construir
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.publicacao.outputs.page_url }}
-    steps:
-      - name: Publicar no GitHub Pages
-        id: publicacao
-        uses: actions/deploy-pages@v5
+      # Na primeira vez, cria o projeto. Nas outras, ele já existe e o erro é ignorado.
+      - name: Criar o projeto no Cloudflare Pages
+        if: steps.cloudflare.outputs.configurado == 'sim'
+        continue-on-error: true
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create albummania --production-branch=main
+
+      - name: Publicar no Cloudflare Pages
+        if: steps.cloudflare.outputs.configurado == 'sim'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=albummania --branch=main --commit-hash=${{ github.sha }}
