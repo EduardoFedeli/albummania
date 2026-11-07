@@ -143,27 +143,27 @@ export function FormularioDoItem({ item, dados, colecaoInicial, aoSalvar, aoApag
   }
 
   return (
-    <dialog ref={janela} className="ad-janela" aria-labelledby="ad-form-titulo" onClose={aoFechar}>
-      <form className="ad-form" onSubmit={enviar} noValidate>
-        <div className="ad-form-topo">
-          <h2 id="ad-form-titulo" className="ad-titulo">
+    <dialog ref={janela} className="adm-janela" aria-labelledby="adm-form-titulo" onClose={aoFechar}>
+      <form className="adm-form" onSubmit={enviar} noValidate>
+        <div className="adm-form-topo">
+          <h2 id="adm-form-titulo" className="adm-titulo">
             {item ? 'Editar item' : 'Novo item'}
           </h2>
-          <button type="button" className="ad-fechar" aria-label="Fechar" onClick={aoFechar}>
+          <button type="button" className="adm-fechar" aria-label="Fechar" onClick={aoFechar}>
             ×
           </button>
         </div>
 
-        <div className="ad-foto-campo">
-          <div className="ad-foto-previa">
+        <div className="adm-foto-campo">
+          <div className="adm-foto-previa">
             {fotoNaTela ? (
               <img src={fotoNaTela} alt="Foto do item" />
             ) : (
               <span aria-hidden="true">{numeral({ codigo: rascunho.codigo || null, nome: rascunho.nome || '?' })}</span>
             )}
           </div>
-          <div className="ad-foto-acoes">
-            <label className="ad-botao ad-botao-leve">
+          <div className="adm-foto-acoes">
+            <label className="adm-botao adm-botao-leve">
               {fotoNaTela ? 'Trocar foto' : 'Tirar ou escolher foto'}
               <input
                 ref={campoFoto}
@@ -180,7 +180,7 @@ export function FormularioDoItem({ item, dados, colecaoInicial, aoSalvar, aoApag
             {fotoNaTela && (
               <button
                 type="button"
-                className="ad-link"
+                className="adm-link"
                 onClick={() => {
                   esquecerFoto()
                   setRemoverFoto(true)
@@ -189,7 +189,7 @@ export function FormularioDoItem({ item, dados, colecaoInicial, aoSalvar, aoApag
                 Remover foto
               </button>
             )}
-            <p className="ad-dica">Use uma foto do próprio item. O site reduz o tamanho sozinho.</p>
+            <p className="adm-dica">Use uma foto do próprio item. O site reduz o tamanho sozinho.</p>
           </div>
         </div>
 
@@ -206,12 +206,12 @@ export function FormularioDoItem({ item, dados, colecaoInicial, aoSalvar, aoApag
           )}
         </Campo>
 
-        <div className="ad-dupla">
+        <div className="adm-dupla">
           <Campo rotulo="Código" dica="Opcional. Ex.: BRA 10" erro={erros.codigo}>
             {(controle) => <input {...controle} ref={campoCodigo} value={rascunho.codigo} onChange={mudar('codigo')} />}
           </Campo>
           <Campo rotulo="Equipe" dica="Opcional. Ex.: Brasil">
-            {(controle) => <input {...controle} list="ad-equipes" value={rascunho.equipe} onChange={mudar('equipe')} />}
+            {(controle) => <input {...controle} list="adm-equipes" value={rascunho.equipe} onChange={mudar('equipe')} />}
           </Campo>
         </div>
 
@@ -221,11 +221,11 @@ export function FormularioDoItem({ item, dados, colecaoInicial, aoSalvar, aoApag
 
         <Campo rotulo="Raridade" dica="Opcional. Aparece como selo na foto. Ex.: Brilhante">
           {(controle) => (
-            <input {...controle} list="ad-raridades" value={rascunho.raridade} onChange={mudar('raridade')} />
+            <input {...controle} list="adm-raridades" value={rascunho.raridade} onChange={mudar('raridade')} />
           )}
         </Campo>
 
-        <div className="ad-dupla">
+        <div className="adm-dupla">
           <Campo rotulo="Preço (R$)" erro={erros.preco}>
             {(controle) => (
               <input
@@ -244,39 +244,39 @@ export function FormularioDoItem({ item, dados, colecaoInicial, aoSalvar, aoApag
           </Campo>
         </div>
 
-        <datalist id="ad-equipes">
+        <datalist id="adm-equipes">
           {equipes.map((v) => (
             <option key={v} value={v} />
           ))}
         </datalist>
-        <datalist id="ad-raridades">
+        <datalist id="adm-raridades">
           {raridades.map((v) => (
             <option key={v} value={v} />
           ))}
         </datalist>
 
         {erro && (
-          <p className="ad-erro" role="alert">
+          <p className="adm-erro" role="alert">
             {erro}
           </p>
         )}
         {aviso && (
-          <p className="ad-aviso" role="status">
+          <p className="adm-aviso" role="status">
             {aviso}
           </p>
         )}
 
-        <div className="ad-form-acoes">
-          <button type="submit" className="ad-botao ad-botao-principal" disabled={salvando}>
+        <div className="adm-form-acoes">
+          <button type="submit" className="adm-botao adm-botao-principal" disabled={salvando}>
             {salvando ? 'Salvando…' : 'Salvar'}
           </button>
           {!item && (
-            <button type="button" className="ad-botao" disabled={salvando} onClick={() => void salvar(true)}>
+            <button type="button" className="adm-botao" disabled={salvando} onClick={() => void salvar(true)}>
               Salvar e cadastrar outro
             </button>
           )}
           {item && (
-            <button type="button" className="ad-botao ad-botao-perigo" disabled={salvando} onClick={() => void apagar()}>
+            <button type="button" className="adm-botao adm-botao-perigo" disabled={salvando} onClick={() => void apagar()}>
               Apagar item
             </button>
           )}

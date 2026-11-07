@@ -22,10 +22,10 @@ export function Entrar() {
   }
 
   return (
-    <main className="ad-centro">
-      <form className="ad-cartao ad-entrar" onSubmit={enviar}>
-        <p className="ad-sobretitulo">Área do Vendedor</p>
-        <h1 className="ad-titulo">Entrar no Admin</h1>
+    <main className="adm-centro">
+      <form className="adm-cartao adm-entrar" onSubmit={enviar}>
+        <p className="adm-sobretitulo">Área do Vendedor</p>
+        <h1 className="adm-titulo">Entrar no Admin</h1>
         <Campo rotulo="E-mail">
           {(controle) => (
             <input
@@ -51,14 +51,14 @@ export function Entrar() {
           )}
         </Campo>
         {erro && (
-          <p className="ad-erro" role="alert">
+          <p className="adm-erro" role="alert">
             {erro}
           </p>
         )}
-        <button className="ad-botao ad-botao-principal" disabled={entrando}>
+        <button className="adm-botao adm-botao-principal" disabled={entrando}>
           {entrando ? 'Entrando…' : 'Entrar'}
         </button>
-        <p className="ad-dica">Esqueceu a senha? Peça uma nova a quem cuida do site.</p>
+        <p className="adm-dica">Esqueceu a senha? Peça uma nova a quem cuida do site.</p>
       </form>
     </main>
   )

@@ -93,6 +93,27 @@ export async function sair(): Promise<void> {
   await supabase().auth.signOut()
 }
 
+/** O e-mail da conta que está logada, lido da sessão guardada no navegador. */
+export async function emailDaConta(): Promise<string | null> {
+  const { data } = await supabase().auth.getSession()
+  return data.session?.user.email ?? null
+}
+
+const frasesDaSenha: Record<string, string> = {
+  same_password: 'A nova senha precisa ser diferente da atual.',
+  weak_password: 'Essa senha é fraca demais. Use uma mais longa, misturando letras e números.',
+  reauthentication_needed: 'Por segurança, saia, entre de novo e troque a senha logo em seguida.',
+}
+
+export async function trocarSenha(senha: string): Promise<void> {
+  const { error } = await supabase().auth.updateUser({ password: senha })
+  if (!error) return
+  console.error('Erro ao trocar a senha:', error)
+  throw new Error(
+    (error.code && frasesDaSenha[error.code]) || 'Não deu para trocar a senha agora. Confira a internet e tente de novo.',
+  )
+}
+
 export async function ehAdministrador(): Promise<boolean> {
   const { data, error } = await supabase().rpc('eh_administrador')
   if (error) falhar(error)

@@ -61,13 +61,13 @@ O Supabase gratuito pausa depois de 7 dias sem acesso. Este acesso faz uma consu
    on conflict do nothing;
    ```
 
-3. Mande o endereço do Admin e a senha por uma conversa privada.
+3. Mande o endereço do Admin e a senha provisória por uma conversa privada. No primeiro acesso, a pessoa troca por uma senha que só ela sabe, na aba **Conta**.
 
 O cadastro público fica desligado (**Authentication → Sign In / Providers**), então uma conta só nasce desse jeito.
 
 ### O Vendedor esqueceu a senha
 
-Por enquanto não há "trocar senha" no Admin (está no [roadmap](./roadmap.md)). Apague a conta em **Authentication → Users** e crie de novo, com os passos acima. Apagar a conta tira a linha dela de `administradores` sozinho (`on delete cascade`). As Coleções e os Itens não mudam.
+O Admin tem "trocar senha" (aba **Conta**), mas não tem "esqueci a senha" por e-mail: o envio de e-mail do Supabase gratuito só entrega para os membros da organização, e o Vendedor não é membro. Então apague a conta em **Authentication → Users** e crie de novo, com os passos acima e uma senha provisória. Apagar a conta tira a linha dela de `administradores` sozinho (`on delete cascade`). As Coleções e os Itens não mudam.
 
 ### A loja mostra "Não deu para carregar o catálogo"
 

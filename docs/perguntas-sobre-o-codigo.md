@@ -98,3 +98,25 @@ Porque o `npm ci` e o build rodam código de terceiros: as dependências, os scr
 Porque quem lê as tags Open Graph é o robô do WhatsApp, que monta a prévia do link sem rodar JavaScript. O título da aba só muda depois que o React carrega e lê o banco, e o robô nunca chega a ver isso. Por isso as tags precisam estar no HTML. O custo é que, se o Vendedor trocar o nome da loja no Admin, a prévia do link continua com o nome antigo até alguém mudar o `index.html`. Arquivo: [`index.html`](../index.html).
 
 </details>
+
+## V2, Etapa 5: preparando a entrega
+
+### 10. Os Itens sumiram do Admin no seu navegador, mas apareciam no navegador de teste. O que explicava a diferença, e por que o console não mostrou erro nenhum?
+
+<details>
+<summary>Resposta</summary>
+
+O seu navegador tem um bloqueador de anúncio. Esses bloqueadores usam listas públicas, como a EasyList, com regras do tipo `##.ad-item`: "esconda todo elemento com a classe `ad-item`". As classes do Admin começavam com `ad-` (de "admin"), e o bloqueador achou que os Itens eram propaganda. Ele esconde o elemento com CSS (`display: none`), então o React montou tudo certo e não havia erro para mostrar: a contagem dizia "10 itens", e os 10 estavam no HTML, só que invisíveis.
+
+A depuração seguiu o caminho certo: reproduzir com os dados reais (apareceu tudo), comparar com o seu ambiente (a diferença era a extensão) e provar a causa aplicando as regras da EasyList no navegador de teste (0 de 10 visíveis antes, 10 de 10 depois). O conserto foi na raiz: o prefixo virou `adm-`, e o teste [`src/nomes-de-classe.test.ts`](../src/nomes-de-classe.test.ts) reprova qualquer nome com cara de anúncio (`ad-`, `ads-`, `banner-`, `sponsor-`) que alguém crie no futuro.
+
+</details>
+
+### 11. O Supabase também confere a senha nova. Por que validar o tamanho e a repetição no navegador antes?
+
+<details>
+<summary>Resposta</summary>
+
+Por causa da conversa com quem está usando. O Supabase não sabe que existe um campo "Repita a nova senha": essa conferência só pode ser feita na tela. E o erro do tamanho, vindo do banco, chega em inglês e depois de uma ida e volta pela internet. Validando antes, o Vendedor recebe na hora uma frase clara em português ("Use pelo menos 8 caracteres"). A regra fica em TypeScript puro, com testes ([`src/domain/conta.ts`](../src/domain/conta.ts)), e o Supabase continua sendo a última palavra: os erros dele (como "a nova senha precisa ser diferente da atual") também viram frases em português, em [`src/infra/admin.ts`](../src/infra/admin.ts).
+
+</details>

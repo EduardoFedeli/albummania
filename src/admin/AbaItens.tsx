@@ -59,9 +59,9 @@ export function AbaItens({ dados, atualizar, irParaColecoes }: Props) {
 
   if (dados.colecoes.length === 0) {
     return (
-      <div className="ad-cartao ad-vazio">
+      <div className="adm-cartao adm-vazio">
         <p>Para cadastrar Itens, crie primeiro uma Coleção, como "Match Attax 26/27" ou "Colecionáveis".</p>
-        <button className="ad-botao ad-botao-principal" onClick={irParaColecoes}>
+        <button className="adm-botao adm-botao-principal" onClick={irParaColecoes}>
           Criar a primeira Coleção
         </button>
       </div>
@@ -72,8 +72,8 @@ export function AbaItens({ dados, atualizar, irParaColecoes }: Props) {
 
   return (
     <>
-      <div className="ad-barra">
-        <label className="ad-busca">
+      <div className="adm-barra">
+        <label className="adm-busca">
           <span className="so-leitor">Buscar Item</span>
           <input
             type="search"
@@ -85,7 +85,7 @@ export function AbaItens({ dados, atualizar, irParaColecoes }: Props) {
             }}
           />
         </label>
-        <label className="ad-filtro">
+        <label className="adm-filtro">
           <span className="so-leitor">Coleção</span>
           <select
             value={colecaoId ?? ''}
@@ -102,62 +102,62 @@ export function AbaItens({ dados, atualizar, irParaColecoes }: Props) {
             ))}
           </select>
         </label>
-        <button className="ad-botao ad-botao-principal" onClick={() => setEditando('novo')}>
+        <button className="adm-botao adm-botao-principal" onClick={() => setEditando('novo')}>
           + Novo item
         </button>
       </div>
 
-      <p className="ad-contagem" role="status">
+      <p className="adm-contagem" role="status">
         {visiveis.length === total
           ? `${total} ${total === 1 ? 'item cadastrado' : 'itens cadastrados'}, ${comEstoque} com Estoque`
           : `Mostrando ${visiveis.length} de ${total} itens`}
       </p>
 
       {erro && (
-        <p className="ad-erro" role="alert">
+        <p className="adm-erro" role="alert">
           {erro}
         </p>
       )}
 
       {visiveis.length === 0 ? (
-        <p className="ad-cartao ad-vazio">
+        <p className="adm-cartao adm-vazio">
           {total === 0 ? 'Nenhum item cadastrado ainda. Comece pelo "+ Novo item".' : 'Nenhum item encontrado.'}
         </p>
       ) : (
-        <ul className="ad-lista">
+        <ul className="adm-lista">
           {visiveis.slice(0, quantos).map((item) => {
             const ocupado = gravando.has(item.id)
             return (
-              <li key={item.id} className="ad-item" data-esgotado={item.estoque === 0 || undefined}>
-                <div className="ad-item-foto">
+              <li key={item.id} className="adm-item" data-esgotado={item.estoque === 0 || undefined}>
+                <div className="adm-item-foto">
                   {item.foto ? (
                     <img src={item.foto} alt="" loading="lazy" decoding="async" />
                   ) : (
                     <span aria-hidden="true">{numeral(item)}</span>
                   )}
                 </div>
-                <div className="ad-item-dados">
-                  <p className="ad-item-detalhe">
+                <div className="adm-item-dados">
+                  <p className="adm-item-detalhe">
                     {[item.codigo, nomeDaColecao.get(item.colecaoId)].filter(Boolean).join(' · ')}
                   </p>
-                  <p className="ad-item-nome">{item.nome}</p>
-                  <p className="ad-item-preco">
+                  <p className="adm-item-nome">{item.nome}</p>
+                  <p className="adm-item-preco">
                     {formatarPreco(item.precoCentavos)}
-                    {item.estoque === 0 && <span className="ad-selo">Esgotado</span>}
+                    {item.estoque === 0 && <span className="adm-selo">Esgotado</span>}
                   </p>
                 </div>
-                <div className="ad-estoque" role="group" aria-label={`Estoque de ${item.nome}`} aria-busy={ocupado}>
+                <div className="adm-estoque" role="group" aria-label={`Estoque de ${item.nome}`} aria-busy={ocupado}>
                   <button
-                    className="ad-passo"
+                    className="adm-passo"
                     aria-label={`Tirar 1 de ${item.nome}`}
                     disabled={ocupado || item.estoque === 0}
                     onClick={() => void mudar(item, -1)}
                   >
                     −
                   </button>
-                  <output className="ad-estoque-valor">{item.estoque}</output>
+                  <output className="adm-estoque-valor">{item.estoque}</output>
                   <button
-                    className="ad-passo"
+                    className="adm-passo"
                     aria-label={`Pôr mais 1 de ${item.nome}`}
                     disabled={ocupado}
                     onClick={() => void mudar(item, 1)}
@@ -165,7 +165,7 @@ export function AbaItens({ dados, atualizar, irParaColecoes }: Props) {
                     +
                   </button>
                 </div>
-                <button className="ad-botao ad-botao-leve ad-editar" onClick={() => setEditando(item)}>
+                <button className="adm-botao adm-botao-leve adm-editar" onClick={() => setEditando(item)}>
                   Editar
                 </button>
               </li>
@@ -175,7 +175,7 @@ export function AbaItens({ dados, atualizar, irParaColecoes }: Props) {
       )}
 
       {visiveis.length > quantos && (
-        <button className="ad-botao ad-mais" onClick={() => setQuantos((n) => n + POR_VEZ)}>
+        <button className="adm-botao adm-mais" onClick={() => setQuantos((n) => n + POR_VEZ)}>
           Mostrar mais ({visiveis.length - quantos} restantes)
         </button>
       )}

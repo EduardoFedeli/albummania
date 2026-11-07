@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { aoMudarSessao, buscarTudo, ehAdministrador, sair, type DadosDoAdmin } from '../infra/admin'
 import { AbaColecoes } from './AbaColecoes'
+import { AbaConta } from './AbaConta'
 import { AbaItens } from './AbaItens'
 import { AbaLoja } from './AbaLoja'
 import { Entrar } from './Entrar'
@@ -46,7 +47,7 @@ export function Admin() {
   switch (acesso.tipo) {
     case 'verificando':
       return (
-        <main className="ad-centro">
+        <main className="adm-centro">
           <p role="status">Carregando…</p>
         </main>
       )
@@ -54,10 +55,10 @@ export function Admin() {
       return <Entrar />
     case 'sem-permissao':
       return (
-        <main className="ad-centro">
-          <div className="ad-cartao">
+        <main className="adm-centro">
+          <div className="adm-cartao">
             <p>Esta conta não tem acesso ao Admin.</p>
-            <button className="ad-botao" onClick={() => void sair()}>
+            <button className="adm-botao" onClick={() => void sair()}>
               Sair
             </button>
           </div>
@@ -65,10 +66,10 @@ export function Admin() {
       )
     case 'erro':
       return (
-        <main className="ad-centro">
-          <div className="ad-cartao" role="alert">
+        <main className="adm-centro">
+          <div className="adm-cartao" role="alert">
             <p>{acesso.mensagem}</p>
-            <button className="ad-botao" onClick={() => location.reload()}>
+            <button className="adm-botao" onClick={() => location.reload()}>
               Tentar de novo
             </button>
           </div>
@@ -79,12 +80,13 @@ export function Admin() {
   }
 }
 
-type Aba = 'itens' | 'colecoes' | 'loja'
+type Aba = 'itens' | 'colecoes' | 'loja' | 'conta'
 
 const ABAS: Array<[Aba, string]> = [
   ['itens', 'Itens'],
   ['colecoes', 'Coleções'],
   ['loja', 'Loja'],
+  ['conta', 'Conta'],
 ]
 
 function AreaDoAdmin() {
@@ -113,11 +115,11 @@ function AreaDoAdmin() {
 
   if (falhou) {
     return (
-      <main className="ad-centro">
-        <div className="ad-cartao" role="alert">
+      <main className="adm-centro">
+        <div className="adm-cartao" role="alert">
           <p>Não deu para carregar os dados. Confira a internet e tente de novo.</p>
           <button
-            className="ad-botao"
+            className="adm-botao"
             onClick={() => {
               setFalhou(false)
               setTentativa((n) => n + 1)
@@ -132,7 +134,7 @@ function AreaDoAdmin() {
 
   if (!dados) {
     return (
-      <main className="ad-centro">
+      <main className="adm-centro">
         <p role="status">Carregando os itens…</p>
       </main>
     )
@@ -140,26 +142,26 @@ function AreaDoAdmin() {
 
   return (
     <>
-      <header className="ad-topo">
+      <header className="adm-topo">
         <div>
-          <p className="ad-sobretitulo">Admin</p>
-          <p className="ad-marca">{dados.loja.nome}</p>
+          <p className="adm-sobretitulo">Admin</p>
+          <p className="adm-marca">{dados.loja.nome}</p>
         </div>
-        <div className="ad-topo-acoes">
-          <a className="ad-botao ad-botao-leve" href="../" target="_blank" rel="noreferrer">
+        <div className="adm-topo-acoes">
+          <a className="adm-botao adm-botao-leve" href="../" target="_blank" rel="noreferrer">
             Ver a loja
           </a>
-          <button className="ad-botao ad-botao-leve" onClick={() => void sair()}>
+          <button className="adm-botao adm-botao-leve" onClick={() => void sair()}>
             Sair
           </button>
         </div>
       </header>
 
-      <nav className="ad-abas" aria-label="Partes do Admin">
+      <nav className="adm-abas" aria-label="Partes do Admin">
         {ABAS.map(([id, rotulo]) => (
           <button
             key={id}
-            className="ad-aba"
+            className="adm-aba"
             aria-current={aba === id ? 'page' : undefined}
             onClick={() => setAba(id)}
           >
@@ -168,10 +170,11 @@ function AreaDoAdmin() {
         ))}
       </nav>
 
-      <main className="ad-pagina">
+      <main className="adm-pagina">
         {aba === 'itens' && <AbaItens dados={dados} atualizar={atualizar} irParaColecoes={() => setAba('colecoes')} />}
         {aba === 'colecoes' && <AbaColecoes dados={dados} atualizar={atualizar} />}
         {aba === 'loja' && <AbaLoja dados={dados} atualizar={atualizar} />}
+        {aba === 'conta' && <AbaConta />}
       </main>
     </>
   )

@@ -43,7 +43,7 @@ export function AbaLoja({ dados, atualizar }: Props) {
   }
 
   return (
-    <form className="ad-cartao ad-form-loja" onSubmit={salvar} noValidate>
+    <form className="adm-cartao adm-form-loja" onSubmit={salvar} noValidate>
       <Campo rotulo="Nome da loja" erro={erros.nome}>
         {(controle) => (
           <input
@@ -77,15 +77,15 @@ export function AbaLoja({ dados, atualizar }: Props) {
         )}
       </Campo>
       {erro && (
-        <p className="ad-erro" role="alert">
+        <p className="adm-erro" role="alert">
           {erro}
         </p>
       )}
-      <button className="ad-botao ad-botao-principal" disabled={situacao === 'salvando'}>
+      <button className="adm-botao adm-botao-principal" disabled={situacao === 'salvando'}>
         {situacao === 'salvando' ? 'Salvando…' : 'Salvar'}
       </button>
       {situacao === 'salvo' && (
-        <p className="ad-aviso" role="status">
+        <p className="adm-aviso" role="status">
           Salvo! A loja já mostra os dados novos.
         </p>
       )}

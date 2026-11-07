@@ -21,11 +21,11 @@ export function Campo({ rotulo, dica, erro, children }: Props) {
   const descricao = texto ? `${id}-descricao` : undefined
 
   return (
-    <div className="ad-campo">
+    <div className="adm-campo">
       <label htmlFor={id}>{rotulo}</label>
       {children({ id, 'aria-invalid': erro ? true : undefined, 'aria-describedby': descricao })}
       {texto && (
-        <p id={descricao} className={erro ? 'ad-campo-erro' : 'ad-campo-dica'}>
+        <p id={descricao} className={erro ? 'adm-campo-erro' : 'adm-campo-dica'}>
           {texto}
         </p>
       )}

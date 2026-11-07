@@ -45,7 +45,7 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 - [x] README, README em inglês (com prints novos) e system design reescritos para a V2; [manual de operação](./operacao.md)
 - [x] Conta na Cloudflare, token e Account ID no GitHub ([operacao.md](./operacao.md#1-cloudflare-pages))
 - [x] Primeiro deploy no Cloudflare: a loja está em https://albummania-966.pages.dev (o nome sem número já era de outra pessoa), lendo o Supabase real. A prévia da V1 passou a apontar para lá
-- [ ] **Eduardo:** desligar o GitHub Pages depois de conferir o site no ar
+- [x] GitHub Pages desligado (o endereço antigo responde 404)
 - [ ] **Eduardo:** acesso diário ao banco no cron-job.org, com aviso de falha por e-mail ([operacao.md](./operacao.md#2-acesso-diário-ao-banco-cron-joborg))
 
 ### Etapa 5: entrega
@@ -53,7 +53,8 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 - [ ] Apagar os dados de exemplo e criar a conta do Vendedor no Admin ([operacao.md](./operacao.md#criar-a-conta-do-vendedor-ou-de-outro-administrador))
 - [ ] Mostrar ao Vendedor e cadastrar uma Coleção com ele
 - [ ] Manual de 1 página para o Vendedor
-- [ ] "Trocar senha" no Admin
+- [x] "Trocar senha" no Admin (aba Conta). O "esqueci a senha" por e-mail ficou de fora: o e-mail gratuito do Supabase só entrega para membros da organização
+- [x] Admin invisível para quem usa bloqueador de anúncio: a EasyList esconde `.ad-item`, e as classes do Admin passaram de `ad-` para `adm-`, com um teste que barra nomes com cara de anúncio
 - [ ] Imagem da prévia do link da loja (Open Graph)
 - [ ] Levar os scripts de teste ponta a ponta (Vitrine e Admin) para o repositório
 - [ ] Perguntas que sobrarem, depois que ele vir o site funcionando (nome e domínio, rodapé com CPF ou CNPJ, autorização para o portfólio)
