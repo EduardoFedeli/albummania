@@ -19,13 +19,6 @@ Pesquisa de 2026-11-04 sobre o que a loja pode mostrar. **É pesquisa, não pare
 - **Jogadores:** o rosto do jogador só aparece como parte do Item à venda, nunca num banner ou na decoração. Usar a imagem de alguém para vender gera indenização mesmo sem prova de prejuízo (Súmula 403 do STJ).
 - **Lei do e-commerce:** a loja on-line precisa mostrar nome, CPF ou CNPJ, endereço e contato, além das condições de pagamento e entrega (Decreto 7.962/2013, art. 2º). O Vendedor precisa escolher entre mostrar o CPF e abrir um MEI.
 
-## O que o site faz
-
-- O Admin só aceita Fotos enviadas pelo Vendedor. O combinado é ele fotografar ou escanear os próprios Itens, o que ainda mostra o estado de cada um ao Comprador.
-- Item sem Foto aparece com o espaço do numeral, nunca com uma imagem tirada de outro site.
-- O rodapé diz que a loja é independente e não tem vínculo com Panini, Topps ou FIFA.
-- No acordo do freela, fica escrito que o conteúdo cadastrado é responsabilidade do Vendedor.
-
 ## Fontes
 
 - [Lei 9.610/98 (direitos autorais)](https://www.planalto.gov.br/ccivil_03/leis/l9610.htm)
