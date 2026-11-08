@@ -8,18 +8,17 @@ const css = readFileSync('src/styles/tokens.css', 'utf8')
 
 function bloco(seletor: string): Tokens {
   const inicio = css.indexOf(`${seletor} {`)
+  if (inicio === -1) throw new Error(`O bloco "${seletor}" não existe em tokens.css`)
   const fim = css.indexOf('}', inicio)
   const declaracoes = css.slice(inicio, fim).matchAll(/(--[\w-]+):\s*([^;]+);/g)
   return Object.fromEntries([...declaracoes].map(([, nome, valor]) => [nome, valor.trim()]))
 }
 
-const tokens = bloco(':root')
-
-function resolver(nome: string): string {
-  const valor = tokens[nome]
-  const referencia = valor?.match(/^var\((--[\w-]+)\)$/)
-  return referencia ? resolver(referencia[1]) : valor
-}
+// O escuro é o padrão (:root). O claro troca só as cores, por cima dele, como acontece no navegador.
+const TEMAS: Array<[string, Tokens]> = [
+  ['escuro', bloco(':root')],
+  ['claro', { ...bloco(':root'), ...bloco(":root[data-tema='claro']") }],
+]
 
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))
 
@@ -38,32 +37,47 @@ const luminancia = (hex: string) => {
 }
 
 const contraste = (a: string, b: string) => {
-  const [claro, escuro] = [luminancia(a), luminancia(b)].sort((x, y) => y - x)
-  return (claro + 0.05) / (escuro + 0.05)
+  const [maisClara, maisEscura] = [luminancia(a), luminancia(b)].sort((x, y) => y - x)
+  return (maisClara + 0.05) / (maisEscura + 0.05)
 }
 
 const TEXTO_AA = 4.5
 const ELEMENTO_AA = 3
 
-describe('contraste dos tokens', () => {
+describe.each(TEMAS)('contraste dos tokens no tema %s', (tema, tokens) => {
+  const resolver = (nome: string): string => {
+    const valor = tokens[nome]
+    const referencia = valor?.match(/^var\((--[\w-]+)\)$/)
+    return referencia ? resolver(referencia[1]) : valor
+  }
   const cor = (nome: string) => resolver(`--cor-${nome}`)
+
+  it(`o fundo é ${tema === 'escuro' ? 'mais escuro' : 'mais claro'} que o texto`, () => {
+    const fundoMaisEscuro = luminancia(cor('fundo')) < luminancia(cor('texto'))
+    expect(fundoMaisEscuro).toBe(tema === 'escuro')
+  })
 
   it.each([
     ['texto', 'fundo'],
     ['texto', 'superficie'],
+    ['texto', 'apagado'],
     ['texto-fraco', 'fundo'],
     ['texto-fraco', 'superficie'],
     ['texto-sobre-acao', 'acao'],
     ['texto-sobre-destaque', 'destaque'],
     ['erro', 'fundo'],
+    ['erro', 'superficie'],
   ])('texto %s sobre %s passa no AA', (frente, fundo) => {
     expect(contraste(cor(frente), cor(fundo))).toBeGreaterThanOrEqual(TEXTO_AA)
   })
 
   it.each([
     ['foco', 'fundo'],
+    ['foco', 'superficie'],
     ['borda-forte', 'fundo'],
+    ['borda-forte', 'superficie'],
     ['acao', 'fundo'],
+    ['destaque', 'superficie'],
   ])('elemento %s se distingue de %s', (frente, fundo) => {
     expect(contraste(cor(frente), cor(fundo))).toBeGreaterThanOrEqual(ELEMENTO_AA)
   })

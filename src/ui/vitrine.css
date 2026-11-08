@@ -14,6 +14,30 @@
   padding-bottom: var(--espaco-5);
 }
 
+.vt-topo-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+/* Botão de tema: redondo, só com o desenho do sol ou da lua. */
+.vt-tema {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--alvo-minimo);
+  height: var(--alvo-minimo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-superficie);
+  cursor: pointer;
+}
+
+.vt-tema:hover {
+  border-color: var(--cor-borda-forte);
+}
+
 .vt-sobretitulo {
   margin: 0;
   font-size: var(--texto-pequeno);
@@ -447,7 +471,8 @@
 }
 
 .vt-painel::backdrop {
-  background: rgb(20 33 61 / 0.55);
+  /* Navegadores antigos não deixam o ::backdrop herdar variáveis CSS: aí vale o véu azul-marinho. */
+  background: var(--cor-veu, rgb(20 33 61 / 0.55));
 }
 
 @media (min-width: 48rem) {
@@ -616,6 +641,7 @@
   padding: var(--espaco-2);
   border: 1px solid var(--cor-borda-forte);
   border-radius: var(--raio-pequeno);
+  background: var(--cor-superficie);
   font: inherit;
 }
 

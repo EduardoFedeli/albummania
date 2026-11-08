@@ -6,7 +6,7 @@
 
 O site parece as páginas internas do próprio álbum. Cada Figurinha é mostrada como o **espaço vazio do álbum**, com o Código em destaque, porque é isso que o colecionador procura quando folheia as páginas. A metáfora vem do domínio, não é decoração: ela reforça a busca por Código.
 
-- **Tema único, claro**: as páginas internas do álbum. O tema escuro foi descartado em 2026-09-29, porque é complexidade sem retorno para quem abre um link de WhatsApp para comprar figurinhas.
+- **Tema escuro como padrão, com o claro a um toque (2026-11-07):** a V1 era só clara (as páginas internas do álbum), e o escuro tinha sido descartado em 2026-09-29. Na V2, com fotos de cards, o Eduardo escolheu o escuro como padrão: as fotos se destacam mais sobre o fundo noturno, tirado da mesma tinta azul-marinho. O claro continua lá, com a mesma cara de antes.
 
 ### O que o álbum real ensina
 
@@ -58,7 +58,7 @@ Das três variações do protótipo, a escolha foi uma **mistura**, montada como
 
 ## Decisões
 
-- **Tema:** só claro. Sem botão de tema e sem seguir a preferência do sistema.
+- **Tema (2026-11-07):** escuro por padrão, para todo mundo, sem seguir a preferência do sistema. O botão de tema (sol ou lua) fica no topo da Vitrine, redondo e só com o desenho, e na barra do Admin, com o texto "Modo claro" ou "Modo escuro": ele mostra para onde vai, não onde está. A escolha fica gravada no navegador e vale para a Vitrine e o Admin, que estão no mesmo endereço. Um script pequeno no `<head>` aplica o claro antes da primeira pintura, para a tela não piscar escura. A prévia da V1 e a prancha ficam fixas no claro, como foram aprovadas.
 - **Layout:** mobile-first. No celular, o conteúdo ocupa a tela com margem de 1rem. Em telas largas, fica numa coluna de no máximo `--largura-conteudo` (64rem), centralizada, com a grade de espaços se adaptando à largura (3 colunas no celular, 6 no desktop), a tira de números numa linha só e a barra do pedido como pílula centralizada de até `--largura-leitura` (38rem). [Tela no desktop](./design/layout-desktop.png).
 - **Índice de seleções = filtro:** no celular é uma lista horizontal de arrastar; no desktop largo (a partir de 72rem), uma **barra lateral fixa agrupada por Grupo**, como a tabela de grupos da Copa. Cada seleção é um botão de marcar: nenhuma marcada mostra todas, e marcar Brasil e Suíça mostra só as páginas delas, com o aviso "Mostrando: Suíça e Brasil." e o botão "Mostrar todas".
 - **Espaço de Figurinha:** mostra o Estoque real ("3 disponíveis"). Tocar no espaço adiciona uma unidade, e no lugar aparece o controle **− quantidade +** (botões de 44px). O + fica desativado quando a quantidade chega ao Estoque.
@@ -114,7 +114,7 @@ A fonte da verdade é [`src/styles/tokens.css`](../src/styles/tokens.css). Os co
 
 | Grupo | Tokens | Regra |
 |---|---|---|
-| **Cor** | fundo, superfície, texto, texto fraco/apagado, borda, ação, destaque, foco, erro, brilho | tinta azul-marinho `#14213D`; ação verde |
+| **Cor** | fundo, superfície, texto, texto fraco/apagado, borda, ação, destaque, foco, erro, brilho, véu | escuro (padrão, no `:root`): fundo noturno `#0C1322`, texto névoa `#E6EAF2`, destaque invertido (pílula clara com texto escuro). Claro (`:root[data-tema='claro']`): tinta azul-marinho `#14213D`. Ação verde nos dois. O teste de contraste confere cada par **nos dois temas** |
 | **Cor da Seção** | `--mistura-cabecalho`, `--mistura-espaco`, `--mistura-numeral` | a cor da bandeira é misturada ao fundo com `color-mix()`, então se adapta a qualquer fundo; texto nunca fica direto sobre a cor pura |
 | **Tipografia** | `--fonte-titulo` (Unbounded), `--fonte-texto` (Instrument Sans), escala 1,25 de 0,8 a 3,05rem | Unbounded só em títulos e no numeral decorativo |
 | **Espaço** | `--espaco-1` a `--espaco-8` (4px a 64px) | múltiplos de 4px |

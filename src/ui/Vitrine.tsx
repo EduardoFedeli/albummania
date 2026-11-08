@@ -4,6 +4,7 @@ import { quantidadeNoCarrinho, resumir } from '../domain/carrinho'
 import { ordenarColecoes, ordenarItens, type Catalogo } from '../domain/catalogo'
 import { formatarWhatsapp } from '../domain/pedido'
 import { BarraDoPedido } from './BarraDoPedido'
+import { BotaoDoTema } from './BotaoDoTema'
 import { CartaoDoItem } from './CartaoDoItem'
 import { PainelDoPedido } from './PainelDoPedido'
 import { useCarrinho } from './useCarrinho'
@@ -63,7 +64,10 @@ export function Vitrine({ catalogo }: { catalogo: Catalogo }) {
     <>
       <main className="vt-pagina">
         <header className="vt-topo">
-          <p className="vt-sobretitulo">Figurinhas · Cards · Colecionáveis</p>
+          <div className="vt-topo-linha">
+            <p className="vt-sobretitulo">Figurinhas · Cards · Colecionáveis</p>
+            <BotaoDoTema className="vt-tema" soIcone />
+          </div>
           <h1 className="vt-marca">{loja.nome}</h1>
           <p className="vt-chamada">Itens avulsos para completar a sua coleção, com foto, preço e estoque.</p>
 

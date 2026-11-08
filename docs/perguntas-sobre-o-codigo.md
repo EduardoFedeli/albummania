@@ -120,3 +120,25 @@ A depuração seguiu o caminho certo: reproduzir com os dados reais (apareceu tu
 Por causa da conversa com quem está usando. O Supabase não sabe que existe um campo "Repita a nova senha": essa conferência só pode ser feita na tela. E o erro do tamanho, vindo do banco, chega em inglês e depois de uma ida e volta pela internet. Validando antes, o Vendedor recebe na hora uma frase clara em português ("Use pelo menos 8 caracteres"). A regra fica em TypeScript puro, com testes ([`src/domain/conta.ts`](../src/domain/conta.ts)), e o Supabase continua sendo a última palavra: os erros dele (como "a nova senha precisa ser diferente da atual") também viram frases em português, em [`src/infra/admin.ts`](../src/infra/admin.ts).
 
 </details>
+
+### 12. O tema escolhido fica no `localStorage`, mas quem lê primeiro é um `<script>` solto no `index.html`, e não o React. Por quê?
+
+<details>
+<summary>Resposta</summary>
+
+Por causa da ordem em que o navegador trabalha. O `<script>` do `<head>` roda enquanto a página ainda está sendo lida, antes de qualquer pixel aparecer. O React só roda depois que o JavaScript do site chega, e até lá o navegador já pintou a tela uma vez. Se a escolha fosse lida pelo React, quem escolheu o claro veria a loja **piscar escura** em cada visita, até o React trocar. O script é minúsculo e faz uma coisa só: se a escolha salva for "claro", marca o `<html>` com `data-tema="claro"`, e o CSS faz o resto.
+
+Repare que o escuro é o padrão no próprio CSS (`:root`), e não no script. Assim, se o `localStorage` estiver bloqueado ou o script falhar, o site fica no escuro, que é o padrão, e nunca num estado quebrado. O teste prova isso: com o JavaScript do site bloqueado, a página já abre no tema certo. Arquivos: [`index.html`](../index.html) e [`src/ui/tema.ts`](../src/ui/tema.ts).
+
+</details>
+
+### 13. Para criar o tema escuro, nenhum componente mudou de cor no seu CSS. Como isso foi possível?
+
+<details>
+<summary>Resposta</summary>
+
+Graças às duas camadas de tokens. Os componentes nunca usam uma cor direta: usam o **nome do uso**, como `--cor-superficie` ou `--cor-destaque`. O tema escuro só redefine o que cada nome significa: `--cor-superficie` passa de branco para azul-noite, e `--cor-destaque` passa de azul-marinho para uma névoa clara. Os cartões, botões e janelas continuam pedindo "a cor de superfície" e recebem a do tema da vez. É o que o design system prometia: "trocar a paleta é mexer só nos primitivos".
+
+A única cor solta que existia, o véu atrás das janelas (`rgb(20 33 61 / 0.55)`), virou o token `--cor-veu`. Tem um detalhe: navegadores antigos não deixam o `::backdrop` herdar variáveis CSS, então ele tem um valor reserva, `var(--cor-veu, ...)`. E o `color-scheme: dark` avisa o navegador para desenhar no escuro o que é dele, como a barra de rolagem e a lista do `<select>`. Arquivos: [`src/styles/tokens.css`](../src/styles/tokens.css) e [`src/styles/tokens.test.ts`](../src/styles/tokens.test.ts).
+
+</details>

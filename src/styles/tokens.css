@@ -1,8 +1,22 @@
 /* Tokens do design system: primitivos (valores brutos) → semânticos (o uso).
-   Componentes usam só os semânticos. */
+   Componentes usam só os semânticos. O tema escuro é o padrão; o claro troca só as cores, mais abaixo. */
 
 :root {
-  /* Primitivos */
+  color-scheme: dark;
+
+  /* Primitivos do tema escuro: a noite, tirada da mesma tinta azul-marinho */
+  --noite-950: #0c1322;
+  --noite-900: #151e33;
+  --noite-800: #222d46;
+  --noite-700: #2b3754;
+  --noite-500: #56627d;
+  --nevoa-300: #a3adc0;
+  --nevoa-100: #e6eaf2;
+  --verde-400: #3fcf80;
+  --vermelho-300: #ff7a86;
+  --ouro-400: #e0b43a;
+
+  /* Primitivos do tema claro: o papel e a tinta do álbum */
   --azul-900: #14213d;
   --cinza-600: #5f6878;
   --cinza-400: #9aa2b1;
@@ -30,25 +44,27 @@
   --espaco-7: 3rem;
   --espaco-8: 4rem;
 
-  /* Semânticos: cor */
-  --cor-fundo: var(--azul-050);
-  --cor-superficie: var(--branco);
-  --cor-texto: var(--azul-900);
-  --cor-texto-fraco: var(--cinza-600);
-  --cor-texto-apagado: var(--cinza-400);
-  --cor-borda: var(--cinza-100);
-  --cor-borda-forte: var(--azul-900);
-  --cor-apagado: var(--cinza-100);
+  /* Semânticos: cor (tema escuro, o padrão) */
+  --cor-fundo: var(--noite-950);
+  --cor-superficie: var(--noite-900);
+  --cor-texto: var(--nevoa-100);
+  --cor-texto-fraco: var(--nevoa-300);
+  --cor-texto-apagado: var(--noite-500);
+  --cor-borda: var(--noite-700);
+  --cor-borda-forte: var(--nevoa-300);
+  --cor-apagado: var(--noite-800);
   --cor-acao: var(--verde-700);
   --cor-texto-sobre-acao: var(--branco);
-  --cor-destaque: var(--azul-900);
-  --cor-texto-sobre-destaque: var(--branco);
-  --cor-foco: var(--verde-700);
-  --cor-erro: var(--vermelho-600);
-  --cor-brilho: var(--ouro-600);
+  --cor-destaque: var(--nevoa-100);
+  --cor-texto-sobre-destaque: var(--noite-950);
+  --cor-foco: var(--verde-400);
+  --cor-erro: var(--vermelho-300);
+  --cor-brilho: var(--ouro-400);
+  /* O véu atrás das janelas (painel do pedido, formulário do Item) */
+  --cor-veu: rgb(3 6 14 / 0.7);
 
   /* Retícula de impressão, como no papel do álbum: quebra o fundo liso sem competir com o texto. */
-  --textura-fundo: radial-gradient(circle, rgb(20 33 61 / 0.07) 1px, transparent 1.3px) 0 0 / 12px 12px;
+  --textura-fundo: radial-gradient(circle, rgb(230 234 242 / 0.035) 1px, transparent 1.3px) 0 0 / 12px 12px;
 
   /* Mistura da cor da Seção (bandeira) com a superfície */
   --mistura-cabecalho: 12%;
@@ -82,6 +98,31 @@
   --largura-conteudo: 64rem;
   --largura-leitura: 38rem;
   --duracao-rapida: 150ms;
+}
+
+/* Tema claro: o botão de tema grava a escolha no navegador, e o script do <head>
+   marca o <html> com data-tema="claro" antes da primeira pintura (index.html e admin/index.html). */
+:root[data-tema='claro'] {
+  color-scheme: light;
+
+  --cor-fundo: var(--azul-050);
+  --cor-superficie: var(--branco);
+  --cor-texto: var(--azul-900);
+  --cor-texto-fraco: var(--cinza-600);
+  --cor-texto-apagado: var(--cinza-400);
+  --cor-borda: var(--cinza-100);
+  --cor-borda-forte: var(--azul-900);
+  --cor-apagado: var(--cinza-100);
+  --cor-acao: var(--verde-700);
+  --cor-texto-sobre-acao: var(--branco);
+  --cor-destaque: var(--azul-900);
+  --cor-texto-sobre-destaque: var(--branco);
+  --cor-foco: var(--verde-700);
+  --cor-erro: var(--vermelho-600);
+  --cor-brilho: var(--ouro-600);
+  --cor-veu: rgb(20 33 61 / 0.55);
+
+  --textura-fundo: radial-gradient(circle, rgb(20 33 61 / 0.07) 1px, transparent 1.3px) 0 0 / 12px 12px;
 }
 
 @media (prefers-reduced-motion: reduce) {

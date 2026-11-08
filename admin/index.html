@@ -7,6 +7,16 @@
     <title>Admin da loja</title>
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#14213d" />
+
+    <!-- O tema escuro é o padrão. Quem escolheu o claro (botão de tema, src/ui/tema.ts) recebe ele
+         antes da primeira pintura, sem a tela piscar escura. -->
+    <script>
+      try {
+        if (localStorage.getItem('tema') === 'claro') document.documentElement.dataset.tema = 'claro'
+      } catch {
+        // Sem localStorage (aba anônima, cookies bloqueados): fica o padrão, o escuro.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

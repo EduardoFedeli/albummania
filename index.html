@@ -15,6 +15,16 @@
     <meta property="og:site_name" content="ÁlbumMania" />
     <meta property="og:title" content="ÁlbumMania" />
     <meta property="og:description" content="Figurinhas, cards e colecionáveis avulsos, com foto, preço e estoque. Monte o pedido e finalize pelo WhatsApp." />
+
+    <!-- O tema escuro é o padrão. Quem escolheu o claro (botão de tema, src/ui/tema.ts) recebe ele
+         antes da primeira pintura, sem a tela piscar escura. -->
+    <script>
+      try {
+        if (localStorage.getItem('tema') === 'claro') document.documentElement.dataset.tema = 'claro'
+      } catch {
+        // Sem localStorage (aba anônima, cookies bloqueados): fica o padrão, o escuro.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

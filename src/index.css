@@ -22,7 +22,9 @@ img {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
   color: inherit;
 }

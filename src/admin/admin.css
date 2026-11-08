@@ -64,6 +64,7 @@
 
 .adm-topo-acoes {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--espaco-2);
 }
 
@@ -384,7 +385,8 @@
 }
 
 .adm-janela::backdrop {
-  background: rgb(20 33 61 / 0.55);
+  /* Navegadores antigos não deixam o ::backdrop herdar variáveis CSS: aí vale o véu azul-marinho. */
+  background: var(--cor-veu, rgb(20 33 61 / 0.55));
 }
 
 .adm-form {

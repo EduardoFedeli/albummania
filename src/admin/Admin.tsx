@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { aoMudarSessao, buscarTudo, ehAdministrador, sair, type DadosDoAdmin } from '../infra/admin'
+import { BotaoDoTema } from '../ui/BotaoDoTema'
 import { AbaColecoes } from './AbaColecoes'
 import { AbaConta } from './AbaConta'
 import { AbaItens } from './AbaItens'
@@ -148,6 +149,7 @@ function AreaDoAdmin() {
           <p className="adm-marca">{dados.loja.nome}</p>
         </div>
         <div className="adm-topo-acoes">
+          <BotaoDoTema className="adm-botao adm-botao-leve" />
           <a className="adm-botao adm-botao-leve" href="../" target="_blank" rel="noreferrer">
             Ver a loja
           </a>
