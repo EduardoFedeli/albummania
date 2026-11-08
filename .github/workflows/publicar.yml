@@ -17,6 +17,10 @@ concurrency:
 jobs:
   verificar-construir-e-publicar:
     runs-on: ubuntu-latest
+    env:
+      # O nome do projeto no Cloudflare vira o endereço da loja (gugiucards.pages.dev).
+      # Trocar este nome cria um projeto novo, num endereço novo; o antigo fica no ar até ser apagado no painel.
+      PROJETO_CLOUDFLARE: gugiucards
     steps:
       - name: Baixar o código
         uses: actions/checkout@v7
@@ -87,7 +91,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create albummania --production-branch=main
+          command: pages project create ${{ env.PROJETO_CLOUDFLARE }} --production-branch=main
 
       - name: Publicar no Cloudflare Pages
         if: steps.cloudflare.outputs.configurado == 'sim'
@@ -95,4 +99,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=albummania --branch=main --commit-hash=${{ github.sha }}
+          command: pages deploy dist --project-name=${{ env.PROJETO_CLOUDFLARE }} --branch=main --commit-hash=${{ github.sha }}

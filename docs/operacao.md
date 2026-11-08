@@ -6,8 +6,8 @@ O manual de quem cuida do site (o Eduardo). O Vendedor usa só o Admin. As decis
 
 | O quê | Onde |
 |---|---|
-| Loja (Vitrine) | https://albummania-966.pages.dev, no projeto `albummania` do Cloudflare Pages. O "-966" veio porque `albummania.pages.dev` já era de outra pessoa |
-| Admin | https://albummania-966.pages.dev/admin/ |
+| Loja (Vitrine) | https://gugiucards.pages.dev, no projeto `gugiucards` do Cloudflare Pages. A loja se chama **GuGiu Cards**, nome escolhido pelo Vendedor em 2026-11-08. Antes, ficava em `albummania-966.pages.dev` (ÁlbumMania é o nome do projeto no repositório) |
+| Admin | https://gugiucards.pages.dev/admin/ |
 | Banco, login e Fotos | Supabase, projeto `albummania` (região São Paulo), organização E.J Studios, na conta do Eduardo |
 | Publicação | GitHub Actions ([`publicar.yml`](../.github/workflows/publicar.yml)), a cada push na `main` |
 | Acesso diário e alarme | cron-job.org, na conta do Eduardo |
@@ -74,6 +74,16 @@ O Admin tem "trocar senha" (aba **Conta**), mas não tem "esqueci a senha" por e
 1. **O Supabase pausou?** Abra o painel do Supabase. Se o projeto aparecer como pausado, clique em **Restore project** e espere alguns minutos. Depois descubra por que o cron-job.org não evitou a pausa.
 2. **O erro técnico** aparece no console do navegador: abra a loja com o F12 aberto, na aba Console.
 3. **As variáveis mudaram?** Confira `VITE_SUPABASE_URL` e `VITE_SUPABASE_CHAVE_PUBLICA` nas Variables do GitHub. Depois de trocar uma variável, publique de novo (**Actions → Publicar site → Run workflow**), porque elas entram no site na hora do build.
+
+### Trocar o nome ou o endereço da loja
+
+O nome aparece em dois lugares, e o endereço vem de um terceiro:
+
+1. **Nome na página:** no Admin, aba **Loja**. Vale na hora, para todo mundo.
+2. **Nome na aba do navegador e na prévia do link no WhatsApp:** no [`index.html`](../index.html) (`<title>`, `og:site_name` e `og:title`). O robô do WhatsApp não roda JavaScript, então não lê o nome do banco. Muda no próximo push.
+3. **Endereço:** é o nome do projeto no Cloudflare, na variável `PROJETO_CLOUDFLARE` do [`publicar.yml`](../.github/workflows/publicar.yml). Trocar o nome e fazer o push **cria um projeto novo**, num endereço novo. O projeto antigo continua no ar, lendo o mesmo banco, até ser apagado em **Workers & Pages → (projeto antigo) → Settings → Delete project**. Apague só depois de mandar o endereço novo ao Vendedor. Se o nome já for de outra pessoa, o Cloudflare acrescenta um número, como aconteceu com o `albummania-966`: confira o endereço no log do passo "Publicar no Cloudflare Pages".
+
+O nome do projeto no Supabase é só um rótulo do painel (**Project Settings → General**): trocá-lo não muda o endereço do banco nem as chaves.
 
 ### Publicar uma mudança
 

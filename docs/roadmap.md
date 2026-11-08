@@ -55,6 +55,7 @@ Descoberta, documentação, spikes, esqueleto andante, checklist das 980 figurin
 - [ ] Manual de 1 página para o Vendedor
 - [x] "Trocar senha" no Admin (aba Conta). O "esqueci a senha" por e-mail ficou de fora: o e-mail gratuito do Supabase só entrega para membros da organização
 - [x] Admin invisível para quem usa bloqueador de anúncio: a EasyList esconde `.ad-item`, e as classes do Admin passaram de `ad-` para `adm-`, com um teste que barra nomes com cara de anúncio
+- [ ] Loja renomeada para **GuGiu Cards**, a pedido do Vendedor: título, prévia do link e endereço novo, https://gugiucards.pages.dev (o código está pronto). **Eduardo:** push, nome na aba Loja do Admin, links novos para o Vendedor e só então apagar o projeto `albummania` no Cloudflare
 - [x] Modo escuro como padrão, com o botão de tema na Vitrine e no Admin. O teste de contraste passou a conferir os dois temas
 - [ ] Imagem da prévia do link da loja (Open Graph)
 - [ ] Levar os scripts de teste ponta a ponta (Vitrine e Admin) para o repositório

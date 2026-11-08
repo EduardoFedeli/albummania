@@ -88,7 +88,7 @@ export async function buscarCatalogo(
   ])
 
   return {
-    loja: lojas[0] ?? { nome: 'ÁlbumMania', whatsapp: '' },
+    loja: lojas[0] ?? { nome: 'GuGiu Cards', whatsapp: '' },
     colecoes,
     itens: linhas.map((linha) => itemDaLinha(linha, conexao.url)),
   }

@@ -39,7 +39,7 @@ create index if not exists itens_colecao_id_idx on public.itens (colecao_id);
 -- A configuração da loja tem uma linha só: o "check (id = 1)" impede uma segunda.
 create table if not exists public.loja (
   id integer primary key default 1 check (id = 1),
-  nome text not null default 'ÁlbumMania' check (btrim(nome) <> ''),
+  nome text not null default 'GuGiu Cards' check (btrim(nome) <> ''),
   -- Só dígitos, com DDI e DDD (ex.: 5511999999999). Fica vazio até ser configurado.
   whatsapp text not null default '' check (whatsapp ~ '^[0-9]*$')
 );

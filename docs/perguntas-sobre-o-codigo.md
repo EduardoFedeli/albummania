@@ -142,3 +142,23 @@ Graças às duas camadas de tokens. Os componentes nunca usam uma cor direta: us
 A única cor solta que existia, o véu atrás das janelas (`rgb(20 33 61 / 0.55)`), virou o token `--cor-veu`. Tem um detalhe: navegadores antigos não deixam o `::backdrop` herdar variáveis CSS, então ele tem um valor reserva, `var(--cor-veu, ...)`. E o `color-scheme: dark` avisa o navegador para desenhar no escuro o que é dele, como a barra de rolagem e a lista do `<select>`. Arquivos: [`src/styles/tokens.css`](../src/styles/tokens.css) e [`src/styles/tokens.test.ts`](../src/styles/tokens.test.ts).
 
 </details>
+
+### 14. Depois do push com o nome novo, o endereço antigo (`albummania-966`) continua no ar. O que ele mostra?
+
+<details>
+<summary>Resposta</summary>
+
+A mesma loja, com os mesmos Itens, porque os dois sites leem o **mesmo banco**: o Cloudflare só guarda os arquivos (HTML, CSS e JavaScript), e os dados vêm do Supabase na hora em que a página abre. Assim que o nome for trocado na aba Loja, o título grande da página muda nos dois endereços.
+
+Mas a aba do navegador e a prévia do link no WhatsApp continuam dizendo "ÁlbumMania" no endereço antigo. Esse nome está escrito no `index.html`, que entrou no site na hora do build. O site antigo é um build antigo, e ninguém vai publicar nele de novo. É a diferença entre o que vem **do banco, na hora** e o que vem **do build, congelado**. Por isso o projeto antigo deve ser apagado depois que o Vendedor tiver o link novo: dois endereços para a mesma loja confundem quem compra.
+
+</details>
+
+### 15. Por que o nome do projeto no Cloudflare virou uma variável (`PROJETO_CLOUDFLARE`) no topo do job, em vez de ficar escrito nos dois passos?
+
+<details>
+<summary>Resposta</summary>
+
+Porque os dois passos precisam concordar. O primeiro cria o projeto e o segundo publica nele. Se alguém trocasse o nome só no segundo, a publicação falharia, porque o projeto ainda não existe. Se trocasse só no primeiro, o site novo seria criado vazio e a loja continuaria saindo no endereço antigo, sem erro nenhum. Com o nome num lugar só, não dá para os dois discordarem. A variável fica no `env` do job, e não nos Secrets, porque o nome não é segredo: ele aparece no próprio endereço do site. Arquivo: [`.github/workflows/publicar.yml`](../.github/workflows/publicar.yml).
+
+</details>
